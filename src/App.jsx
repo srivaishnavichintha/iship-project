@@ -1,7 +1,8 @@
 
-import Landing from "./Landing"
+import Login from "./Login"
 export default function App(){
     return(
-        <Landing />
+        <Login 
+        />
     )
 }
