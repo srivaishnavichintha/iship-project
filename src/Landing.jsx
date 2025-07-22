@@ -1,0 +1,61 @@
+ import "./Landing.css" 
+import landingImg from './landing-image.png';
+ export default function Landing(){
+    return(
+        <>
+            <div className="about"> 
+                <nav >
+                    <ul className="nav_bar">
+                        <li><a href="#land-exp" >Explore</a></li>
+                        <li> <a href="#land-pro" >Product</a></li>
+                        <li> <a href="#land-comp" >Compiler</a></li>
+                        <li> <a href=".land-explore" >Sign in</a></li>
+                    </ul>
+                </nav>
+                <div className="land-content">
+                    <div>
+                         <h1>Learn, &nbsp; Compete, &nbsp; Level Up.</h1>
+                         <p>Platform to master coding through peer challenges, mentor-led contests, and a dynamic leaderboard. Learn collaboratively, compete with equals, and progress through levels as you sharpen your skills.</p>
+                    </div>
+                    <img src={landingImg} />
+                </div>
+            </div>
+            <div id="land-exp" className="land-explore">
+                 <div className="floating">
+                    <div className="box1"></div>
+                     <div className="box2"  style={{ animationDelay: "0.5s" }}></div>
+                      <div className="box3"  style={{ animationDelay: "0s" }}></div>
+                      <div className="box4"  style={{ animationDelay: "1s" }}></div>
+                 </div>
+                 <div  className="explore-data">
+                      <h2>Start Exploring</h2>
+                      <p>An engaging platform that helps you grow through peer challenges, mentor contests, and a leaderboard — guiding your journey to the next level.</p>
+                      <a href="">Get started</a>
+                 </div>
+            </div>
+            <div id="land-pro" className="product">
+                    <div className="product-left-card">
+                        <h2>Challenges, Community & Leaderboard</h2><br></br>
+                        <p>Over 1000 challenges designed to help you practice, compete, and grow. Join a vibrant community of students, challenge peers at your level, and climb the leaderboard as you learn and earn rewards through mentor-led contests.</p>
+                        <a href="">view leader board</a>
+                    </div>
+                    <div className="product-right-card">
+                        <h2>Mentors & Skill Building</h2><br></br>
+                        <p>Not only does this platform help students improve their coding and problem-solving skills, it also enables mentors to guide and assess students of all levels. From hosting contests to monitoring progress and rewarding achievements, it’s a complete learning and competitive ecosystem.</p>
+                        <a href="">view courses</a>
+                    </div>
+            </div>
+            <div id="land-comp" className="land-compiler">
+               <div className="comp">
+                <h2>Compiler</h2>
+                <p>Our platform empowers students to learn and improve through engaging peer challenges, mentor-led contests, and a dynamic leaderboard. Practice, compete, and measure your progress — all in one collaborative space designed for growth.</p>
+               </div>
+               <div className="comp-div"></div>
+            </div>
+            <div className="land-about">
+                <h2>We believe learning is better when shared.</h2>
+                <p>With peer challenges, mentor-led contests, and a dynamic leaderboard, we create a space where students unlock their potential. Competing, learning, and growing together, they build skills, track progress, and achieve their goals as a community.</p>
+            </div>
+        </>
+    )
+  }

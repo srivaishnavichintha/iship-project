@@ -1,0 +1,155 @@
+
+.about {
+ margin:0px;
+ padding: 0px;
+  position: relative;
+  height: 100vh;
+  background: linear-gradient(to right, #090909, #4b4c4c);
+  color: white;
+  padding: 1.5rem;
+}
+
+.about::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  clip-path: ellipse(100% 100% at 80% 170%);
+}
+.nav_bar{
+    float:right;
+    display: flex;
+    list-style-type:none;
+    /* margin-top: -5px; */
+}
+.nav_bar > li{
+    margin-right: 40px;
+    font-family: "Inter", sans-serif;
+    font-weight: 200;
+}
+.land-content{
+    width: 100%;
+    height: 60%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center; 
+}
+.land-content > img{
+    width: 300px;
+    height: 300px;
+    transform: rotateZ(10deg);
+}
+.land-content > div{
+    max-width: 700px;
+}
+.land-content >div >h1{
+    text-align: center;
+    font-size: 40px;
+    font-weight: 900;
+}
+.land-content > div >p{
+    text-align: center;
+    font-weight: 200;
+}
+.land-explore{
+    display: flex;
+    justify-content:space-evenly;
+    align-items: center;
+    height: 50svh;
+}
+.floating{
+    position: relative;
+    width: 300px;
+
+}
+.floating > div{
+    width: 300px;
+    height:250px;
+    animation: floatUpDown 5s ease-in-out infinite;
+    /* border: 1px solid rgb(117, 114, 114); */
+}
+.box1{
+     /* background-color: rgb(151, 208, 208); */
+    top: 30px;
+    right: 30px; 
+   
+}
+.box2{
+    /* height: 500px;  */
+    background-color: aqua;
+    position: absolute;
+    top: 60px;
+    right: 30px;
+   z-index: 2; 
+}
+.box3{
+     position: absolute;
+    top: 30px;
+    left: 40px;
+     background-color: rgb(53, 74, 74);
+     z-index: 30;
+}
+.box4{
+    position: absolute;
+    top: 90px;
+    left: -80px;
+    z-index: 1;
+    background-color: #4b4c4c;
+}
+.explore-data{
+    text-align: left;
+    max-width: 600px;
+}
+.product{
+    display: flex;
+    justify-content: space-evenly;
+    height: 80svh;
+    align-items: center;
+}
+.product > div{
+    height: 300px;
+    width: 500px;
+}
+.land-compiler{
+    text-align: center;
+    padding-right: 10%;
+    padding-left:10%;
+    height: 110svh;
+}
+.comp{
+     padding-right: 12%;
+    padding-left:12%;
+}
+.comp-div{
+    height: 80svh;
+    /* width: 150sv; */
+    border:1px solid black;
+}
+.land-about{
+    display: flex;
+    flex-direction: column;
+    height: 100svh;
+    align-items: center;
+    justify-content: center;
+}
+.land-about > p{
+    text-align: center;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+
+@keyframes floatUpDown {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
