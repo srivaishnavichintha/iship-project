@@ -1,14 +1,20 @@
-html {
-  scroll-behavior: smooth;
+/* index.css (optional global styles) */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-body{
-    margin:0px;
-    font-family: "Inter", sans-serif;
-    line-height: 1.5;
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
 }
-a{
-    text-decoration-line: none;
-    color: inherit;
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 p{
   font-family: "Inter", sans-serif;
