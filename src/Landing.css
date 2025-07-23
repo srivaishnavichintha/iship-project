@@ -4,11 +4,10 @@
  padding: 0px;
   position: relative;
   height: 100vh;
-  background: linear-gradient(to right, #090909, #4b4c4c);
+  background: linear-gradient(to right, #191919, #4b4c4c);
   color: white;
   padding: 1.5rem;
 }
-
 .about::after {
   content: '';
   position: absolute;
@@ -140,8 +139,9 @@
     padding-left: 20%;
     padding-right: 20%;
 }
-
-
+ nav_bar > li a:hover {
+    color: #ddd;
+}
 @keyframes floatUpDown {
   0% {
     transform: translateY(0px);

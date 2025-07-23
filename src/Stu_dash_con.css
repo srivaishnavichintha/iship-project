@@ -1,0 +1,57 @@
+.stu_con{
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 5%;
+}
+.card {
+    width: 300px;
+    height: 300px;
+    box-shadow: 2px 5px 8px #888888;
+    border-radius: 14px;
+    background: linear-gradient(to bottom, rgb(227, 97, 97) 75%, transparent 25%);
+    position: relative;
+    transition: transform 3s ease ;
+}
+.rec{
+    position: absolute;
+    top: 25%;
+    left: 10%;
+    opacity: 0.5;
+}
+.rec1{
+      border-radius: 3px;
+    background-color: white;
+    width: 40px;
+    height: 10px;
+    margin: 5px;
+}
+.rec2{
+      border-radius: 3px;
+    margin: 5px;
+    background-color: white;
+    width: 70px;
+    height: 10px;
+}
+.rec3{
+      border-radius: 3px;
+    margin: 5px;
+    background-color: white;
+    width: 90px;
+    height: 10px;
+}
+.circle {
+    position: absolute;
+    top: 60%;
+    left: 70%;
+    background-color: aliceblue;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card:hover{
+    transform: translateY(-20px)
+}
+

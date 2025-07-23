@@ -10,3 +10,6 @@ a{
     text-decoration-line: none;
     color: inherit;
 }
+p{
+  font-family: "Inter", sans-serif;
+}

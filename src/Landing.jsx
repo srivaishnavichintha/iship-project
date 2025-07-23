@@ -1,5 +1,6 @@
  import "./Landing.css" 
-import landingImg from './landing-image.png';
+ import { Link } from "react-router-dom";
+import landingImg from './assets/landing-image.png';
  export default function Landing(){
     return(
         <>
@@ -9,7 +10,7 @@ import landingImg from './landing-image.png';
                         <li><a href="#land-exp" >Explore</a></li>
                         <li> <a href="#land-pro" >Product</a></li>
                         <li> <a href="#land-comp" >Compiler</a></li>
-                        <li> <a href=".land-explore" >Sign in</a></li>
+                        <li><Link to="/login">Sign in</Link></li>
                     </ul>
                 </nav>
                 <div className="land-content">
