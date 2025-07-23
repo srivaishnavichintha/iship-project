@@ -16,14 +16,4 @@ function App() {
   );
 }
 
-<<<<<<< HEAD
 export default App;
-=======
-import Login from "./Login"
-export default function App(){
-    return(
-        <Login 
-        />
-    )
-}
->>>>>>> 259e1b9ddbaf7468d6aee0b4a043349b687dd6a9
