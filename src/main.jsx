@@ -1,9 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Login from "./Login"; // ✅ Correct import
-
+import App from "./App"
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Login />
+    <App />
   </React.StrictMode>
 );

@@ -22,6 +22,7 @@
     float:right;
     display: flex;
     list-style-type:none;
+    height: 50px;
     /* margin-top: -5px; */
 }
 .nav_bar > li{
@@ -139,7 +140,7 @@
     padding-left: 20%;
     padding-right: 20%;
 }
- nav_bar > li a:hover {
+ .nav_bar > li a:hover {
     color: #ddd;
 }
 @keyframes floatUpDown {

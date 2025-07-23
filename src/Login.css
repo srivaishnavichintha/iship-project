@@ -1,12 +1,10 @@
-/* Reset base */
+
 body {
   margin: 0;
   padding: 0;
   font-family: "Inter", sans-serif;
   background-color: #f2f2f2;
 }
-
-/* Center wrapper */
 .login-wrapper {
   display: flex;
   justify-content: center;
@@ -14,7 +12,6 @@ body {
   height: 100vh;
 }
 
-/* Card */
 .login-card {
   width: 90%;
   max-width: 400px;
@@ -25,7 +22,6 @@ body {
   box-sizing: border-box;
 }
 
-/* Tabs */
 .tabs {
   display: flex;
   justify-content: space-between;
@@ -54,15 +50,11 @@ body {
   height: 80px;
   margin: 10px auto;
 }
-
-/* Title */
 .login-card h3 {
   text-align: center;
   margin: 10px 0;
   font-weight: bold;
 }
-
-/* Inputs */
 .login-card input {
   width: 100%;
   padding: 10px;
@@ -72,15 +64,12 @@ body {
   box-sizing: border-box;
 }
 
-/* Verify Placeholder */
 .verify {
   height: 40px;
   border: 1px solid #ccc;
   margin: 8px 0;
   border-radius: 5px;
 }
-
-/* Button */
 .login-card button {
   width: 100%;
   padding: 12px;
@@ -94,7 +83,6 @@ body {
   font-weight: bold;
 }
 
-/* Bottom links */
 .t1 {
   display: flex;
   justify-content: space-between;
@@ -127,8 +115,6 @@ body {
   color: #000;
 }
 
-
-/* Responsive tweaks */
 @media (max-width: 500px) {
   .login-card {
     padding: 20px;
