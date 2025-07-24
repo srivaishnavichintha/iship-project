@@ -12,6 +12,11 @@
     position: relative;
     transition: transform 3s ease ;
 }
+.card_cover{
+    margin-top: 50px;
+    display: flex;
+    gap:50px
+}
 .rec{
     position: absolute;
     top: 25%;
