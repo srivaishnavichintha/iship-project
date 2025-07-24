@@ -4,6 +4,7 @@ import logo from "./assets/react.svg";
 import moon from "./assets/moon.png";
 import sun from "./assets/sun.png";
 import env from "./assets/envelope.png"
+import whiteenv from "./assets/white_env.png"
 
 export default function Student_navbar() {
   const [isDark, setIsDark] = useState(false);
@@ -25,18 +26,18 @@ export default function Student_navbar() {
       <div className="nav-left">
         <img src={logo} alt="logo" />
         <a className="nav-con">Courses</a>
-        <a className="nav-con" > </a>
-        <a className="nav-con">My Leaderboard</a>
+        <a className="nav-con">Student Leaderboard</a>
+         <a className="nav-con">Problems</a>
+          <a className="nav-con">Contest</a>
       </div>
       <div className="nav-right">
-         <img src={env} />
+         <img src={isDark ? whiteenv : env} />
          <div id="main_nav"></div>
         <img
         src={isDark ? sun : moon}
         alt="theme toggle"
         onClick={theme}
         className="theme"
-        style={{ cursor: "pointer" }}
       />
       </div>
     </nav>

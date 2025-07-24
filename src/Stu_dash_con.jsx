@@ -27,7 +27,6 @@ export default function Stu_dash_con(){
                     </div>
                   </div>
               </div>
-              
             </div>
         </>
     )
