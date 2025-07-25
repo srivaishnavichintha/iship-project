@@ -1,0 +1,160 @@
+.stu_con {
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 5%;
+  font-family: sans-serif;
+  position: relative;
+}
+
+.title_bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.plus_btn {
+  font-size: 30px;
+  background-color: #1d4ed8;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.plus_btn:hover {
+  background-color: #2563eb;
+}
+
+.card_cover {
+  margin-top: 50px;
+  display: flex;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 300px;
+  height: 300px;
+  box-shadow: 2px 5px 8px #888888;
+  border-radius: 14px;
+  background: linear-gradient(to bottom, rgb(227, 97, 97) 75%, transparent 25%);
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-20px);
+}
+
+.rec {
+  position: absolute;
+  top: 25%;
+  left: 10%;
+  opacity: 0.5;
+}
+
+.rec1,
+.rec2,
+.rec3 {
+  border-radius: 3px;
+  background-color: white;
+  margin: 5px;
+}
+
+.rec1 {
+  width: 40px;
+  height: 10px;
+}
+
+.rec2 {
+  width: 70px;
+  height: 10px;
+}
+
+.rec3 {
+  width: 90px;
+  height: 10px;
+}
+
+/* Overlay and Form Styles */
+.form_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  background: rgba(255, 255, 255, 0.95);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.course_form {
+  background-color: #f0f4f8;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.course_form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.form_buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.submit_btn {
+  width: 48%;
+  padding: 10px;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.submit_btn:hover {
+  background-color: #059669;
+}
+
+.cancel_btn {
+  width: 48%;
+  padding: 10px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cancel_btn:hover {
+  background-color: #dc2626;
+}
+
+/* Slide-down animation */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+.slide-down {
+  animation: slideDown 0.4s ease-out;
+}
