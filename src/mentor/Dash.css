@@ -1,0 +1,75 @@
+.mentor_dashboard {
+  padding: 5% 10%;
+}
+
+.section {
+  margin-bottom: 60px;
+}
+
+.card_cover {
+  display: flex;
+  gap: 50px;
+  margin-top: 30px;
+}
+
+.popular_card,
+.upcoming_card {
+  width: 300px;
+  height: 300px;
+  box-shadow: 2px 5px 8px #888888;
+  border-radius: 14px;
+  background: linear-gradient(to bottom, rgb(227, 97, 97) 75%, transparent 25%);
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.popular_card:hover,
+.upcoming_card:hover {
+  transform: translateY(-20px);
+}
+
+.rec {
+  position: absolute;
+  top: 25%;
+  left: 10%;
+  opacity: 0.5;
+}
+
+.rec1,
+.rec2,
+.rec3 {
+  border-radius: 3px;
+  background-color: white;
+  height: 10px;
+  margin: 5px 0;
+}
+
+.rec1 {
+  width: 40px;
+}
+
+.rec2 {
+  width: 70px;
+}
+
+.rec3 {
+  width: 90px;
+}
+
+.top_students_table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.top_students_table th,
+.top_students_table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.top_students_table th {
+  background-color: #f2f2f2;
+  font-weight: 600;
+}
