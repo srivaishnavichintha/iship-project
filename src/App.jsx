@@ -6,6 +6,8 @@ import Login from "./Login"
 // import Mentor_dashboard from "./Mentor_dashboard"
 import Dash from "./mentor/Dash";
 import Course from "./mentor/Course";
+import MentorContest from "./mentor/MentorContest";
+import LeaderBoard from "./mentor/LeaderBoard";
 function App() {
   return (
     <Router>
@@ -17,6 +19,8 @@ function App() {
         {/* <Route path="/mentordashboard" element={<Mentor_dashboard />} /> */}
          <Route path="/mentor/Dash" element={<Dash />} />
          <Route path="/mentor/courses" element={<Course />} />
+         <Route path="/mentor/mentorcontest" element={<MentorContest/>}/>
+         <Route path="/mentor/leaderboard" element={<LeaderBoard/>}/>
       </Routes>
     </Router> 
   );
