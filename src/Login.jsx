@@ -1,6 +1,6 @@
 import  { useState } from "react";
- import axios from "axios";
- import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import logo from "./assets/react.svg";
 
@@ -67,10 +67,10 @@ const handleSubmit = async () => {
         <h3>LeetCode</h3>
         {isSignup ? (
           <>
-            <input type="text" name="username" placeholder="Username" value={formData.username} onChange={handleChange} />
-            <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
-            <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} />
-            <input type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleChange} />
+            <input type="text" name="username" placeholder="Username" value={formData.username} onChange={handleChange} required />
+            <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+            <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange}  required />
+            <input type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleChange}  required />
             <button onClick={handleSubmit}>
               {isSignup ? `Sign Up as ${role}` : `Login as ${role}`}
             </button>
