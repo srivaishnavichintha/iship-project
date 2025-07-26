@@ -1,6 +1,7 @@
  import "./Landing.css" 
  import { Link } from "react-router-dom";
 import landingImg from './assets/landing-image.png';
+import peertopeer from  "./assets/2code.png"
  export default function Landing(){
     return(
         <>
@@ -24,7 +25,9 @@ import landingImg from './assets/landing-image.png';
             <div id="land-exp" className="land-explore">
                  <div className="floating">
                     <div className="box1"></div>
-                     <div className="box2"  style={{ animationDelay: "0.5s" }}></div>
+                     <div className="box2"  style={{ animationDelay: "0.5s" }}>
+                        <img src= {peertopeer} />
+                     </div>
                       <div className="box3"  style={{ animationDelay: "0s" }}></div>
                       <div className="box4"  style={{ animationDelay: "1s" }}></div>
                  </div>

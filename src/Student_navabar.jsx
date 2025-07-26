@@ -39,7 +39,6 @@ export default function Student_navbar() {
         alt="theme toggle"
         onClick={theme}
         className="theme"
-        style={{ cursor: "pointer" }}
       />
       </div>
     </nav>

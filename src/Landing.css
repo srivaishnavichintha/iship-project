@@ -69,14 +69,19 @@
 }
 .floating{
     position: relative;
+    top:-30px;
     width: 300px;
 
 }
 .floating > div{
     width: 300px;
-    height:250px;
+    height:300px;
     animation: floatUpDown 5s ease-in-out infinite;
     /* border: 1px solid rgb(117, 114, 114); */
+}
+.floating > div > img{
+    height: 200px;
+    width: 200px;
 }
 .box1{
      /* background-color: rgb(151, 208, 208); */
