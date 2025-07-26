@@ -1,56 +1,13 @@
-<<<<<<< HEAD
-import  { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-=======
 import { useState } from "react";
 import axios from "axios";
->>>>>>> 852100fe65009c42a367a1a2134ac886da6788e6
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import logo from "./assets/react.svg";
 
 export default function Login() {
   const [role, setRole] = useState("student");
   const [isSignup, setIsSignup] = useState(false);
-<<<<<<< HEAD
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-  username: "",
-  email: "",
-  password: "",
-  confirmPassword: ""
-});
-const handleChange = (e) => {
-  setFormData({ ...formData, [e.target.name]: e.target.value });
-};
-const handleSubmit = async () => {
-  try {
-    const endpoint = isSignup
-      ? "http://localhost:5000/api/signup"
-      : "http://localhost:5000/api/login";
-
-    const payload = {
-      username: formData.username,
-      email: formData.email,
-      password: formData.password,
-      role: role
-    };
-    if (isSignup && formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
-    const res = await axios.post(endpoint, payload);
-   alert(res.data.message);
-    if (user.role === "student") {
-      navigate("/student-dashboard", { state: { user } });
-    } else if (user.role === "mentor") {
-      navigate("/mentor-dashboard", { state: { user } });
-    }
-  } catch (err) {
-    alert("Error occurred");
-  }
-};
-=======
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -65,8 +22,8 @@ const handleSubmit = async () => {
   const handleSubmit = async () => {
     try {
       const endpoint = isSignup
-        ? "http://localhost:3000/signup"
-        : "http://localhost:3000/login";
+        ? "http://localhost:5000/api/signup"
+        : "http://localhost:5000/api/login";
 
       const payload = {
         username: formData.username,
@@ -75,13 +32,24 @@ const handleSubmit = async () => {
         role: role
       };
 
+      if (isSignup && formData.password !== formData.confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
       const res = await axios.post(endpoint, payload);
       alert(res.data.message);
+
+      const user = res.data.user;
+      if (user.role === "student") {
+        navigate("/student-dashboard", { state: { user } });
+      } else if (user.role === "mentor") {
+        navigate("/mentor-dashboard", { state: { user } });
+      }
     } catch (err) {
-      alert(err.response.data.message);
+      alert(err.response?.data?.message || "Something went wrong!");
     }
   };
->>>>>>> 852100fe65009c42a367a1a2134ac886da6788e6
 
   return (
     <div className="login-wrapper">
@@ -106,22 +74,13 @@ const handleSubmit = async () => {
 
         {isSignup ? (
           <>
-<<<<<<< HEAD
-            <input type="text" name="username" placeholder="Username" value={formData.username} onChange={handleChange} required />
-            <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
-            <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange}  required />
-            <input type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleChange}  required />
-            <button onClick={handleSubmit}>
-              {isSignup ? `Sign Up as ${role}` : `Login as ${role}`}
-            </button>
-
-=======
             <input
               type="text"
               name="username"
               placeholder="Username"
               value={formData.username}
               onChange={handleChange}
+              required
             />
             <input
               type="email"
@@ -129,6 +88,7 @@ const handleSubmit = async () => {
               placeholder="Email"
               value={formData.email}
               onChange={handleChange}
+              required
             />
             <input
               type="password"
@@ -136,6 +96,7 @@ const handleSubmit = async () => {
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}
+              required
             />
             <input
               type="password"
@@ -143,36 +104,26 @@ const handleSubmit = async () => {
               placeholder="Confirm Password"
               value={formData.confirmPassword}
               onChange={handleChange}
+              required
             />
             <button onClick={handleSubmit}>
               {`Sign Up as ${role}`}
             </button>
->>>>>>> 852100fe65009c42a367a1a2134ac886da6788e6
-
             <div className="t1">
               <span
                 onClick={() => setIsSignup(false)}
                 style={{ cursor: "pointer" }}
               >
-                Already have an account?  Sign In
+                Already have an account? Sign In
               </span>
             </div>
           </>
         ) : (
           <>
-<<<<<<< HEAD
-            <input type="text" name="username" placeholder="Username or E-mail" value={formData.username} onChange={handleChange} />
-            <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} />
-
-             <button onClick={handleSubmit}>
-              {isSignup ? `Sign Up as ${role}` : `Login as ${role}`}
-            </button>
-
-=======
             <input
               type="text"
               name="username"
-              placeholder="Username or E-mail"
+              placeholder="Username or Email"
               value={formData.username}
               onChange={handleChange}
             />
@@ -183,12 +134,9 @@ const handleSubmit = async () => {
               value={formData.password}
               onChange={handleChange}
             />
-
             <button onClick={handleSubmit}>
               {`Login as ${role}`}
             </button>
->>>>>>> 852100fe65009c42a367a1a2134ac886da6788e6
-
             <div className="t1">
               <span>Forgot Password?</span>
               <span
