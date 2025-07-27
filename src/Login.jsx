@@ -8,6 +8,7 @@ export default function Login() {
   const [role, setRole] = useState("student");
   const [isSignup, setIsSignup] = useState(false);
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -19,9 +20,10 @@ export default function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async () => {
-    try {
-      const endpoint = isSignup
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  const endpoint = isSignup
         ? "http://localhost:3000/signup"
         : "http://localhost:3000/login";
 
@@ -52,7 +54,29 @@ export default function Login() {
     } catch (err) {
       alert(err.response?.data?.message || "Something went wrong!");
     }
+  const payload = {
+    username: formData.username,
+    email: formData.email,
+    password: formData.password,
+    role: role,
   };
+
+  try {
+    const res = await axios.post(endpoint, payload);
+    alert(res.data.message);
+
+    const user = res.data.user;
+    console.log("Authenticated user:", user);
+    if (user.role === "student") {
+      navigate("/student/dashboard", { state: { user } });
+    } else if (user.role === "mentor") {
+      navigate("/mentor/dashboard", { state: { user } });
+    }
+  } catch (err) {
+    alert(err.response?.data?.message || "Something went wrong");
+  }
+};
+
 
   return (
     <div className="login-wrapper">

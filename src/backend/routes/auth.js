@@ -2,23 +2,42 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const Student = require("../models/Student");
-const Mentor=require("../models/Mentor");
+const Mentor = require("../models/Mentor");
 
 // Signup Route
 router.post("/signup", async (req, res) => {
-  const { username, email, password,role } = req.body;
+  const { username, email, password, role } = req.body;
+
   try {
-    const userExists = await Student.findOne({ email });
-    if (userExists) return res.status(400).json({ message: "User already exists" });
-    if(role=="student"){
-      const newUser = new Student({ username, email, password });
-      await newUser.save();
+    const userExists =
+      role === "student"
+        ? await Student.findOne({ email })
+        : await Mentor.findOne({ email });
+
+    if (userExists) {
+      return res.status(400).json({ message: "User already exists" });
     }
-    else{
-      const newUser = new Mentor({ username, email, password });
-      await newUser.save(); 
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    let newUser;
+    if (role === "student") {
+      newUser = new Student({ username, email, password: hashedPassword });
+    } else {
+      newUser = new Mentor({ username, email, password: hashedPassword });
     }
-    res.status(201).json({ message: "User created successfully" });
+
+    await newUser.save();
+
+    res.status(201).json({
+      message: "User created successfully",
+      user: {
+        username: newUser.username,
+        email: newUser.email,
+        role: role 
+      },
+    });
+
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -45,14 +64,12 @@ router.post("/login", async (req, res) => {
       user: {
         username: user.username,
         email: user.email,
-        role: role
-      }
+        role: role,
+      },
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
-
-
 
 module.exports = router;
