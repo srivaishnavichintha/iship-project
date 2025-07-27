@@ -40,7 +40,7 @@ export default function Login() {
       const res = await axios.post(endpoint, payload);
       alert(res.data.message);
 
-      const user = res.data; 
+      const user = res.data.user;
       console.log("Logged in user:", user);
 
       if (user.role === "student") {
