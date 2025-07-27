@@ -1,4 +1,4 @@
-import React from 'react';
+
 import './Icongrid.css';
 
 const Icongrid = () => {
