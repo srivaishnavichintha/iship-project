@@ -10,6 +10,10 @@ import whiteenv from "./assets/white_env.png"
 export default function Student_navbar() {
   const [isDark, setIsDark] = useState(false);
   const navRef = useRef(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+   const toggleDropdown = () => {
+    setShowDropdown((prev) => !prev);
+  };
 
   useEffect(() => {
     document.body.className = isDark ? "dark" : "light";
@@ -32,6 +36,7 @@ export default function Student_navbar() {
            <Link className="nav-con" to="/mentor/leaderboard" >Leaderboard</Link>
       </div>
       <div className="nav-right">
+         <div className="profile_circle" onClick={toggleDropdown}></div>
          <img src={isDark ? whiteenv : env} />
          <div id="main_nav"></div>
         <img
@@ -40,7 +45,15 @@ export default function Student_navbar() {
         onClick={theme}
         className="theme"
       />
+       {showDropdown && (
+        <div className="dropdown-content">
+          <a href="#">Profile</a>
+          <a href="#">Settings</a>
+          <a href="#">Logout</a>
+        </div>
+      )}
       </div>
     </nav>
+
   );
 }

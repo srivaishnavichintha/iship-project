@@ -50,3 +50,10 @@ body.dark {
 .nav-con {
   margin-left: 30px;
 }
+.profile_circle{
+  background-color: rgb(215, 215, 215);
+  border-radius: 50%;
+   width: 7svh;
+  height: 7svh;
+   margin:5px ;
+}
