@@ -35,12 +35,13 @@ import peertopeer from  "./assets/2code.png"
                     <div className="float-box box4" style={{ animationDelay: "1.5s" }}></div>
                 </div>
 
-                <div  className="explore-data">
-                      <h2>Start Exploring</h2><br></br><br></br>
-                      <p>An engaging platform that helps you grow through peer challenges, mentor contests, and a leaderboard — guiding your journey to the next level.</p>
-                      <br></br>
-                      <a > <Link to="/login">Get Started</Link></a>
+                <div className="explore-data">
+                    <h2>Start Exploring</h2><br /><br />
+                    <p>An engaging platform that helps you grow through peer challenges, mentor contests, and a leaderboard — guiding your journey to the next level.</p>
+                    <br />
+                    <Link to="/login">Get Started</Link>
                 </div>
+
             </div>
             <div id="land-pro" className="product">
                     <div className="product-left-card">
