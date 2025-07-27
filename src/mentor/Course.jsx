@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./Course.css";
 import Mentor_navbar from "../Mentor_navbar";
-import { v4 as uuidv4 } from "uuid"; 
 
 const CourseCard = () => {
   return (
@@ -17,24 +17,38 @@ const CourseCard = () => {
 
 export default function Course() {
   const [showForm, setShowForm] = useState(false);
-  const [peerOption, setPeerOption] = useState("disable");
   const [prerequisites, setPrerequisites] = useState([]);
   const [prereqInput, setPrereqInput] = useState("");
+  const [formData, setFormData] = useState({
+    coursename: "",
+    description: "",
+    category: "",
+    level: "",
+    enrollementend: "",
+    max_participants: ""
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && prereqInput.trim() !== "") {
       e.preventDefault();
-      const newTag = {
-        id: uuidv4(),
-        value: prereqInput.trim(),
-      };
-      setPrerequisites((prev) => [...prev, newTag]);
+      const trimmedValue = prereqInput.trim();
+      if (!prerequisites.includes(trimmedValue)) {
+        setPrerequisites((prev) => [...prev, trimmedValue]);
+      }
       setPrereqInput("");
     }
   };
 
-  const removePrerequisite = (idToRemove) => {
-    setPrerequisites((prev) => prev.filter((tag) => tag.id !== idToRemove));
+  const removePrerequisite = (valueToRemove) => {
+    setPrerequisites((prev) => prev.filter((tag) => tag !== valueToRemove));
   };
 
   const handleAddClick = () => {
@@ -43,6 +57,32 @@ export default function Course() {
 
   const handleClose = () => {
     setShowForm(false);
+  };
+
+  const handlecourse = async () => {
+    try {
+      const endpoint = "http://localhost:3000/mentor/courses";
+      const payload = {
+        ...formData,
+        prerequisites,
+      };
+      const res = await axios.post(endpoint, payload);
+      console.log("Course added:", res.data);
+      alert("Course added successfully!");
+      setShowForm(false);
+      setFormData({
+        coursename: "",
+        description: "",
+        category: "",
+        level: "",
+        enrollementend: "",
+        max_participants: ""
+      });
+      setPrerequisites([]);
+    } catch (error) {
+      console.error("Error adding course:", error);
+      alert("Failed to add course!");
+    }
   };
 
   return (
@@ -56,93 +96,54 @@ export default function Course() {
 
               <label>
                 Course Name:<br />
-                <input type="text" placeholder="Course Name" required />
+                <input type="text"  placeholder="Course Name"  name="coursename"  value={formData.coursename}  onChange={handleInputChange}  required />
               </label>
 
               <label>
                 Description:<br />
-                <textarea placeholder="Enter course description here" required />
+                <textarea placeholder="Enter course description here" name="description"  value={formData.description}  onChange={handleInputChange}  required  />
               </label>
 
               <label>
                 Category:<br />
-                <input type="text" placeholder="e.g., DSA, Web Dev" required />
+                <input  type="text"  placeholder="e.g., DSA, Web Dev"  name="category"  value={formData.category}  onChange={handleInputChange}  required  />
+              </label>
+
+              <label>
+                Level:<br />
+                <input  type="text"  placeholder="e.g., Beginner, Intermediate, Advanced" name="level"  value={formData.level}  onChange={handleInputChange}  required  />
               </label>
 
               <label>
                 Prerequisites:<br />
                 <div className="tag-container">
-                  {prerequisites.map((tag) => (
-                    <span key={tag.id} className="tag">
-                      {tag.value}
-                      <button
-                        type="button"
-                        className="remove-tag"
-                        onClick={() => removePrerequisite(tag.id)}
-                      >
+                  {prerequisites.map((tag, index) => (
+                    <span key={index} className="tag">
+                      {tag}
+                      <button  type="button"  className="remove-tag"
+                        onClick={() => removePrerequisite(tag)} >
                         ×
                       </button>
                     </span>
                   ))}
                 </div>
-                <input
-                  type="text"
-                  placeholder="Press Enter to add"
-                  value={prereqInput}
-                  onChange={(e) => setPrereqInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                />
-              </label>
-
-              <label htmlFor="enrollmentEnd">
-                Enrollment End Date:
-                <input
-                  type="date"
-                  id="enrollmentEnd"
-                  name="enrollmentEnd"
-                  required
-                />
+                <input  type="text"  placeholder="Press Enter to add"  value={prereqInput}  onChange={(e) => setPrereqInput(e.target.value)}  onKeyDown={handleKeyDown}  />
               </label>
 
               <label>
-                Peer-to-Peer Access:
-                <div className="peer-radio-group">
-                  <label
-                    className={
-                      peerOption === "enable" ? "radio-btn selected" : "radio-btn"
-                    }
-                  >
-                    <input
-                      type="radio"
-                      value="enable"
-                      checked={peerOption === "enable"}
-                      onChange={() => setPeerOption("enable")}
-                    />
-                    Enable
-                  </label>
-                  <label
-                    className={
-                      peerOption === "disable" ? "radio-btn selected" : "radio-btn"
-                    }
-                  >
-                    <input
-                      type="radio"
-                      value="disable"
-                      checked={peerOption === "disable"}
-                      onChange={() => setPeerOption("disable")}
-                    />
-                    Disable
-                  </label>
-                </div>
+                Enrollment End Date:<br />
+                <input  type="date"  name="enrollementend"  value={formData.enrollementend}  onChange={handleInputChange}  required  />
               </label>
 
               <label>
                 Max Participants:<br />
-                <input type="number" placeholder="e.g., 60" required />
+                <input type="number" placeholder="e.g., 60" name="max_participants" value={formData.max_participants} onChange={handleInputChange} required/>
               </label>
 
               <div className="form_buttons">
-                <button className="submit_btn">Add Course</button>
+                <button className="submit_btn" onClick={handlecourse}>
+                  Add Course
+                </button>
                 <button className="cancel_btn" onClick={handleClose}>
                   Cancel
                 </button>
