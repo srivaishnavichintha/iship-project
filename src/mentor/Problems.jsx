@@ -7,11 +7,16 @@ export default function Problems() {
   const [showForm, setShowForm] = useState(false);
   const [prerequisites, setPrerequisites] = useState([]);
   const [prereqInput, setPrereqInput] = useState("");
+
+  const [companyTags, setCompanyTags] = useState([]);
+  const [companyInput, setCompanyInput] = useState("");
+
   const [formData, setFormData] = useState({
     problemtitle: "",
     description: "",
     level: "",
   });
+
   const [inputs, setInputs] = useState([""]);
   const [outputs, setOutputs] = useState([""]);
 
@@ -23,19 +28,29 @@ export default function Problems() {
     }));
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" && prereqInput.trim() !== "") {
+  const handleKeyDown = (e, type) => {
+    if (e.key === "Enter" && (type === "prereq" ? prereqInput : companyInput).trim() !== "") {
       e.preventDefault();
-      const trimmed = prereqInput.trim();
-      if (!prerequisites.includes(trimmed)) {
+      const trimmed = (type === "prereq" ? prereqInput : companyInput).trim();
+
+      if (type === "prereq" && !prerequisites.includes(trimmed)) {
         setPrerequisites((prev) => [...prev, trimmed]);
+        setPrereqInput("");
       }
-      setPrereqInput("");
+
+      if (type === "company" && !companyTags.includes(trimmed)) {
+        setCompanyTags((prev) => [...prev, trimmed]);
+        setCompanyInput("");
+      }
     }
   };
 
-  const removePrerequisite = (valueToRemove) => {
-    setPrerequisites((prev) => prev.filter((tag) => tag !== valueToRemove));
+  const removeTag = (valueToRemove, type) => {
+    if (type === "prereq") {
+      setPrerequisites((prev) => prev.filter((tag) => tag !== valueToRemove));
+    } else {
+      setCompanyTags((prev) => prev.filter((tag) => tag !== valueToRemove));
+    }
   };
 
   const handleclick = () => setShowForm(true);
@@ -71,20 +86,18 @@ export default function Problems() {
       const payload = {
         ...formData,
         prerequisites,
+        companyTags,
         inputs,
         outputs,
       };
       const res = await axios.post("http://localhost:3000/mentor/problems", payload);
       alert("Problem added successfully!");
       setShowForm(false);
-      setFormData({
-        problemtitle: "",
-        description: "",
-        level: "",
-      });
+      setFormData({ problemtitle: "", description: "", level: "" });
       setInputs([""]);
       setOutputs([""]);
       setPrerequisites([]);
+      setCompanyTags([]);
     } catch (err) {
       console.error(err);
       alert("Failed to add problem!");
@@ -135,6 +148,7 @@ export default function Problems() {
                   />
                 </label>
 
+                {/* Category / Prerequisite Tags */}
                 <label>
                   Category:<br />
                   <div className="tag-container">
@@ -144,7 +158,7 @@ export default function Problems() {
                         <button
                           type="button"
                           className="remove-tag"
-                          onClick={() => removePrerequisite(tag)}
+                          onClick={() => removeTag(tag, "prereq")}
                         >
                           ×
                         </button>
@@ -153,13 +167,40 @@ export default function Problems() {
                   </div>
                   <input
                     type="text"
-                    placeholder="Press Enter to add"
+                    placeholder="Press Enter to add category"
                     value={prereqInput}
                     onChange={(e) => setPrereqInput(e.target.value)}
-                    onKeyDown={handleKeyDown}
+                    onKeyDown={(e) => handleKeyDown(e, "prereq")}
                   />
                 </label>
 
+                {/* Company Tags */}
+                <label>
+                  Company Tags:<br />
+                  <div className="tag-container">
+                    {companyTags.map((tag, index) => (
+                      <span key={index} className="tag company">
+                        {tag}
+                        <button
+                          type="button"
+                          className="remove-tag"
+                          onClick={() => removeTag(tag, "company")}
+                        >
+                          ×
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Press Enter to add company tag"
+                    value={companyInput}
+                    onChange={(e) => setCompanyInput(e.target.value)}
+                    onKeyDown={(e) => handleKeyDown(e, "company")}
+                  />
+                </label>
+
+                {/* Test Cases */}
                 <label>
                   Test Cases:<br />
                   {inputs.map((input, i) => (
@@ -194,6 +235,7 @@ export default function Problems() {
           </div>
         )}
 
+        {/* Static Problem List */}
         <div className="problemsdata">
           <div className="headingcard">
             <h1>PROBLEMS</h1>
