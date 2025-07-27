@@ -74,69 +74,22 @@ export default function Login() {
 
         {isSignup ? (
           <>
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-            />
-            <button onClick={handleSubmit}>
-              {`Sign Up as ${role}`}
-            </button>
+            <input type="text" name="username" placeholder="Username" value={formData.username} onChange={handleChange} required   />
+            <input type="email"   name="email"   placeholder="Email"   value={formData.email}   onChange={handleChange}   required />
+            <input type="password"   name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
+            <input type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleChange} required />
+            <button onClick={handleSubmit}>  {`Sign Up as ${role}`} </button>
             <div className="t1">
-              <span
-                onClick={() => setIsSignup(false)}
-                style={{ cursor: "pointer" }}
-              >
+              <span onClick={() => setIsSignup(false)} style={{ cursor: "pointer" }}>
                 Already have an account? Sign In
               </span>
             </div>
           </>
         ) : (
           <>
-            <input
-              type="text"
-              name="username"
-              placeholder="Username or Email"
-              value={formData.username}
-              onChange={handleChange}
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-            />
-            <button onClick={handleSubmit}>
-              {`Login as ${role}`}
-            </button>
+            <input type="text" name="username" placeholder="Username or Email" value={formData.username} onChange={handleChange} />
+            <input type="password" name="password"  placeholder="Password" value={formData.password} onChange={handleChange} />
+            <button onClick={handleSubmit}>{`Login as ${role}`} </button>
             <div className="t1">
               <span>Forgot Password?</span>
               <span
@@ -148,13 +101,13 @@ export default function Login() {
             </div>
           </>
         )}
-
+{/* 
         <p>or you can sign in with</p>
         <div className="social-icons">
           <i className="fab fa-google"></i>
           <i className="fab fa-linkedin"></i>
           <i className="fab fa-twitter"></i>
-        </div>
+        </div> */}
       </div>
     </div>
   );

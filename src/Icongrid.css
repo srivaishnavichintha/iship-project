@@ -1,0 +1,56 @@
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 140px);
+  grid-gap: 10px;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  padding: 10px;
+  height: auto;
+  transform: rotateZ(20deg);
+}
+
+.icon-card {
+  width: 130px;
+  height: 150px;
+  border-radius: 20px;
+  background-color: #0d3b45;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  object-fit: contain;
+}
+
+.user-icon .icon {
+  background-image: url('https://img.icons8.com/ios-filled/50/ffffff/user.png');
+}
+
+.trophy-icon {
+  background-color: #fdbd2d;
+}
+
+.trophy-icon .icon {
+  background-image: url('https://img.icons8.com/ios-filled/50/ffffff/trophy.png');
+}
+
+.pair-icon .icon {
+  background-image: url('https://img.icons8.com/ios-filled/50/ffffff/code.png');
+}
+
+.code-icon .icon {
+  background-image: url('https://img.icons8.com/ios-filled/50/ffffff/source-code.png');
+}
+
+.glow {
+  box-shadow: 0 0 12px #00e0ff;
+}

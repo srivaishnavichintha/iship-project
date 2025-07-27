@@ -1,6 +1,6 @@
 import "./Student_navbar.css";
 import { useState, useRef, useEffect } from "react";
-import logo from "./assets/react.svg";
+import logo from "./assets/react.png";
 import moon from "./assets/moon.png";
 import sun from "./assets/sun.png";
 import env from "./assets/envelope.png"
@@ -25,11 +25,12 @@ export default function Student_navbar() {
   return (
     <nav ref={navRef} id="nava">
       <div className="nav-left">
-        <img src={logo} alt="logo" />
+        <img src={logo} alt="logo" className="logo"/>
         <a className="nav-con">Courses</a>
         <a className="nav-con" > <Link to="/practice">Practice</Link></a>
         <a className="nav-con">My Leaderboard</a>
          <a className="nav-con">Contests</a>
+         <a className="nav-con">peer2peer</a>
       </div>
       <div className="nav-right">
          <img src={isDark ? whiteenv : env} />

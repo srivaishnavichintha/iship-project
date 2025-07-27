@@ -4,7 +4,7 @@ export default function Mentor_dashboard(){
     return(
       <>
            <Mentor_navbar />
-         <Dash />
+           <Dash />
       </>
     )
 }

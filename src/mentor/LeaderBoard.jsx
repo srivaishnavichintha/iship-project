@@ -1,5 +1,6 @@
 import "./LeaderBoard.css";
 import { useState } from "react";
+import Mentor_navbar from "../Mentor_navbar"
 
 export default function Leaderboard() {
   const [filterCourse, setFilterCourse] = useState("All");
@@ -20,44 +21,47 @@ export default function Leaderboard() {
   const sorted = filteredData.sort((a, b) => b.points - a.points);
 
   return (
-    <div className="leaderboard-container">
-      <div className="header">
-        <h1>Leaderboard</h1>
-        <select
-          value={filterCourse}
-          onChange={(e) => setFilterCourse(e.target.value)}
-        >
-          <option value="All">All Courses</option>
-          <option value="DSA">DSA</option>
-          <option value="Web Dev">Web Dev</option>
-        </select>
-      </div>
+    <>
+      <Mentor_navbar />
+      <div className="leaderboard-container">
+        <div className="header">
+          <h1>Leaderboard</h1>
+          <select
+            value={filterCourse}
+            onChange={(e) => setFilterCourse(e.target.value)}
+          >
+            <option value="All">All Courses</option>
+            <option value="DSA">DSA</option>
+            <option value="Web Dev">Web Dev</option>
+          </select>
+        </div>
 
-      <table className="leaderboard-table">
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Name</th>
-            <th>Course</th>
-            <th>Level</th>
-            <th>Points</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sorted.map((user, index) => (
-            <tr
-              key={index}
-              className={user.name === "Harika" ? "highlight" : ""}
-            >
-              <td>#{index + 1}</td>
-              <td>{user.name}</td>
-              <td>{user.course}</td>
-              <td>Level {user.level}</td>
-              <td>{user.points}</td>
+        <table className="leaderboard-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Name</th>
+              <th>Course</th>
+              <th>Level</th>
+              <th>Points</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {sorted.map((user, index) => (
+              <tr
+                key={index}
+                className={user.name === "Harika" ? "highlight" : ""}
+              >
+                <td>#{index + 1}</td>
+                <td>{user.name}</td>
+                <td>{user.course}</td>
+                <td>Level {user.level}</td>
+                <td>{user.points}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }

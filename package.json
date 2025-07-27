@@ -13,11 +13,13 @@
     "axios": "^1.11.0",
     "monaco-editor": "^0.52.2",
     "monaco-languageclient": "^9.8.0",
+    "mongoose": "^8.16.5",
     "normalize-url": "^8.0.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.7.0",
     "reconnecting-websocket": "^4.4.0",
+    "uuid": "^11.1.0",
     "vscode-ws-jsonrpc": "^3.4.0"
   },
   "devDependencies": {

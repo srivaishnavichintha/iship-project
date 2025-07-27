@@ -1,12 +1,13 @@
  import "./Landing.css" 
  import { Link } from "react-router-dom";
-import landingImg from './assets/landing-image.png';
+import Icongrid from "./Icongrid"
 import peertopeer from  "./assets/2code.png"
  export default function Landing(){
     return(
         <>
             <div className="about"> 
                 <nav >
+                    <img></img>
                     <ul className="nav_bar">
                         <li><a href="#land-exp" >Explore</a></li>
                         <li> <a href="#land-pro" >Product</a></li>
@@ -16,27 +17,30 @@ import peertopeer from  "./assets/2code.png"
                 </nav>
                 <div className="land-content">
                     <div>
-                         <h1>Learn, &nbsp; Compete, &nbsp; Level Up.</h1>
+                       <h1>
+                            <strong>Learn</strong>, <strong>Compete</strong>, <strong>Level Up</strong>.
+                       </h1>
                          <p>Master coding through peer challenges, mentor-led contests, and a dynamic leaderboard — all in one collaborative platform.</p>
                     </div>
-                    <img src={landingImg} />
+                    <Icongrid />
                 </div>
             </div>
             <div id="land-exp" className="land-explore">
-                 <div className="floating">
-                    <div className="box1"></div>
-                     <div className="box2"  style={{ animationDelay: "0.5s" }}>
-                        <img src= {peertopeer} />
-                     </div>
-                      <div className="box3"  style={{ animationDelay: "0s" }}></div>
-                      <div className="box4"  style={{ animationDelay: "1s" }}></div>
-                 </div>
-                 <div  className="explore-data">
+                <div className="floating">
+                    <div className="float-box box1" style={{ animationDelay: "0s" }}></div>
+                    <div className="float-box box2" style={{ animationDelay: "0.5s" }}></div>
+                    <div className="float-box box3" style={{ animationDelay: "1s" }}>
+                         <img src={peertopeer} alt="peer coding" />
+                    </div>
+                    <div className="float-box box4" style={{ animationDelay: "1.5s" }}></div>
+                </div>
+
+                <div  className="explore-data">
                       <h2>Start Exploring</h2><br></br><br></br>
                       <p>An engaging platform that helps you grow through peer challenges, mentor contests, and a leaderboard — guiding your journey to the next level.</p>
                       <br></br>
                       <a > <Link to="/login">Get Started</Link></a>
-                 </div>
+                </div>
             </div>
             <div id="land-pro" className="product">
                     <div className="product-left-card">

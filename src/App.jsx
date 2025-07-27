@@ -12,10 +12,10 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/studentdashboard" element={<Student_main_dashboard/>} />
+        <Route path="/student/dashboard" element={<Student_main_dashboard/>} />
         <Route path="/practice" element={<Practice_board />} />
         <Route path="/login" element={<Login/>} />
-         <Route path="/mentor/7tdashboard" element={<Mentor_dashboard />} /> 
+         <Route path="/mentor/dashboard" element={<Mentor_dashboard />} /> 
          <Route path="/mentor/courses" element={<Course />} />
          <Route path="/mentor/mentorcontest" element={<MentorContest/>}/>
          <Route path="/mentor/leaderboard" element={<LeaderBoard/>}/>
