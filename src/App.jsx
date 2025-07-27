@@ -7,6 +7,7 @@ import Mentor_dashboard from "./Mentor_dashboard"
 import Course from "./mentor/Course";
 import MentorContest from "./mentor/MentorContest";
 import LeaderBoard from "./mentor/LeaderBoard";
+import Problems from "./mentor/Problems"
 function App() {
   return (
     <Router>
@@ -19,6 +20,7 @@ function App() {
          <Route path="/mentor/courses" element={<Course />} />
          <Route path="/mentor/mentorcontest" element={<MentorContest/>}/>
          <Route path="/mentor/leaderboard" element={<LeaderBoard/>}/>
+         <Route path="/mentor/problems" element={<Problems/>}/>
       </Routes>
     </Router> 
   );
