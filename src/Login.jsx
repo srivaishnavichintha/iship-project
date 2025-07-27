@@ -22,8 +22,8 @@ export default function Login() {
   const handleSubmit = async () => {
     try {
       const endpoint = isSignup
-        ? "http://localhost:5000/api/signup"
-        : "http://localhost:5000/api/login";
+        ? "http://localhost:3000/signup"
+        : "http://localhost:3000/login";
 
       const payload = {
         username: formData.username,
