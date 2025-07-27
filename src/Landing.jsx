@@ -1,4 +1,4 @@
- import "./Landing.css" 
+import "./Landing.css" 
  import { Link } from "react-router-dom";
 import Icongrid from "./Icongrid"
 import peertopeer from  "./assets/2code.png"

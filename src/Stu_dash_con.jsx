@@ -5,22 +5,22 @@ export default function Stu_dash_con(){
            <div className="stu_con"> 
             <h1>My courses</h1>
               <div className="card_cover">
-                  <div class="card">
-                    <div class="rec">
+                  <div className="card">
+                    <div className="rec">
                         <div className="rec1"></div>
                         <div className="rec2"></div>
                         <div className="rec3"></div>
                     </div>
                   </div>
-                   <div class="card">
-                    <div class="rec">
+                   <div className="card">
+                    <div className="rec">
                         <div className="rec1"></div>
                         <div className="rec2"></div>
                         <div className="rec3"></div>
                     </div>
                   </div>
-                  <div class="card">
-                    <div class="rec">
+                  <div className="card">
+                    <div className="rec">
                         <div className="rec1"></div>
                         <div className="rec2"></div>
                         <div className="rec3"></div>
