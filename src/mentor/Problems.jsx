@@ -65,7 +65,8 @@ export default function Problems() {
     setOutputs(updated);
   };
 
-  const handlecourse = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       const payload = {
         ...formData,
@@ -98,54 +99,97 @@ export default function Problems() {
           <div className="form_overlay">
             <div className="course_form slide-down">
               <h2>Add New Problem</h2>
+              <form onSubmit={handleSubmit}>
+                <label>
+                  Problem Title:<br />
+                  <input
+                    type="text"
+                    placeholder="Title"
+                    name="problemtitle"
+                    value={formData.problemtitle}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </label>
 
-              <label>
-                Problem Title:<br />
-                <input type="text"  placeholder="Title" name="problemtitle"  value={formData.problemtitle}  onChange={handleInputChange}  required />
-              </label>
+                <label>
+                  Description:<br />
+                  <textarea
+                    placeholder="Enter problem description"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </label>
 
-              <label>
-                Description:<br />
-                <textarea placeholder="Enter problem description" name="description" value={formData.description} onChange={handleInputChange} required/>
-              </label>
+                <label>
+                  Level:<br />
+                  <input
+                    type="text"
+                    placeholder="e.g., Easy, Medium, Hard"
+                    name="level"
+                    value={formData.level}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </label>
 
-              <label>
-                Level:<br />
-                <input type="text" placeholder="e.g., Easy, Medium, Hard" name="level" value={formData.level} onChange={handleInputChange} required />
-              </label>
-
-              <label>
-                Category:<br />
-                <div className="tag-container">
-                  {prerequisites.map((tag, index) => (
-                    <span key={index} className="tag">
-                      {tag}
-                      <button type="button" className="remove-tag" onClick={() => removePrerequisite(tag)} > ×l.   </button>
-                    </span>
-                  ))}
-                </div>
-                <input  type="text"  placeholder="Press Enter to add"  value={prereqInput}  onChange={(e) => setPrereqInput(e.target.value)}  onKeyDown={handleKeyDown}    />
-              </label>
-
-              <label>
-                Test Cases:<br />
-                {inputs.map((input, i) => (
-                  <div className="testcase-row" key={i}>
-                    <input type="text" placeholder={`Input ${i + 1}`}  value={input}  onChange={(e) => handleChangeInput(i, e.target.value)}    />
-                    <input  type="text"  placeholder={`Output ${i + 1}`}  value={outputs[i]}  onChange={(e) => handleChangeOutput(i, e.target.value)} />
+                <label>
+                  Category:<br />
+                  <div className="tag-container">
+                    {prerequisites.map((tag, index) => (
+                      <span key={index} className="tag">
+                        {tag}
+                        <button
+                          type="button"
+                          className="remove-tag"
+                          onClick={() => removePrerequisite(tag)}
+                        >
+                          ×
+                        </button>
+                      </span>
+                    ))}
                   </div>
-                ))}
+                  <input
+                    type="text"
+                    placeholder="Press Enter to add"
+                    value={prereqInput}
+                    onChange={(e) => setPrereqInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                  />
+                </label>
 
-                <div className="testcase-buttons">
-                  <button type="button" onClick={handleAddTestCase}>+ Add Test Case</button>
-                  <button type="button" onClick={handleRemoveTestCase} className="cancel-testcase-btn">– Cancel Last</button>
+                <label>
+                  Test Cases:<br />
+                  {inputs.map((input, i) => (
+                    <div className="testcase-row" key={i}>
+                      <input
+                        type="text"
+                        placeholder={`Input ${i + 1}`}
+                        value={input}
+                        onChange={(e) => handleChangeInput(i, e.target.value)}
+                      />
+                      <input
+                        type="text"
+                        placeholder={`Output ${i + 1}`}
+                        value={outputs[i]}
+                        onChange={(e) => handleChangeOutput(i, e.target.value)}
+                      />
+                    </div>
+                  ))}
+
+                  <div className="testcase-buttons">
+                    <button type="button" onClick={handleAddTestCase}>+ Add Test Case</button>
+                    <button type="button" onClick={handleRemoveTestCase} className="cancel-testcase-btn">– Cancel Last</button>
+                  </div>
+                </label>
+
+                <div className="form_buttons">
+                  <button type="submit" className="submit_btn">Add Problem</button>
+                  <button type="button" className="cancel_btn" onClick={handleClose}>Cancel</button>
                 </div>
-              </label>
-
-              <div className="form_buttons">
-                <button className="submit_btn" onClick={handlecourse}>Add Problem</button>
-                <button className="cancel_btn" onClick={handleClose}>Cancel</button>
-              </div>
+              </form>
             </div>
           </div>
         )}

@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import "./Course.css";
 import Mentor_navbar from "../Mentor_navbar";
@@ -59,7 +59,8 @@ export default function Course() {
     setShowForm(false);
   };
 
-  const handlecourse = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       const endpoint = "http://localhost:3000/mentor/courses";
       const payload = {
@@ -93,61 +94,61 @@ export default function Course() {
           <div className="form_overlay">
             <div className="course_form slide-down">
               <h2>Add New Course</h2>
+              <form onSubmit={handleSubmit}>
+                <label>
+                  Course Name:<br />
+                  <input type="text" placeholder="Course Name" name="coursename" value={formData.coursename} onChange={handleInputChange} required />
+                </label>
 
-              <label>
-                Course Name:<br />
-                <input type="text"  placeholder="Course Name"  name="coursename"  value={formData.coursename}  onChange={handleInputChange}  required />
-              </label>
+                <label>
+                  Description:<br />
+                  <textarea placeholder="Enter course description here" name="description" value={formData.description} onChange={handleInputChange} required />
+                </label>
 
-              <label>
-                Description:<br />
-                <textarea placeholder="Enter course description here" name="description"  value={formData.description}  onChange={handleInputChange}  required  />
-              </label>
+                <label>
+                  Category:<br />
+                  <input type="text" placeholder="e.g., DSA, Web Dev" name="category" value={formData.category} onChange={handleInputChange} required />
+                </label>
 
-              <label>
-                Category:<br />
-                <input  type="text"  placeholder="e.g., DSA, Web Dev"  name="category"  value={formData.category}  onChange={handleInputChange}  required  />
-              </label>
+                <label>
+                  Level:<br />
+                  <input type="text" placeholder="e.g., Beginner, Intermediate, Advanced" name="level" value={formData.level} onChange={handleInputChange} required />
+                </label>
 
-              <label>
-                Level:<br />
-                <input  type="text"  placeholder="e.g., Beginner, Intermediate, Advanced" name="level"  value={formData.level}  onChange={handleInputChange}  required  />
-              </label>
+                <label>
+                  Prerequisites:<br />
+                  <div className="tag-container">
+                    {prerequisites.map((tag, index) => (
+                      <span key={index} className="tag">
+                        {tag}
+                        <button type="button" className="remove-tag" onClick={() => removePrerequisite(tag)}>
+                          ×
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                  <input type="text" placeholder="Press Enter to add" value={prereqInput} onChange={(e) => setPrereqInput(e.target.value)} onKeyDown={handleKeyDown} />
+                </label>
 
-              <label>
-                Prerequisites:<br />
-                <div className="tag-container">
-                  {prerequisites.map((tag, index) => (
-                    <span key={index} className="tag">
-                      {tag}
-                      <button  type="button"  className="remove-tag"
-                        onClick={() => removePrerequisite(tag)} >
-                        ×
-                      </button>
-                    </span>
-                  ))}
+                <label>
+                  Enrollment End Date:<br />
+                  <input type="date" name="enrollementend" value={formData.enrollementend} onChange={handleInputChange} required />
+                </label>
+
+                <label>
+                  Max Participants:<br />
+                  <input type="number" placeholder="e.g., 60" name="max_participants" value={formData.max_participants} onChange={handleInputChange} required />
+                </label>
+
+                <div className="form_buttons">
+                  <button type="submit" className="submit_btn">
+                    Add Course
+                  </button>
+                  <button type="button" className="cancel_btn" onClick={handleClose}>
+                    Cancel
+                  </button>
                 </div>
-                <input  type="text"  placeholder="Press Enter to add"  value={prereqInput}  onChange={(e) => setPrereqInput(e.target.value)}  onKeyDown={handleKeyDown}  />
-              </label>
-
-              <label>
-                Enrollment End Date:<br />
-                <input  type="date"  name="enrollementend"  value={formData.enrollementend}  onChange={handleInputChange}  required  />
-              </label>
-
-              <label>
-                Max Participants:<br />
-                <input type="number" placeholder="e.g., 60" name="max_participants" value={formData.max_participants} onChange={handleInputChange} required/>
-              </label>
-
-              <div className="form_buttons">
-                <button className="submit_btn" onClick={handlecourse}>
-                  Add Course
-                </button>
-                <button className="cancel_btn" onClick={handleClose}>
-                  Cancel
-                </button>
-              </div>
+              </form>
             </div>
           </div>
         )}

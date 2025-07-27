@@ -77,84 +77,86 @@ export default function Login() {
         <img src={logo} alt="Logo" className="logo" />
         <h3>LeetCode</h3>
 
-        {isSignup ? (
-          <>
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-            />
-            <button onClick={handleSubmit}>
-              {`Sign Up as ${role}`}
-            </button>
-            <div className="t1">
-              <span
-                onClick={() => setIsSignup(false)}
-                style={{ cursor: "pointer" }}
-              >
-                Already have an account? Sign In
-              </span>
-            </div>
-          </>
-        ) : (
-          <>
-            <input
-              type="text"
-              name="username"
-              placeholder="Username or Email"
-              value={formData.username}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-            <button onClick={handleSubmit}>
-              {`Login as ${role}`}
-            </button>
-            <div className="t1">
-              <span>Forgot Password?</span>
-              <span
-                onClick={() => setIsSignup(true)}
-                style={{ cursor: "pointer" }}
-              >
-                Sign Up
-              </span>
-            </div>
-          </>
-        )}
+        <form onSubmit={handleSubmit}>
+          {isSignup ? (
+            <>
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                value={formData.username}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+              />
+              <button type="submit">
+                {`Sign Up as ${role}`}
+              </button>
+              <div className="t1">
+                <span
+                  onClick={() => setIsSignup(false)}
+                  style={{ cursor: "pointer" }}
+                >
+                  Already have an account? Sign In
+                </span>
+              </div>
+            </>
+          ) : (
+            <>
+              <input
+                type="text"
+                name="username"
+                placeholder="Username or Email"
+                value={formData.username}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <button type="submit">
+                {`Login as ${role}`}
+              </button>
+              <div className="t1">
+                <span>Forgot Password?</span>
+                <span
+                  onClick={() => setIsSignup(true)}
+                  style={{ cursor: "pointer" }}
+                >
+                  Sign Up
+                </span>
+              </div>
+            </>
+          )}
+        </form>
       </div>
     </div>
   );
