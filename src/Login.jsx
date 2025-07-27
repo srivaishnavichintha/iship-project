@@ -20,63 +20,41 @@ export default function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  const endpoint = isSignup
-        ? "http://localhost:3000/signup"
-        : "http://localhost:3000/login";
+    e.preventDefault();
 
-      const payload = {
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
-        role: role
-      };
+    const endpoint = isSignup
+      ? "http://localhost:3000/signup"
+      : "http://localhost:3000/login";
 
-      if (isSignup && formData.password !== formData.confirmPassword) {
-        alert("Passwords do not match!");
-        return;
-      }
+    const payload = {
+      username: formData.username,
+      email: formData.email,
+      password: formData.password,
+      role: role
+    };
 
+    if (isSignup && formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    try {
       const res = await axios.post(endpoint, payload);
       alert(res.data.message);
 
       const user = res.data.user;
-      console.log("Logged in user:", user);
+      console.log("Authenticated user:", user);
 
       if (user.role === "student") {
         navigate("/student/dashboard", { state: { user } });
       } else if (user.role === "mentor") {
         navigate("/mentor/dashboard", { state: { user } });
       }
-
     } catch (err) {
-      alert(err.response?.data?.message || "Something went wrong!");
+      alert(err.response?.data?.message || "Something went wrong");
     }
-  const payload = {
-    username: formData.username,
-    email: formData.email,
-    password: formData.password,
-    role: role,
   };
-
-  try {
-    const res = await axios.post(endpoint, payload);
-    alert(res.data.message);
-
-    const user = res.data.user;
-    console.log("Authenticated user:", user);
-    if (user.role === "student") {
-      navigate("/student/dashboard", { state: { user } });
-    } else if (user.role === "mentor") {
-      navigate("/mentor/dashboard", { state: { user } });
-    }
-  } catch (err) {
-    alert(err.response?.data?.message || "Something went wrong");
-  }
-};
-
 
   return (
     <div className="login-wrapper">
@@ -153,6 +131,7 @@ export default function Login() {
               placeholder="Username or Email"
               value={formData.username}
               onChange={handleChange}
+              required
             />
             <input
               type="password"
@@ -160,6 +139,7 @@ export default function Login() {
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}
+              required
             />
             <button onClick={handleSubmit}>
               {`Login as ${role}`}
