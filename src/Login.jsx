@@ -8,13 +8,14 @@ export default function Login() {
   const [role, setRole] = useState("student");
   const [isSignup, setIsSignup] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
-    identifier: "", 
+    identifier: "", // used only for login
   });
 
   const handleChange = (e) => {
@@ -47,13 +48,14 @@ export default function Login() {
     }
 
     try {
+      setLoading(true);
+
       const res = await axios.post(endpoint, payload, {
         headers: { "Content-Type": "application/json" },
       });
 
       alert(res.data.message);
 
-      alert(res.data.message);
       const user = res.data.user;
       console.log("Authenticated user:", user);
 
@@ -63,13 +65,16 @@ export default function Login() {
         navigate("/mentor/dashboard", { state: { user } });
       }
     } catch (err) {
-      alert(err.response?.data?.message || "Something went wrong");
+      alert(`Failed to login: ${err.response?.data?.message || err.message}`);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="login-wrapper">
       <div className="login-card">
+        {/* Role Tabs */}
         <div className="tabs">
           <div
             className={`tab ${role === "student" ? "active" : ""}`}
@@ -85,9 +90,11 @@ export default function Login() {
           </div>
         </div>
 
+        {/* Logo */}
         <img src={logo} alt="Logo" className="logo" />
-        <h3>LeetCode</h3>
+        <h3>YourPlatform</h3>
 
+        {/* Form */}
         <form onSubmit={handleSubmit}>
           {isSignup ? (
             <>
@@ -123,7 +130,9 @@ export default function Login() {
                 onChange={handleChange}
                 required
               />
-              <button type="submit">{`Sign Up as ${role}`}</button>
+              <button type="submit" disabled={loading}>
+                {loading ? "Signing up..." : `Sign Up as ${role}`}
+              </button>
               <div className="t1">
                 <span
                   onClick={() => setIsSignup(false)}
@@ -151,12 +160,14 @@ export default function Login() {
                 onChange={handleChange}
                 required
               />
-              <button type="submit">{`Login as ${role}`}</button>
+              <button type="submit" disabled={loading}>
+                {loading ? "Logging in..." : `Login as ${role}`}
+              </button>
               <div className="t1">
                 <span>Forgot Password?</span>
                 <span
                   onClick={() => setIsSignup(true)}
-                  style={{ cursor: "pointer", marginLeft: "10px" }}
+                  style={{ cursor: "pointer" }}
                 >
                   Sign Up
                 </span>
