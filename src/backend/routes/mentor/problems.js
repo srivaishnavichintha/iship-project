@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const Problem = require("./problems");
+const Problem = require("../../models/Problem");
 
 // POST: Add a new problem
 router.post("/add", async (req, res) => {
   try {
     const problem = new Problem(req.body);
-    console.log(req.body,problem);
+    // console.log(req.body);
     await problem.save();
     res.status(201).json(problem);
   } catch (err) {

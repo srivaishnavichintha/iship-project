@@ -13,7 +13,8 @@ export default function Login() {
     username: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    identifier: "", // used only for login
   });
 
   const handleChange = (e) => {
@@ -27,12 +28,18 @@ export default function Login() {
       ? "http://localhost:3000/signup"
       : "http://localhost:3000/login";
 
-    const payload = {
-      username: formData.username,
-      email: formData.email,
-      password: formData.password,
-      role: role
-    };
+    const payload = isSignup
+      ? {
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+          role: role,
+        }
+      : {
+          identifier: formData.identifier,
+          password: formData.password,
+          role: role,
+        };
 
     if (isSignup && formData.password !== formData.confirmPassword) {
       alert("Passwords do not match!");
@@ -40,7 +47,10 @@ export default function Login() {
     }
 
     try {
-      const res = await axios.post(endpoint, payload);
+      const res = await axios.post(endpoint, payload, {
+        headers: { "Content-Type": "application/json" },
+      });
+
       alert(res.data.message);
 
       const user = res.data.user;
@@ -112,9 +122,7 @@ export default function Login() {
                 onChange={handleChange}
                 required
               />
-              <button type="submit">
-                {`Sign Up as ${role}`}
-              </button>
+              <button type="submit">{`Sign Up as ${role}`}</button>
               <div className="t1">
                 <span
                   onClick={() => setIsSignup(false)}
@@ -128,9 +136,9 @@ export default function Login() {
             <>
               <input
                 type="text"
-                name="username"
+                name="identifier"
                 placeholder="Username or Email"
-                value={formData.username}
+                value={formData.identifier}
                 onChange={handleChange}
                 required
               />
@@ -142,9 +150,7 @@ export default function Login() {
                 onChange={handleChange}
                 required
               />
-              <button type="submit">
-                {`Login as ${role}`}
-              </button>
+              <button type="submit">{`Login as ${role}`}</button>
               <div className="t1">
                 <span>Forgot Password?</span>
                 <span
