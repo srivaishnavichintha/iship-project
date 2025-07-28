@@ -2,9 +2,12 @@
 .stu_con {
   padding-left: 10%;
   padding-right: 10%;
+  padding-bottom: 0px;
   padding-top: 5%;
   font-family: sans-serif;
   position: relative;
+  height: 100svh;
+  overflow: hidden;
 }
 
 .title_bar {
@@ -30,6 +33,7 @@
 }
 
 .card_cover {
+  height: 100%;
   margin-top: 50px;
   display: flex;
   gap: 50px;
@@ -91,7 +95,6 @@
   display: flex;
   justify-content: center;
   padding-top: 20px;
-  padding-bottom: 300px;
 }
 
 .course_form {

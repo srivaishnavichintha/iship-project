@@ -1,4 +1,3 @@
-// Frontcompiler.jsx
 import React, { useEffect, useRef, useState } from "react";
 import * as monaco from "monaco-editor";
 import "./Frontcompiler.css";
@@ -6,7 +5,7 @@ import "./Frontcompiler.css";
 export default function Compiler() {
   const editorRef = useRef(null);
   const monacoRef = useRef(null);
-  const [languageId, setLanguageId] = useState("71"); // 71 = Python
+  const [languageId, setLanguageId] = useState("71");
   const [output, setOutput] = useState("");
 
   const languageMap = {
@@ -23,23 +22,42 @@ export default function Compiler() {
         value: 'print("Hello World!")',
         language: languageMap[languageId],
         theme: "vs-dark",
+        fontFamily: "Fira Code",
+        fontSize: 14,
+        fontLigatures: true,
         automaticLayout: true,
-         renderIndentGuides: false,
+        scrollBeyondLastLine: false,
+        minimap: { enabled: false },
+        lineNumbers: "on",
+        lineDecorationsWidth: 0,
+        lineNumbersMinChars: 3,
       });
+
+      // 🟢 Align to top on load
+      setTimeout(() => {
+        monacoRef.current.revealLineInCenter(1);
+        monacoRef.current.setScrollTop(0);
+      }, 100);
     }
 
+    // Cleanup
     return () => {
-      if (monacoRef.current) {
-        monacoRef.current.dispose();
-        monacoRef.current = null;
-      }
+      monacoRef.current?.dispose();
+      monacoRef.current = null;
     };
   }, []);
 
   useEffect(() => {
     if (monacoRef.current) {
       const model = monacoRef.current.getModel();
-      monaco.editor.setModelLanguage(model, languageMap[languageId]);
+      if (model) {
+        monaco.editor.setModelLanguage(model, languageMap[languageId]);
+      }
+
+      // Reset scroll to top on language change
+      setTimeout(() => {
+        monacoRef.current?.setScrollTop(0);
+      }, 100);
     }
   }, [languageId]);
 
@@ -84,7 +102,9 @@ export default function Compiler() {
         </select>
         <button onClick={runCode}>Run Code</button>
       </div>
-      <div className="editor" ref={editorRef}></div>
+      <div className="editor-container">
+        <div className="editor" ref={editorRef}></div>
+      </div>
       <div className="output-section">
         <h3>Output:</h3>
         <pre>{output}</pre>

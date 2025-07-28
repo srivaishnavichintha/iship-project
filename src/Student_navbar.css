@@ -15,7 +15,10 @@ nav.dtheme {
 .nav-left {
   display: flex;
   align-items: center;
-  margin-left: 5svh;
+ 
+}
+.nav-left img{
+  height: 9svh;
 }
 
 .nav-right {
@@ -35,12 +38,12 @@ nav.dtheme {
 }
 
 body.light {
-  background-color: white;
+  background: linear-gradient(to bottom,#fafcfc, #f3f8f8,#e4fdfd,#7fbaba);
   color: black;
 }
 
 body.dark {
-  background-color: #121212;
+  background: linear-gradient(to bottom,#101111, #131313,#1d2323,#3d6f6f);
   color: white;
 }
 

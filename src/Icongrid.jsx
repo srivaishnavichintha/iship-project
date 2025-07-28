@@ -7,7 +7,7 @@ const Icongrid = () => {
       <div className="icon-card user-icon">
         <div className="icon user" />
       </div>
-      <div className="icon-card trophy-icon">
+      <div className="icon-card trophy-icon glow">
         <div className="icon trophy" />
       </div>
       <div className="icon-card pair-icon glow">
