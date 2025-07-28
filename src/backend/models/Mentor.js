@@ -21,8 +21,8 @@ const mentorSchema = new mongoose.Schema({
   courseIds: [String]
 });
 
-mentorSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next(); // skip if password is unchanged
+mentorSchema.pre('save', async function(next) {
+  if (!this.isModified('password')) return next();
   try {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
@@ -31,6 +31,6 @@ mentorSchema.pre("save", async function (next) {
     next(err);
   }
 });
-const Mentor = mongoose.model("Mentor", mentorSchema);
 
-module.exports = Mentor;
+
+module.exports = mongoose.model('Mentor', mentorSchema);

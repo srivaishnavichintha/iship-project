@@ -13,42 +13,58 @@ export default function Login() {
     username: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    identifier: "", // used only for login
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  const endpoint = isSignup
-        ? "http://localhost:3000/signup"
-        : "http://localhost:3000/login";
-  const payload = {
-    username: formData.username,
-    email: formData.email,
-    password: formData.password,
-    role: role,
-  };
+    e.preventDefault();
 
-  try {
-    const res = await axios.post(endpoint, payload);
-    alert(res.data.message);
+    const endpoint = isSignup
+      ? "http://localhost:3000/signup"
+      : "http://localhost:3000/login";
 
-    const user = res.data.user;
-    console.log("Authenticated user:", user);
-    if (user.role === "student") {
-      navigate("/student/dashboard", { state: { user } });
-    } else if (user.role === "mentor") {
-      navigate("/mentor/dashboard", { state: { user } });
+    const payload = isSignup
+      ? {
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+          role: role,
+        }
+      : {
+          identifier: formData.identifier,
+          password: formData.password,
+          role: role,
+        };
+
+    if (isSignup && formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
     }
-  } catch (err) {
-    alert(err.response?.data?.message || "Something went wrong");
-  }
-};
 
+    try {
+      const res = await axios.post(endpoint, payload, {
+        headers: { "Content-Type": "application/json" },
+      });
+
+      alert(res.data.message);
+
+      const user = res.data.user;
+      console.log("Authenticated user:", user);
+
+      if (user.role === "student") {
+        navigate("/student/dashboard", { state: { user } });
+      } else if (user.role === "mentor") {
+        navigate("/mentor/dashboard", { state: { user } });
+      }
+    } catch (err) {
+      alert(err.response?.data?.message || "Something went wrong");
+    }
+  };
 
   return (
     <div className="login-wrapper">
@@ -71,82 +87,82 @@ export default function Login() {
         <img src={logo} alt="Logo" className="logo" />
         <h3>LeetCode</h3>
 
-        {isSignup ? (
-          <>
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-            />
-            <button onClick={handleSubmit}>
-              {`Sign Up as ${role}`}
-            </button>
-            <div className="t1">
-              <span
-                onClick={() => setIsSignup(false)}
-                style={{ cursor: "pointer" }}
-              >
-                Already have an account? Sign In
-              </span>
-            </div>
-          </>
-        ) : (
-          <>
-            <input
-              type="text"
-              name="username"
-              placeholder="Username or Email"
-              value={formData.username}
-              onChange={handleChange}
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-            />
-            <button onClick={handleSubmit}>
-              {`Login as ${role}`}
-            </button>
-            <div className="t1">
-              <span>Forgot Password?</span>
-              <span
-                onClick={() => setIsSignup(true)}
-                style={{ cursor: "pointer" }}
-              >
-                Sign Up
-              </span>
-            </div>
-          </>
-        )}
+        <form onSubmit={handleSubmit}>
+          {isSignup ? (
+            <>
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                value={formData.username}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+              />
+              <button type="submit">{`Sign Up as ${role}`}</button>
+              <div className="t1">
+                <span
+                  onClick={() => setIsSignup(false)}
+                  style={{ cursor: "pointer" }}
+                >
+                  Already have an account? Sign In
+                </span>
+              </div>
+            </>
+          ) : (
+            <>
+              <input
+                type="text"
+                name="identifier"
+                placeholder="Username or Email"
+                value={formData.identifier}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <button type="submit">{`Login as ${role}`}</button>
+              <div className="t1">
+                <span>Forgot Password?</span>
+                <span
+                  onClick={() => setIsSignup(true)}
+                  style={{ cursor: "pointer" }}
+                >
+                  Sign Up
+                </span>
+              </div>
+            </>
+          )}
+        </form>
       </div>
     </div>
   );
