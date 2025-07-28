@@ -18,23 +18,21 @@ router.post("/signup", async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     let newUser;
     if (role === "student") {
-      newUser = new Student({ username, email, password: hashedPassword });
+      newUser = new Student({ username, email, password });
     } else {
-      newUser = new Mentor({ username, email, password: hashedPassword });
+      newUser = new Mentor({ username, email, password });
     }
 
-    await newUser.save();
+    await newUser.save(); // pre("save") hook will hash password here
 
     res.status(201).json({
       message: "User created successfully",
       user: {
         username: newUser.username,
         email: newUser.email,
-        role: role 
+        role,
       },
     });
 
@@ -43,28 +41,40 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+
 // Login Route
 router.post("/login", async (req, res) => {
-  const { username, email, password, role } = req.body;
+  const { identifier, password, role } = req.body;
+
+  console.log("Login attempt:", { identifier, password, role });
+
   try {
     let user;
     if (role === "student") {
-      user = await Student.findOne({ username }) || await Student.findOne({ email });
+      user = await Student.findOne({
+        $or: [{ username: identifier }, { email: identifier }],
+      });
     } else {
-      user = await Mentor.findOne({ username }) || await Mentor.findOne({ email });
+      user = await Mentor.findOne({
+        $or: [{ username: identifier }, { email: identifier }],
+      });
     }
 
-    if (!user) return res.status(400).json({ message: "User not found" });
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
 
     res.status(200).json({
       message: "Login successful",
       user: {
         username: user.username,
         email: user.email,
-        role: role,
+        role,
       },
     });
   } catch (err) {
@@ -72,4 +82,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
+
+
 module.exports = router;
+

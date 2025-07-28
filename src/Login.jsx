@@ -14,7 +14,7 @@ export default function Login() {
     email: "",
     password: "",
     confirmPassword: "",
-    identifier: "",
+    identifier: "", 
   });
 
   const handleChange = (e) => {
@@ -50,6 +50,8 @@ export default function Login() {
       const res = await axios.post(endpoint, payload, {
         headers: { "Content-Type": "application/json" },
       });
+
+      alert(res.data.message);
 
       alert(res.data.message);
       const user = res.data.user;

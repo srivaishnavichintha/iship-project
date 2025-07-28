@@ -81,28 +81,32 @@ export default function Problems() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const payload = {
-        ...formData,
-        prerequisites,
-        companyTags,
-        inputs,
-        outputs,
-      };
-      const res = await axios.post("http://localhost:3000/mentor/problems", payload);
-      alert("Problem added successfully!");
-      setShowForm(false);
-      setFormData({ problemtitle: "", description: "", level: "" });
-      setInputs([""]);
-      setOutputs([""]);
-      setPrerequisites([]);
-      setCompanyTags([]);
-    } catch (err) {
-      console.error(err);
-      alert("Failed to add problem!");
-    }
-  };
+  e.preventDefault();
+  try {
+   const payload = {
+  ...formData,
+  prerequisites,
+  companyTags,
+  inputs,
+  outputs,
+  mentorId: "tej"
+};
+
+
+    const res = await axios.post("http://localhost:3000/mentor/problems/add", payload);
+    alert("Problem added successfully!");
+    setShowForm(false);
+    setFormData({ problemtitle: "", description: "", level: "" });
+    setInputs([""]);
+    setOutputs([""]);
+    setPrerequisites([]);
+    setCompanyTags([]);
+  } catch (err) {
+    console.error("❌ Submit error:", err);
+    alert("Failed to add problem!");
+  }
+};
+
 
   return (
     <>
