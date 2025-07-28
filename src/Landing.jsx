@@ -25,15 +25,16 @@ import peertopeer from  "./assets/2code.png"
                     <Icongrid />
                 </div>
             </div>
-            <div id="land-exp" className="land-explore">
-                <div className="floating">
-                    <div className="float-box box1" style={{ animationDelay: "0s" }}></div>
-                    <div className="float-box box2" style={{ animationDelay: "0.5s" }}></div>
-                    <div className="float-box box3" style={{ animationDelay: "1s" }}>
-                         <img src={peertopeer} alt="peer coding" />
-                    </div>
-                    <div className="float-box box4" style={{ animationDelay: "1.5s" }}></div>
-                </div>
+           <div id="land-exp" className="land-explore">
+  <div className="floating">
+   <div className="float-box box1" style={{ animationDelay: "0s" }}></div>
+<div className="float-box box2 rotating-box" style={{ animationDelay: "0.5s" }}></div>
+<div className="float-box box3 floating-box" style={{ animationDelay: "1s" }}>
+  <img src={peertopeer} alt="peer coding" />
+</div>
+<div className="float-box box4" style={{ animationDelay: "1.5s" }}></div>
+</div>
+
 
                 <div className="explore-data">
                     <h2>Start Exploring</h2><br /><br />

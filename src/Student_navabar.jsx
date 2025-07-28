@@ -7,6 +7,7 @@ import env from "./assets/envelope.png";
 import whiteenv from "./assets/white_env.png";
 import { Link } from "react-router-dom";
 
+
 export default function Student_navbar() {
   const [isDark, setIsDark] = useState(false);
   const navRef = useRef(null);
@@ -26,11 +27,11 @@ export default function Student_navbar() {
     <nav ref={navRef} id="nava">
       <div className="nav-left">
         <img src={logo} alt="logo" className="logo" />
-        <Link to="/courses" className="nav-con">Courses</Link>
+        <Link to="/student/courses" className="nav-con">Courses</Link>
         <Link to="/practice" className="nav-con">Practice</Link>
-        <Link to="/leaderboard" className="nav-con">My Leaderboard</Link>
-        <Link to="/contests" className="nav-con">Contests</Link>
-        <Link to="/peer2peer" className="nav-con">peer2peer</Link>
+        <Link to="/student/leaderboard" className="nav-con">My Leaderboard</Link>
+        <Link to="/student/contest" className="nav-con">Contests</Link>
+        <Link to="/student/peer2peer" className="nav-con">peer2peer</Link>
       </div>
       <div className="nav-right">
         <img src={isDark ? whiteenv : env} />
