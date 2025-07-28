@@ -147,8 +147,6 @@ export default function Problems() {
                     required
                   />
                 </label>
-
-                {/* Category / Prerequisite Tags */}
                 <label>
                   Category:<br />
                   <div className="tag-container">
@@ -173,8 +171,6 @@ export default function Problems() {
                     onKeyDown={(e) => handleKeyDown(e, "prereq")}
                   />
                 </label>
-
-                {/* Company Tags */}
                 <label>
                   Company Tags:<br />
                   <div className="tag-container">
@@ -199,8 +195,6 @@ export default function Problems() {
                     onKeyDown={(e) => handleKeyDown(e, "company")}
                   />
                 </label>
-
-                {/* Test Cases */}
                 <label>
                   Test Cases:<br />
                   {inputs.map((input, i) => (
@@ -234,8 +228,6 @@ export default function Problems() {
             </div>
           </div>
         )}
-
-        {/* Static Problem List */}
         <div className="problemsdata">
           <div className="headingcard">
             <h1>PROBLEMS</h1>

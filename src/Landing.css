@@ -81,7 +81,8 @@
   height: 220px;
   border-radius: 24px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-  animation: float 1s ease-in-out infinite;
+  animation: floatupdown 1s ease-in infinite;
+  perspective: 1000;
   transition: transform 2s ease;
 }
 
@@ -132,7 +133,7 @@
   filter: blur(10px);
 }
 
-@keyframes float {
+@keyframes floatupdown {
   0% { transform: translateY(0px) rotateZ(var(10deg)); }
   50% { transform: translateY(-10px) rotateZ(var(20deg)); }
   100% { transform: translateY(0px) rotateZ(var(30deg)); }
@@ -165,7 +166,7 @@
 .comp-div{
     height: 80svh;
     /* width: 150sv; */
-    border:1px solid black;
+    border:2px solid  #033a3a;
 }
 .land-about{
     display: flex;

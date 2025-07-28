@@ -2,6 +2,7 @@ import "./Landing.css"
  import { Link } from "react-router-dom";
 import Icongrid from "./Icongrid"
 import peertopeer from  "./assets/2code.png"
+import Frontcompiler from "./Frontendcompiler.jsx"
  export default function Landing(){
     return(
         <>
@@ -62,7 +63,9 @@ import peertopeer from  "./assets/2code.png"
                 <h2>Compiler</h2><br></br>
                 <p>Our platform empowers students to learn and improve through engaging peer challenges, mentor-led contests, and a dynamic leaderboard. Practice, compete, and measure your progress — all in one collaborative space designed for growth.</p>
                </div><br></br>
-               <div className="comp-div"></div>
+               <div className="comp-div">
+                 <Frontcompiler />
+               </div>
             </div>
             <div className="land-about">
                 <h2>We believe learning is better when shared.</h2>

@@ -1,0 +1,35 @@
+.compiler-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #1e1e1e;
+  color: white;
+}
+
+.compiler-toolbar {
+  display: flex;
+  padding: 10px;
+  background-color: #111;
+  gap: 10px;
+  align-items: center;
+}
+
+select,
+button {
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.editor {
+  flex-grow: 1;
+  height: 60vh;
+}
+
+.output-section {
+  padding: 15px;
+  background-color: #222;
+  border-top: 1px solid #444;
+  height: 30vh;
+  overflow: auto;
+}

@@ -10,6 +10,16 @@ import { Link } from "react-router-dom";
 export default function Student_navbar() {
   const [isDark, setIsDark] = useState(false);
   const navRef = useRef(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [firstLetter, setFirstLetter] = useState("");
+
+  const toggleDropdown = () => {
+    setShowDropdown((prev) => !prev);
+  };
+
+  const theme = () => {
+    setIsDark((prev) => !prev);
+  };
 
   useEffect(() => {
     document.body.className = isDark ? "dark" : "light";
@@ -18,9 +28,13 @@ export default function Student_navbar() {
     }
   }, [isDark]);
 
-  const theme = () => {
-    setIsDark((prev) => !prev);
-  };
+  useEffect(() => {
+    const username = localStorage.getItem("username");
+     console.log("Username from localStorage:", username);
+    if (username && username.length > 0) {
+      setFirstLetter(username[0].toUpperCase());
+    }
+  }, []);
 
   return (
     <nav ref={navRef} id="nava">
@@ -30,14 +44,25 @@ export default function Student_navbar() {
         <Link to="/practice" className="nav-con">Practice</Link>
         <Link to="/leaderboard" className="nav-con">My Leaderboard</Link>
         <Link to="/contests" className="nav-con">Contests</Link>
-        <Link to="/peer2peer" className="nav-con">peer2peer</Link>
+        <Link to="/peer2peer" className="nav-con">Peer2Peer</Link>
       </div>
+
       <div className="nav-right">
-        <img src={isDark ? whiteenv : env} />
-        <div id="main_nav"></div>
+        <div className="profile_wrapper">
+          <div className="profile_circle" onClick={toggleDropdown}>
+            {firstLetter}
+          </div>
+          <div className={`dash-drop ${showDropdown ? "open" : ""}`}>
+            <p>My Profile</p>
+            <p>My Leaderboard</p>
+            <p>Submissions</p>
+            <p>Log Out</p>
+          </div>
+        </div>
+        <img src={isDark ? whiteenv : env} alt="Envelope" />
         <img
           src={isDark ? sun : moon}
-          alt="theme toggle"
+          alt="Theme Toggle"
           onClick={theme}
           className="theme"
         />
