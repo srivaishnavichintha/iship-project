@@ -31,6 +31,4 @@ mentorSchema.pre("save", async function (next) {
     next(err);
   }
 });
-const Mentor = mongoose.model("Mentor", mentorSchema);
-
-module.exports = Mentor;
+module.exports= mongoose.model("Mentor", mentorSchema);
