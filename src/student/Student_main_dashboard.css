@@ -1,0 +1,108 @@
+/* Main Section Container */
+.dashboard-section {
+  padding: 2rem;
+  background-color: #f9f9f9;
+  margin-bottom: 2rem;
+}
+
+/* Section Heading */
+.dashboard-heading {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Card Container for Flex Layout */
+.dashboard-card-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Individual Card Styling */
+.dashboard-card {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Titles inside cards */
+.dashboard-card h3 {
+  font-size: 20px;
+  margin-bottom: 0.75rem;
+  color: #222;
+}
+
+/* Text inside cards */
+.dashboard-card p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+/* Button Styling */
+.dashboard-button {
+  display: inline-block;
+  background-color: #007bff;
+  color: #fff;
+  padding: 0.5rem 1.2rem;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.dashboard-button:hover {
+  background-color: #0056b3;
+}
+
+
+
+.timeline {
+  position: relative;
+  margin-left: 1rem;
+  padding-left: 20px;
+  border-left: 2px solid #ccc;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 20px;
+  padding-left: 10px;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -11px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  background-color: #007bff;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px #007bff;
+}
+
+.timeline-content h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.timeline-content p {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: #777;
+}
