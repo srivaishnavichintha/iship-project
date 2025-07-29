@@ -14,6 +14,7 @@ import StudentContest from "./student/StudentContest"
 import Peer2peer from "./student/Peer2peer";
 import ProblemStatement from "./problems/Problemstmt";
 import EnrollForm from "./components/Enrollform";
+import Contestleaderboard from "./components/Contestleaderboard"
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="/problemstatement/:slug" element={<ProblemStatement />} />
             <Route path="/enroll/:courseName" element={<EnrollForm />} />
               {/* <Route path="/contest/:contestName" element={<ContestPage />} /> */}
+               <Route path="/contest/leaderboard" element={<Contestleaderboard />} />
       </Routes>
     </Router> 
   );

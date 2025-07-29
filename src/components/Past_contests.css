@@ -1,0 +1,57 @@
+.past-contests-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 40px;
+  align-items: flex-start;
+  width: 100%;
+  margin-left: 5%;
+}
+
+.past-contest-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #121212;
+  border-radius: 12px;
+  padding: 12px 20px;
+  width: 90%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.past-contest-img {
+  width: 100px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.past-contest-info {
+  flex: 1;
+}
+
+.past-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.past-date {
+  font-size: 13px;
+  color: #aaa;
+  margin-top: 4px;
+}
+
+.past-contest-tag {
+  margin-left: auto;
+}
+
+.past-tag {
+  background-color: #6b4eff;
+  color: white;
+  padding: 5px 14px;
+  font-size: 13px;
+  font-weight: bold;
+  border-radius: 10px;
+}

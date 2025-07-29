@@ -1,78 +1,59 @@
-.contest-section {
+.lcv-card {
+  width: 380px;
+  height: 300px;
+  border-radius: 14px;
+  overflow: hidden;
+  color: black;
+  background-color: white;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   display: flex;
-  justify-content: center;
-  padding: 2rem;
-  background: #f9f9f9;
+  flex-direction: column;
 }
 
-.contest-card {
-  background: #fffde6;
-  padding: 1.5rem 2rem;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  width: 340px;
-  text-align: center;
-  transition: 0.3s ease;
+.lcv-image-container {
+  position: relative;
+  width: 100%;
+  height: 75%;
+  overflow: hidden;
 }
 
-.contest-card:hover {
-  transform: translateY(-4px);
+.lcv-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.contest-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #111;
-  margin-bottom: 0.5rem;
-}
-
-.contest-desc {
-  font-size: 1rem;
-  color: #333;
-  margin-bottom: 1rem;
-}
-
-.tags {
+.lcv-countdown {
+  position: absolute;
+  bottom: 8px;
+  left: 12px;
+  font-size: 14px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 4px 10px;
+  border-radius: 12px;
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
+}
+
+
+
+.lcv-details {
+  height: 25%;
+  padding: 10px 16px;
+  background-color: #cdcbcb;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
 }
 
-.tag {
-  background-color: #d1d8e0;
-  color: #2f3542;
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  white-space: nowrap;
+.lcv-title {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 4px;
 }
 
-.timer {
-  font-size: 1rem;
-  color: #ff4d4f;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-
-.mentor {
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-}
-
-.join-button {
-  background-color: #003f5c;
-  color: #fff;
-  padding: 0.6rem 1.2rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.join-button:hover {
-  background-color: #005f73;
+.lcv-time {
+  font-size: 13px;
+  color: #cfcfcf;
 }

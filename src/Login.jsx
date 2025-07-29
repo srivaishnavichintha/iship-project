@@ -11,7 +11,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    studentname: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -31,7 +31,7 @@ export default function Login() {
 
     const payload = isSignup
       ? {
-          studentname: formData.studentname,
+          username: formData.username,
           email: formData.email,
           password: formData.password,
           role: role,
@@ -58,6 +58,13 @@ export default function Login() {
 
       const user = res.data.user;
       console.log("Authenticated user:", user);
+      localStorage.setItem('userData', JSON.stringify({
+      id: user._id || user.id, 
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      ...(user.role === 'mentor' && { mentorId: user.mentorId }) 
+    }));
 
       if (user.role === "student") {
         navigate("/student/dashboard", { state: { user } });
@@ -100,9 +107,9 @@ export default function Login() {
             <>
               <input
                 type="text"
-                name="studentname"
-                placeholder="studentname"
-                value={formData.studentname}
+                name="username"
+                placeholder="username"
+                value={formData.username}
                 onChange={handleChange}
                 required
               />
@@ -147,7 +154,7 @@ export default function Login() {
               <input
                 type="text"
                 name="identifier"
-                placeholder="studentname or Email"
+                placeholder="username or Email"
                 value={formData.identifier}
                 onChange={handleChange}
                 required
