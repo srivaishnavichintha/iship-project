@@ -25,6 +25,7 @@
     "react-router-dom": "^7.7.1",
     "reconnecting-websocket": "^4.4.0",
     "uuid": "^11.1.0",
+    "vite-plugin-monaco-editor": "^1.1.0",
     "vscode-ws-jsonrpc": "^3.4.0"
   },
   "devDependencies": {
