@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Peer2peer.css";
+import Student_navbar from "../Student_navabar";
 
 const PeerToPeer = () => {
   const [view, setView] = useState("history"); // "history" or "invite"
@@ -27,6 +28,8 @@ const PeerToPeer = () => {
   const currentUser = { name: "You", level: 2, points: 135, nextLevel: 150 };
 
   return (
+    <>
+    <Student_navbar/>
     <div className="peer-to-peer-container">
       {view === "history" ? (
         <>
@@ -98,6 +101,7 @@ const PeerToPeer = () => {
         </>
       )}
     </div>
+    </>
   );
 };
 
