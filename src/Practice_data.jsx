@@ -1,41 +1,57 @@
-import "./Practice_data.css"
-export default function Practice_data() {
-    return (
-        <div className="dash">
-            <div id="Companytags"> 
-                <h3>Company wise problems</h3>
-                <button>Amazon</button>
-                <button>Google</button>
-                <button>Microsoft</button>
-                <button>Flipkart</button>  
-                <button>Adobe</button>
-                <button>Netflix</button>
+import { useState } from "react";
+import "./Practice_data.css";
+
+export default function Practice_data({ companyTags, problems }) {
+  const [selectedCompany, setSelectedCompany] = useState(null);
+  const filteredProblems = selectedCompany
+    ? problems.filter((problem) => problem.company === selectedCompany)
+    : problems;
+
+  return (
+    <div className="dash">
+      <div id="Companytags">
+        <h3>Company wise problems</h3>
+        {companyTags.map((company, index) => (
+          <button
+            key={index}
+            className={selectedCompany === company ? "active-tag" : ""}
+            onClick={() =>
+              setSelectedCompany(company === selectedCompany ? null : company)
+            }
+          >
+            {company}
+          </button>
+        ))}
+      </div>
+
+      <div className="problemsdata">
+        <h1>Problems</h1>
+        {filteredProblems.map((problem, index) => (
+          <div className="coding_data" key={index}>
+            <div className="c1">
+              <h4>{problem.id}</h4>
+              <h4>{problem.title}</h4>
             </div>
-            <div className="problemsdata">
-                <h1>Problems</h1>
-                <div className="coding_data">
-                    <div className="c1">
-                        <h4>1</h4>
-                        <h4>Adding two numbers</h4>
-                    </div>
-                    <div className="c2">
-                        <p>Easy</p>
-                        <p>10%</p>
-                        <button>Solve Challenge</button>
-                    </div>
-                </div>
-                <div className="coding_data">
-                    <div className="c1">
-                        <h4>2</h4>
-                        <h4>Reverse a string</h4>
-                    </div>
-                    <div className="c2">
-                        <p>Easy</p>
-                        <p>15%</p>
-                        <button>Solve Challenge</button>
-                    </div>
-                </div>
+            <div className="c2">
+              <p>{problem.level}</p>
+              <p>{problem.successRate}</p>
+
+              <div className="problem-tags">
+                {problem.tags && problem.tags.map((tag, idx) => (
+                  <span className="tag" key={idx}>{tag}</span>
+                ))}
+              </div>
+
+              <button>Solve Challenge</button>
             </div>
-        </div>
-    );
+          </div>
+        ))}
+        {filteredProblems.length === 0 && (
+          <p style={{ marginTop: "20px", color: "gray" }}>
+            No problems found for {selectedCompany}
+          </p>
+        )}
+      </div>
+    </div>
+  );
 }

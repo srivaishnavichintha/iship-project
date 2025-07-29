@@ -1,0 +1,122 @@
+.course-card {
+  width: 350px;
+  height: 300px;
+  border-radius: 16px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  margin: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.course-card:hover {
+  transform: scale(1.05);
+}
+
+.card-top {
+  height: 80%;
+  padding: 20px;
+  color: rgb(16, 16, 16);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.course-title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: rgb(15, 15, 15);
+}
+
+
+.course-desc {
+  font-size: 0.8rem;
+  color: #1e1c1c;
+  line-height: 1.4;
+  max-height: 3.6em; /* roughly 2 lines */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines */
+  -webkit-box-orient: vertical;
+}
+
+
+.card-bottom {
+  height: 40%; 
+  background-color: white;
+  padding: 10px 15px;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.card-bottom p {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.enroll-button {
+  margin-top: 4px;
+  padding: 6px 16px;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(to right, #022442, #014a4e);
+  color: white;
+  font-weight: bold;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.enroll-button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 14px rgba(1, 74, 78, 0.5);
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 6px;
+  margin-top: 12px;
+  gap: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: #ffffff33 transparent;
+}
+
+.tags-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.tags-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+
+
+.tag {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  cursor: default;
+}
+
+.tag:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+

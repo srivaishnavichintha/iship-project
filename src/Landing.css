@@ -16,7 +16,7 @@ nav img {
  padding: 0px;
   position: relative;
   height: 100vh;
-  background: linear-gradient(to right, #011827, #033a3a);
+  background: linear-gradient(to right, rgb(1, 24, 39), #033a3a);
   color: white;
   padding: 1.5rem;
   overflow: hidden;

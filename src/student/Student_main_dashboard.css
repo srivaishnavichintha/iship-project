@@ -4,6 +4,61 @@
   background-color: #f9f9f9;
   margin-bottom: 2rem;
 }
+/*  */
+.cdata-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 40px 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.cdata {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+   margin: 0 8%;
+}
+.cdata > * {
+  flex: 0 0 auto;
+}
+
+.cdata::-webkit-scrollbar {
+  display: none; 
+}
+
+.scroll-button {
+  background-color: #014a4e;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.4rem;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s;
+}
+
+.scroll-button.left {
+  left: 10px;
+}
+
+.scroll-button.right {
+  right: 10px;
+}
+
+.scroll-button:hover {
+  transform: translateY(-50%) scale(1.1);
+  background-color: #022442;
+}
+
 
 /* Section Heading */
 .dashboard-heading {

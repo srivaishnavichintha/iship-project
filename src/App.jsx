@@ -12,6 +12,8 @@ import StudentCourses from "./student/StudentCourses"
 import StudentLeader from "./student/StudentLeader"
 import StudentContest from "./student/StudentContest"
 import Peer2peer from "./student/Peer2peer";
+import ProblemStatement from "./problems/Problemstmt";
+import EnrollForm from "./components/Enrollform";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
           <Route path="/student/leaderboard" element={<StudentLeader/>}/>
            <Route path="/student/contest" element={<StudentContest/>}/>
            <Route path="/student/peer2peer" element={<Peer2peer/>}/>
+            <Route path="/problemstatement/:slug" element={<ProblemStatement />} />
+            <Route path="/enroll/:courseName" element={<EnrollForm />} />
       </Routes>
     </Router> 
   );

@@ -38,12 +38,14 @@ nav.dtheme {
 }
 
 body.light {
-  background: linear-gradient(to bottom,#fafcfc, #f3f8f8,#e4fdfd,#7fbaba);
+  /* background: linear-gradient(to bottom,#fafcfc, #f3f8f8,#e4fdfd,#7fbaba); */
+  background-color: white;
   color: black;
 }
 
 body.dark {
-  background: linear-gradient(to bottom,#101111, #131313,#1d2323,#3d6f6f);
+  /* background: linear-gradient(to bottom,#101111, #131313,#1d2323,#3d6f6f); */
+  background-color: black;
   color: white;
 }
 
