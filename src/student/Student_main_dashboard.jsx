@@ -7,9 +7,8 @@ import "./Student_main_dashboard.css";
 
 export default function Student_main_dashboard() {
   const [courses, setCourses] = useState([]);
-
   useEffect(() => {
-    axios.get("http://localhost:5000/api/active-courses")
+    axios.get("http://localhost:3000/active-courses")
       .then((res) => {
         setCourses(res.data);
       })
@@ -31,7 +30,7 @@ export default function Student_main_dashboard() {
     <>
       <Student_navabar />
       {/* <Stu_dash_con /> */}
-      <h1 className="dash-head">Popular Courses</h1>
+      <h1 className="dash-head">Ongoing Courses</h1>
       <div className="cdata-wrapper">
           <button className="scroll-button left" onClick={() => scrollCards("left")}>◀</button>
 

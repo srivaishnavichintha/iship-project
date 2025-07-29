@@ -5,13 +5,11 @@ import axios from "axios";
 export default function EnrollForm() {
   const { courseName } = useParams();
   const { state } = useLocation();
-  const courseTitle = state?.title || courseName.replace(/-/g, " ");
-  const courseId = 1234;
-//   const courseId = state?.courseId;
+  const coursename = state?.title || courseName.replace(/-/g, " ");
+    const courseid = state?.courseid;
 
-  // Simulating logged-in student (use your own logic)
-  const [studentId, setStudentId] = useState("");
-  const [studentName, setStudentName] = useState("");
+  const [studentid, setStudentId] = useState("");
+  const [studentname, setStudentName] = useState("");
 
   useEffect(() => {
     // Simulate getting from localStorage or auth context
@@ -23,14 +21,14 @@ export default function EnrollForm() {
     e.preventDefault();
 
     const payload = {
-      courseId,
-      courseTitle,
-      studentId,
-      studentName
+      courseid,
+      coursename,
+      studentid,
+      studentname
     };
 
     try {
-      await axios.post("http://localhost:5000/api/enroll", payload);
+      await axios.post("http://localhost:3000/enroll", payload);
       alert("Enrollment successful!");
     } catch (error) {
       console.error("Enrollment failed:", error);
@@ -38,16 +36,16 @@ export default function EnrollForm() {
     }
   };
 
-  if (!courseId || !courseTitle) {
+  if (!courseid || !coursename) {
     return <p style={{ color: "red" }}>Missing course details. Please return to the course page.</p>;
   }
 
   return (
     <div style={{ padding: "2rem", maxWidth: "500px", margin: "auto" }}>
-      <h2>Enroll in <span style={{ color: "#007777" }}>{courseTitle}</span></h2>
-      <p><strong>Course ID:</strong> {courseId}</p>
-      <p><strong>Student ID:</strong> {studentId}</p>
-      <p><strong>Student Name:</strong> {studentName}</p>
+      <h2>Enroll in <span style={{ color: "#007777" }}>{coursename}</span></h2>
+      <p><strong>Course ID:</strong> {courseid}</p>
+      <p><strong>Student ID:</strong> {studentid}</p>
+      <p><strong>Student Name:</strong> {studentname}</p>
 
       <form onSubmit={handleSubmit} style={{ marginTop: "1.5rem" }}>
         <button

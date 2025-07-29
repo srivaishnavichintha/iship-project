@@ -1,10 +1,7 @@
 import "./Student_navbar.css";
 import { useState, useRef, useEffect } from "react";
 import logo from "./assets/react.png";
-import moon from "./assets/moon.png";
-import sun from "./assets/sun.png";
-import env from "./assets/envelope.png";
-import whiteenv from "./assets/white_env.png";
+import env from "./assets/envelope.png"
 import { Link } from "react-router-dom";
 
 
@@ -17,18 +14,6 @@ export default function Student_navbar() {
   const toggleDropdown = () => {
     setShowDropdown((prev) => !prev);
   };
-
-  const theme = () => {
-    setIsDark((prev) => !prev);
-  };
-
-  useEffect(() => {
-    document.body.className = isDark ? "dark" : "light";
-    if (navRef.current) {
-      navRef.current.className = isDark ? "dtheme" : "";
-    }
-  }, [isDark]);
-
   useEffect(() => {
     const username = localStorage.getItem("username");
      console.log("Username from localStorage:", username);
@@ -60,13 +45,7 @@ export default function Student_navbar() {
             <p>Log Out</p>
           </div>
         </div>
-        <img src={isDark ? whiteenv : env} alt="Envelope" />
-        <img
-          src={isDark ? sun : moon}
-          alt="Theme Toggle"
-          onClick={theme}
-          className="theme"
-        />
+        <img src={env} alt="Envelope" />
       </div>
     </nav>
   );
