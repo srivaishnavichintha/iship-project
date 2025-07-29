@@ -21,7 +21,7 @@ export default function CourseCard({ id, title, description, mentor, endDate, ta
 
   const handleEnrollClick = () => {
     const slug = slugify(title);
-    navigate(`/enroll/${slug}`, { state: { title, courseId: id } });
+    navigate(`/enroll/${slug}`, { state: { title, courseid: id } });
   };
 
   return (

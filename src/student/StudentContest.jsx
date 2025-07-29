@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./StudentContest.css";
 import Student_navabar from '../Student_navabar';
+import Contest_on_card from "../components/Contest_on_card"
 
 const ContestPage = () => {
   const [timeLeft, setTimeLeft] = useState({ hours: 1, minutes: 24, seconds: 30 });
@@ -34,23 +35,7 @@ const ContestPage = () => {
         <h1 className="page-title">Contests</h1>
 
         {/* Current Contest */}
-        <section className="contest-section">
-          <h2>Current Contest</h2>
-          <div className="contest-card live">
-            <div className="contest-info">
-              <h3>Code Clash</h3>
-              <p>Live DSA challenge – solve 5 problems in 1.5 hours</p>
-              <div className="tags">
-                <span className="tag">DSA</span>
-                <span className="tag">Medium</span>
-              </div>
-              <div className="timer">
-                ⏳ {formatTime(timeLeft.hours)}:{formatTime(timeLeft.minutes)}:{formatTime(timeLeft.seconds)} remaining
-              </div>
-            </div>
-            <button className="btn join">Enter Contest</button>
-          </div>
-        </section>
+        <Contest_on_card />
 
         {/* Upcoming Contests */}
         <section className="contest-section">

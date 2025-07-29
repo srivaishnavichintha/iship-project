@@ -10,7 +10,7 @@ export default function ProblemStatement() {
   useEffect(() => {
     if (state?.problemId) {
       axios
-        .post("http://localhost:5000/getProblemById", { problemId: state.problemId })
+        .post("http://localhost:3000/getProblemById", { problemId: state.problemId })
         .then((res) => {
           setProblemData(res.data);
         })

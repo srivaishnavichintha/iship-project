@@ -34,6 +34,7 @@ function App() {
            <Route path="/student/peer2peer" element={<Peer2peer/>}/>
             <Route path="/problemstatement/:slug" element={<ProblemStatement />} />
             <Route path="/enroll/:courseName" element={<EnrollForm />} />
+              {/* <Route path="/contest/:contestName" element={<ContestPage />} /> */}
       </Routes>
     </Router> 
   );
