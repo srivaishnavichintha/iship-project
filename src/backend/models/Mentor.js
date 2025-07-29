@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
-const bcrypt=require("bcrypt");
+const bcrypt = require("bcrypt");
+const Counter = require("./counter"); // Adjust path if needed
+
 const mentorSchema = new mongoose.Schema({
+  mentorid: {
+    type: Number,
+    unique: true
+  },
   username: {
     type: String,
     required: true,
@@ -9,7 +15,7 @@ const mentorSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true, // To avoid duplicate emails
+    unique: true,
     lowercase: true,
     trim: true
   },
@@ -21,7 +27,16 @@ const mentorSchema = new mongoose.Schema({
   courseIds: [String]
 });
 
-mentorSchema.pre('save', async function(next) {
+mentorSchema.pre('save', async function (next) {
+  if (this.isNew) {
+    const counter = await Counter.findOneAndUpdate(
+      { id: "mentorid" },
+      { $inc: { seq: 1 } },
+      { new: true, upsert: true }
+    );
+    this.mentorid = counter.seq;
+  }
+
   if (!this.isModified('password')) return next();
   try {
     const salt = await bcrypt.genSalt(10);
@@ -31,6 +46,5 @@ mentorSchema.pre('save', async function(next) {
     next(err);
   }
 });
-
 
 module.exports = mongoose.model('Mentor', mentorSchema);
