@@ -333,23 +333,20 @@ export default function MentorContest() {
     contestdifficulty: "Medium",
     contestdescription: ""
   });
-  
+
   const [contests, setContests] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  
-  // Filter states
+
   const [searchTerm, setSearchTerm] = useState("");
   const [contestTypeFilter, setContestTypeFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
   const [difficultyFilter, setDifficultyFilter] = useState("all");
 
-  // Get mentor data from localStorage
   const userData = JSON.parse(localStorage.getItem("userData"));
   const mentorid = userData?.mentorid;
   const mentorname = userData?.username;
 
-  // Fetch contests from backend
   useEffect(() => {
     const fetchContests = async () => {
       try {
@@ -367,30 +364,25 @@ export default function MentorContest() {
     fetchContests();
   }, []);
 
-  // Apply filters whenever filter states change
   useEffect(() => {
     const filteredContests = contests.filter(contest => {
-      // Search term filter (case insensitive)
-      const matchesSearch = contest.contesttitle.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                           contest.contestdescription.toLowerCase().includes(searchTerm.toLowerCase());
-      
-      // Contest type filter
-      const matchesContestType = contestTypeFilter === "all" || 
-                          (contestTypeFilter === "dsa" && contest.contesttitle.toLowerCase().includes("dsa")) ||
-                          (contestTypeFilter === "system-design" && contest.contesttitle.toLowerCase().includes("system")) ||
-                          (contestTypeFilter === "frontend" && contest.contesttitle.toLowerCase().includes("frontend"));
-      
-      // Status filter
-      const matchesStatus = statusFilter === "all" || 
-                           contest.conteststatus.toLowerCase() === statusFilter.toLowerCase();
-      
-      // Difficulty filter
-      const matchesDifficulty = difficultyFilter === "all" || 
-                              contest.contestdifficulty.toLowerCase() === difficultyFilter.toLowerCase();
-      
+      const matchesSearch = contest.contesttitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        contest.contestdescription.toLowerCase().includes(searchTerm.toLowerCase());
+
+      const matchesContestType = contestTypeFilter === "all" ||
+        (contestTypeFilter === "dsa" && contest.contesttitle.toLowerCase().includes("dsa")) ||
+        (contestTypeFilter === "system-design" && contest.contesttitle.toLowerCase().includes("system")) ||
+        (contestTypeFilter === "frontend" && contest.contesttitle.toLowerCase().includes("frontend"));
+
+      const matchesStatus = statusFilter === "all" ||
+        contest.conteststatus.toLowerCase() === statusFilter.toLowerCase();
+
+      const matchesDifficulty = difficultyFilter === "all" ||
+        contest.contestdifficulty.toLowerCase() === difficultyFilter.toLowerCase();
+
       return matchesSearch && matchesContestType && matchesStatus && matchesDifficulty;
     });
-    
+
     setContests(filteredContests);
   }, [searchTerm, contestTypeFilter, statusFilter, difficultyFilter]);
 
@@ -407,40 +399,37 @@ export default function MentorContest() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    try {
-      // Prepare the payload with mentor info
-      const payload = {
-        ...formData,
-        mentorid,
-        mentorname
-      };
-      
-      // Post new contest
-      await axios.post("http://localhost:3000/contests", payload);
-      
-      // Refresh the contest list
-      const response = await axios.get("http://localhost:3000/contests");
-      setContests(response.data);
-      
-      // Reset form and close it
-      setFormData({
-        contesttitle: "",
-        contestdate: "",
-        conteststatus: "Upcoming",
-        contestdifficulty: "Medium",
-        contestdescription: ""
-      });
-      toggleForm();
-      
-      alert('Contest created successfully!');
-      
-    } catch (error) {
-      console.error('Error creating contest:', error);
-      alert(error.response?.data?.message || 'Failed to create contest. Please try again.');
-    }
-  };
+  e.preventDefault();
+
+  if (!mentorid || !mentorname) {
+    alert("Mentor information missing. Please log in again.");
+    return;
+  }
+
+  try {
+    const payload = {
+      contesttitle: formData.contesttitle,
+      contestdate: formData.contestdate,
+      conteststatus: formData.conteststatus.toLowerCase(),
+      contestdifficulty: formData.contestdifficulty.toLowerCase(),
+      contestdescription: formData.contestdescription,
+      mentorid: Number(mentorid),
+      mentorname
+    };
+
+    console.log("Submitting contest with data:", payload);
+
+    const response = await axios.post("http://localhost:3000/mentor/contests", payload);
+
+    console.log("Contest created successfully:", response.data);
+
+    // Refresh contest list or UI update
+  } catch (error) {
+    console.error("Error creating contest:", error);
+    alert("Failed to create contest. Please check all fields.");
+  }
+};
+
 
   return (
     <>
@@ -463,21 +452,21 @@ export default function MentorContest() {
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label>Contest Title</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     name="contesttitle"
-                    placeholder="e.g. DSA Interview Prep" 
+                    placeholder="e.g. DSA Interview Prep"
                     value={formData.contesttitle}
                     onChange={handleChange}
                     required
                   />
                 </div>
-                
+
                 <div className="form-row">
                   <div className="form-group">
                     <label>Date</label>
-                    <input 
-                      type="date" 
+                    <input
+                      type="date"
                       name="contestdate"
                       value={formData.contestdate}
                       onChange={handleChange}
@@ -486,21 +475,20 @@ export default function MentorContest() {
                   </div>
                   <div className="form-group">
                     <label>Status</label>
-                    <select 
+                    <select
                       name="conteststatus"
                       value={formData.conteststatus}
                       onChange={handleChange}
                     >
                       <option value="Upcoming">Upcoming</option>
                       <option value="Live">Live</option>
-                      <option value="Completed">Completed</option>
                     </select>
                   </div>
                 </div>
-                
+
                 <div className="form-group">
                   <label>Difficulty</label>
-                  <select 
+                  <select
                     name="contestdifficulty"
                     value={formData.contestdifficulty}
                     onChange={handleChange}
@@ -510,10 +498,10 @@ export default function MentorContest() {
                     <option value="Hard">Hard</option>
                   </select>
                 </div>
-                
+
                 <div className="form-group">
                   <label>Description</label>
-                  <textarea 
+                  <textarea
                     name="contestdescription"
                     placeholder="Brief description of the contest..."
                     value={formData.contestdescription}
@@ -522,17 +510,17 @@ export default function MentorContest() {
                     required
                   />
                 </div>
-                
+
                 <div className="form-group">
                   <label>Mentor</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     value={mentorname || "Not available"}
                     readOnly
                     className="read-only-input"
                   />
                 </div>
-                
+
                 <div className="form-buttons">
                   <button type="button" className="cancel-btn" onClick={toggleForm}>
                     Cancel
@@ -551,14 +539,14 @@ export default function MentorContest() {
             <svg className="search-icon" viewBox="0 0 24 24">
               <path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 0 0 1.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 0 0-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 0 0 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
             </svg>
-            <input 
-              type="text" 
-              placeholder="Search contests..." 
+            <input
+              type="text"
+              placeholder="Search contests..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          
+
           <div className="filter-group">
             <label>Filter by:</label>
             <select
@@ -577,7 +565,6 @@ export default function MentorContest() {
               <option value="all">All Status</option>
               <option value="upcoming">Upcoming</option>
               <option value="live">Live</option>
-              <option value="completed">Completed</option>
             </select>
             <select
               value={difficultyFilter}
@@ -595,14 +582,14 @@ export default function MentorContest() {
           {contests.length > 0 ? (
             contests.map((contest) => (
               <ContestCard
-                key={contest.id}
-                id={contest.id}
+                key={contest.contestid}
+                id={contest.contestid}
                 title={contest.contesttitle}
                 date={contest.contestdate}
                 status={contest.conteststatus}
                 difficulty={contest.contestdifficulty}
                 description={contest.contestdescription}
-                mentor={ mentorname}
+                mentor={mentorname}
               />
             ))
           ) : (
