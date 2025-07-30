@@ -1,19 +1,19 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Course.css";
 import Mentor_navbar from "../Mentor_navbar";
-import Mccard from "../components/Mccard"
+import Mccard from "../components/Mccard";
 import { useParams } from "react-router-dom";
 
-const { mentorid } = useParams(); 
-
 export default function Course() {
+  const { mentorid } = useParams(); // ⬅️ Move this line here
+
   const [showForm, setShowForm] = useState(false);
   const [prerequisites, setPrerequisites] = useState([]);
   const [prereqInput, setPrereqInput] = useState("");
   const [my_mentor_courses, setmy_mentor_courses] = useState([]);
   const [formData, setFormData] = useState({
-    courseid:"",
+    courseid: "",
     coursename: "",
     description: "",
     category: "",
@@ -21,6 +21,8 @@ export default function Course() {
     enrollmentend: "",
     max_participants: ""
   });
+
+  // rest of your code...
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
