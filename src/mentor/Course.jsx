@@ -14,7 +14,7 @@ export default function Course() {
     description: "",
     category: "",
     level: "",
-    enrollementend: "",
+    enrollmentend: "",
     max_participants: ""
   });
 
@@ -36,7 +36,7 @@ export default function Course() {
       setPrereqInput("");
     }
   };
-
+  
   const removePrerequisite = (valueToRemove) => {
     setPrerequisites((prev) => prev.filter((tag) => tag !== valueToRemove));
   };
@@ -51,7 +51,7 @@ export default function Course() {
 
   const handlecourse = async () => {
     if (!formData.coursename || !formData.description || !formData.category ||
-        !formData.level || !formData.enrollementend || !formData.max_participants) {
+        !formData.level || !formData.enrollmentend || !formData.max_participants) {
       alert("Please fill all required fields");
       return;
     }
@@ -61,12 +61,12 @@ export default function Course() {
       const payload = {
         ...formData,
         max_participants: Number(formData.max_participants),
-        enrollementend: new Date(formData.enrollementend).toISOString(),
+        enrollmentend: new Date(formData.enrollmentend).toISOString(),
         prerequisites,
         // created_at: new Date().toISOString()
       };
 
-      if (new Date(payload.enrollementend) < new Date()) {
+      if (new Date(payload.enrollmentend) < new Date()) {
         alert("Enrollment end date must be in the future");
         return;
       }
@@ -88,7 +88,7 @@ export default function Course() {
         description: "",
         category: "",
         level: "",
-        enrollementend: "",
+        enrollmentend: "",
         max_participants: ""
       });
       setPrerequisites([]);
@@ -195,8 +195,8 @@ export default function Course() {
                 Enrollment End Date:<br />
                 <input
                   type="date"
-                  name="enrollementend"
-                  value={formData.enrollementend}
+                  name="enrollmentend"
+                  value={formData.enrollmentend}
                   onChange={handleInputChange}
                   required
                 />

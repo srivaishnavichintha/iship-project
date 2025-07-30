@@ -4,15 +4,14 @@ const bcrypt = require("bcrypt");
 const Student = require("../models/Student");
 const Mentor = require("../models/Mentor");
 
-// Signup Route
+// ---------- SIGNUP ----------
 router.post("/signup", async (req, res) => {
   const { username, email, password, role } = req.body;
 
   try {
-    const userExists =
-      role === "student"
-        ? await Student.findOne({ email })
-        : await Mentor.findOne({ email });
+    const userExists = await (role === "student"
+      ? Student.findOne({ email })
+      : Mentor.findOne({ email }));
 
     if (userExists) {
       return res.status(400).json({ message: "User already exists" });
@@ -25,40 +24,32 @@ router.post("/signup", async (req, res) => {
       newUser = new Mentor({ username, email, password });
     }
 
-    await newUser.save(); // pre("save") hook will hash password here
+    await newUser.save(); // triggers pre-save middleware
 
-    res.status(201).json({
+    return res.status(201).json({
       message: "User created successfully",
       user: {
         username: newUser.username,
         email: newUser.email,
         role,
+        ...(role === "student" && { studentid: newUser.studentid }),
+        ...(role === "mentor" && { mentorid: newUser.mentorid }),
       },
     });
-
   } catch (err) {
+    console.error("Signup error:", err);
     res.status(500).json({ message: err.message });
   }
 });
 
-
-// Login Route
+// ---------- LOGIN ----------
 router.post("/login", async (req, res) => {
   const { identifier, password, role } = req.body;
 
-  console.log("Login attempt:", { identifier, password, role });
-
   try {
-    let user;
-    if (role === "student") {
-      user = await Student.findOne({
-        $or: [{ username: identifier }, { email: identifier }],
-      });
-    } else {
-      user = await Mentor.findOne({
-        $or: [{ username: identifier }, { email: identifier }],
-      });
-    }
+    const user = await (role === "student"
+      ? Student.findOne({ $or: [{ username: identifier }, { email: identifier }] })
+      : Mentor.findOne({ $or: [{ username: identifier }, { email: identifier }] }));
 
     if (!user) {
       return res.status(400).json({ message: "User not found" });
@@ -69,21 +60,20 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "Login successful",
       user: {
-        studentid: user.studentid,
         username: user.username,
         email: user.email,
         role,
+        ...(role === "student" && { studentid: user.studentid }),
+        ...(role === "mentor" && { mentorid: user.mentorid }),
       },
     });
   } catch (err) {
+    console.error("Login error:", err);
     res.status(500).json({ message: err.message });
   }
 });
 
-
-
 module.exports = router;
-

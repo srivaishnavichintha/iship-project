@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from 'react';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
@@ -17,7 +18,18 @@ export default function Login() {
     confirmPassword: "",
     identifier: "", // used only for login
   });
+ useEffect(() => {
+    const handleBeforeUnload = () => {
+      localStorage.removeItem("userData");
+    };
 
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    // Cleanup function to remove the event listener
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -58,25 +70,23 @@ export default function Login() {
 
       const user = res.data.user;
       console.log("Authenticated user:", user);
-
       // Save to localStorage
-      const userData = {
-        studentid: user.studentid,
-        username: user.username,
-        email: user.email,
-        role: user.role,
-        ...(user.role === "mentor" && { mentorid: user.mentorid }),
-      };
+     const userData = {
+  username: user.username,
+  email: user.email,
+  role: user.role,
+  ...(user.role === "mentor" && { mentorid: user.mentorid }),
+  ...(user.role === "student" && { studentid: user.studentid }),
+};
+localStorage.setItem("userData", JSON.stringify(userData));
+console.log("Saved to localStorage:", localStorage.getItem("userData"));
 
-      localStorage.setItem("userData", JSON.stringify(userData));
-      console.log("LocalStorage after set:", localStorage.getItem("userData"));
-
-      // Navigate with state
-      if (user.role === "student") {
-        navigate("/student/dashboard", { state: { user: userData } });
-      } else if (user.role === "mentor") {
-        navigate("/mentor/dashboard", { state: { user: userData } });
-      }
+// Navigate with state
+if (user.role === "student") {
+  navigate("/student/dashboard", { state: { user: userData } });
+} else if (user.role === "mentor") {
+  navigate("/mentor/dashboard", { state: { user: userData } });
+}
     } catch (err) {
       alert(`Failed to login: ${err.response?.data?.message || err.message}`);
     } finally {
