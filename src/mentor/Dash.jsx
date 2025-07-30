@@ -3,7 +3,6 @@ import "./Dash.css";
 import CCard from '../components/CCard'
 
 
-
 const StudentRow = ({ sno, name, points, submissions }) => {
   return (
     <tr>
