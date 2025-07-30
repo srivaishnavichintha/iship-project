@@ -49,6 +49,7 @@ export default function Student_main_dashboard() {
            {courses.map((course, index) => (
             <CCard
               key={course.courseid} 
+              id={course.courseid}
               title={course.coursename}
               description={course.description}
               // mentor={course.mentor}
