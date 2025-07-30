@@ -23,10 +23,14 @@ export default function CourseCard({ id, title, description, mentor, endDate, ta
     const slug = slugify(title);
     navigate(`/enroll/${slug}`, { state: { title, courseid: id } });
   };
+  const  handlecourseclick = () => {
+    const enrol = slugify(title);
+    navigate(`/course/${enrol}`,{state: {title,courseid: id}});
+  }
 
   return (
     <div className="course-card">
-      <div className="card-top" style={{ backgroundColor: bgColor }}>
+      <div className="card-top" style={{ backgroundColor: bgColor }} onClick={handlecourseclick}>
         <h2 className="course-title">{title}</h2>
         <p className="course-desc">{description}</p>
 

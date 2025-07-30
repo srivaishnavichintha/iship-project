@@ -15,7 +15,11 @@ export default function Student_navbar() {
     setShowDropdown((prev) => !prev);
   };
   useEffect(() => {
-    const username = localStorage.getItem("username");
+      const userData = JSON.parse(localStorage.getItem("userData"));
+      const username = userData?.username || "Guest";
+
+      console.log("Username from localStorage:", username);
+
      console.log("Username from localStorage:", username);
     if (username && username.length > 0) {
       setFirstLetter(username[0].toUpperCase());

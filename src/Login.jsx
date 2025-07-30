@@ -58,18 +58,24 @@ export default function Login() {
 
       const user = res.data.user;
       console.log("Authenticated user:", user);
-      localStorage.setItem('userData', JSON.stringify({
-      id: user._id || user.id, 
-      username: user.username,
-      email: user.email,
-      role: user.role,
-      ...(user.role === 'mentor' && { mentorid: user.mentorid }) 
-    }));
 
+      // Save to localStorage
+      const userData = {
+        studentid: user._id || user.studentid,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        ...(user.role === "mentor" && { mentorid: user.mentorid }),
+      };
+
+      localStorage.setItem("userData", JSON.stringify(userData));
+      console.log("LocalStorage after set:", localStorage.getItem("userData"));
+
+      // Navigate with state
       if (user.role === "student") {
-        navigate("/student/dashboard", { state: { user } });
+        navigate("/student/dashboard", { state: { user: userData } });
       } else if (user.role === "mentor") {
-        navigate("/mentor/dashboard", { state: { user } });
+        navigate("/mentor/dashboard", { state: { user: userData } });
       }
     } catch (err) {
       alert(`Failed to login: ${err.response?.data?.message || err.message}`);
@@ -108,7 +114,7 @@ export default function Login() {
               <input
                 type="text"
                 name="username"
-                placeholder="username"
+                placeholder="Username"
                 value={formData.username}
                 onChange={handleChange}
                 required
@@ -154,7 +160,7 @@ export default function Login() {
               <input
                 type="text"
                 name="identifier"
-                placeholder="username or Email"
+                placeholder="Username or Email"
                 value={formData.identifier}
                 onChange={handleChange}
                 required

@@ -37,7 +37,6 @@ export default function Student_main_dashboard() {
           <button className="scroll-button left" onClick={() => scrollCards("left")}>◀</button>
 
           <div className="cdata" id="scrollContainer">
-   <Link to="/courses/interview-crash-course" style={{ textDecoration: "none" }}>
   <CCard
     title="Interview Crash Course"
     description="Master D and Algorithms for technical interviews. Includes mock tests and live sessions."
@@ -45,7 +44,6 @@ export default function Student_main_dashboard() {
     endDate="25/05/2020"
     tags={["DSA", "Interview Prep", "Live Sessions", "Mock Tests"]}
   />
-</Link>
 
            {/* {courses.map((course, index) => (
             <CCard
