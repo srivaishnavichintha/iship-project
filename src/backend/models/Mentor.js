@@ -29,6 +29,7 @@ const mentorSchema = new mongoose.Schema({
 
 mentorSchema.pre('save', async function (next) {
   if (this.isNew) {
+    console.log("Running pre-save hook for new enrollment..."); 
     const counter = await Counter.findOneAndUpdate(
       { id: "mentorid" },
       { $inc: { seq: 1 } },

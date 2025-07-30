@@ -1,17 +1,15 @@
-// models/Counter.js
-
 const mongoose = require("mongoose");
 
 const counterSchema = new mongoose.Schema({
   id: {
     type: String,
-    required: true,
-    unique: true,  // ensures one counter per type (e.g., "studentid", "problemid")
+    required: true
   },
   seq: {
     type: Number,
-    default: 0,
-  },
+    default: 0
+  }
 });
 
-module.exports = mongoose.model("Counter", counterSchema);
+// ✅ Export the model safely
+module.exports = mongoose.models.Counter || mongoose.model("Counter", counterSchema);
