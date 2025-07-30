@@ -59,10 +59,23 @@ export default function Login() {
       const user = res.data.user;
       console.log("Authenticated user:", user);
 
+      // Save to localStorage
+      const userData = {
+        studentid: user._id || user.studentid,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        ...(user.role === "mentor" && { mentorid: user.mentorid }),
+      };
+
+      localStorage.setItem("userData", JSON.stringify(userData));
+      console.log("LocalStorage after set:", localStorage.getItem("userData"));
+
+      // Navigate with state
       if (user.role === "student") {
-        navigate("/student/dashboard", { state: { user } });
+        navigate("/student/dashboard", { state: { user: userData } });
       } else if (user.role === "mentor") {
-        navigate("/mentor/dashboard", { state: { user } });
+        navigate("/mentor/dashboard", { state: { user: userData } });
       }
     } catch (err) {
       alert(`Failed to login: ${err.response?.data?.message || err.message}`);

@@ -1,112 +1,224 @@
 .peer-to-peer-container {
-  padding: 2rem;
-  font-family: 'Segoe UI', sans-serif;
-  max-width: 900px;
-  margin: auto;
-  background: #f8f9fa;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 25px 30px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 h2 {
-  margin-bottom: 1rem;
-  color: #343a40;
+  margin: 0;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.toggle-view-btn {
+  background-color: #000;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.toggle-view-btn:hover {
+  background-color: #333;
+  transform: translateY(-1px);
 }
 
 .filters {
   display: flex;
-  justify-content: flex-start;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
-select,
-input[type="date"] {
-  padding: 0.5rem;
+select, input[type="date"] {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
   border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-.contest-history-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
   background: white;
 }
 
-.contest-history-table th,
-.contest-history-table td {
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #e2e2e2;
+.table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+.contest-history-table, .peer-list-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  font-size: 0.95rem;
+}
+
+.contest-history-table thead th, 
+.peer-list-table thead th {
+  background: #000;
+  color: white;
+  font-weight: 600;
+  padding: 15px 12px;
   text-align: left;
+  border: none;
 }
 
-.contest-history-table th {
-  background-color: #dee2e6;
+.contest-history-table th:first-child,
+.peer-list-table th:first-child {
+  border-radius: 6px 0 0 6px;
 }
 
-td.won {
-  color: green;
+.contest-history-table th:last-child,
+.peer-list-table th:last-child {
+  border-radius: 0 6px 6px 0;
+}
+
+.contest-history-table tbody tr,
+.peer-list-table tbody tr {
+  background: white;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.contest-history-table tbody tr:hover,
+.peer-list-table tbody tr:hover {
+  background: #f5f5f5;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.contest-history-table td,
+.peer-list-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border: none;
+  color: #333;
+}
+
+.name-cell {
+  font-weight: 500;
+}
+
+.status {
   font-weight: 600;
 }
-td.lost {
-  color: crimson;
-  font-weight: 600;
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
 }
 
-.status-summary {
-  margin-top: 1rem;
-  font-size: 1rem;
+.status.won .status-badge {
+  background: rgba(25, 135, 84, 0.1);
+  color: #198754;
+}
+
+.status.lost .status-badge {
+  background: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}
+
+.status.virtual .status-badge {
+  background: rgba(13, 110, 253, 0.1);
+  color: #0d6efd;
 }
 
 .btn {
-  padding: 0.5rem 1rem;
+  padding: 8px 16px;
+  font-size: 0.95rem;
   border: none;
-  background-color: #0d6efd;
+  background-color: #000;
   color: white;
   border-radius: 6px;
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: all 0.2s ease;
+  font-weight: 500;
 }
+
 .btn:hover {
-  background-color: #084cdf;
+  background-color: #333;
+  transform: translateY(-1px);
 }
 
-.invite-section {
-  margin-top: 1.5rem;
-  background: white;
-  padding: 1rem;
-  border-radius: 10px;
-  border: 1px solid #ddd;
+.invite-btn {
+  padding: 6px 12px;
+  font-size: 0.9rem;
 }
 
-.peer-list {
-  list-style: none;
-  padding: 0;
+.status-summary {
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
 }
 
-.peer-list li {
+.progress-info {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem;
-  border-bottom: 1px solid #eee;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
 }
 
-.points {
-  font-weight: bold;
-  margin-right: 1rem;
+.progress-bar {
+  height: 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
-.back-btn {
-  margin-top: 1rem;
-  background-color: #6c757d;
+.progress-fill {
+  height: 100%;
+  background: #000;
+  border-radius: 4px;
+  transition: width 0.3s ease;
 }
 
-.back-btn:hover {
-  background-color: #5a6268;
+@media (max-width: 768px) {
+  .peer-to-peer-container {
+    padding: 15px;
+    margin: 15px;
+  }
+  
+  .header-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .filters {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .toggle-view-btn {
+    align-self: flex-start;
+  }
+}
+.peer-list-table th:nth-child(3),
+.peer-list-table th:nth-child(4) {
+  text-align: center;
 }
 
-.course-picker {
-  margin-bottom: 1rem;
+.peer-list-table td:nth-child(3),
+.peer-list-table td:nth-child(4) {
+  text-align: center;
+  color: #555;
+}
+
+.peer-list-table td:nth-child(3) {
+  font-weight: 600;
+}
+
+.peer-list-table td:nth-child(4) {
+  text-transform: capitalize;
 }

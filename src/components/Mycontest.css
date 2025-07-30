@@ -1,0 +1,60 @@
+.my-contests-table {
+  margin: 20px;
+  overflow-x: auto;
+  border-radius: 12px;
+ 
+  padding: 20px;
+  color: #f0f0f0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.my-contests-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.my-contests-table th,
+.my-contests-table td {
+  padding: 14px 16px;
+  text-align: left;
+  color: #000000;
+}
+
+
+
+.my-contests-table thead th {
+  font-weight: 600;
+  color: #000000;
+  border-bottom: 1px solid #444;
+}
+
+.my-contests-table tbody tr {
+
+  transition: background-color 0.2s ease;
+}
+
+.my-contests-table tbody tr:hover {
+  background-color: #b5b1b1;
+}
+
+.my-contests-table td span {
+  font-size: 12px;
+  color: #000000;
+}
+
+.my-contests-table .up {
+  color: #00e676; /* green for rating up */
+  font-weight: bold;
+}
+
+.my-contests-table .down {
+  color: #ff5252; /* red for rating down */
+  font-weight: bold;
+}
+
+.my-contests-table .score {
+  display: block;
+  font-size: 14px;
+  color: #ccc;
+  margin-top: 4px;
+}

@@ -5,6 +5,8 @@ import CCard from "../components/CCard"
 import { Link } from "react-router-dom";
 import "./Student_main_dashboard.css";
 
+
+
 export default function Student_main_dashboard() {
   const [courses, setCourses] = useState([]);
   useEffect(() => {
@@ -35,13 +37,13 @@ export default function Student_main_dashboard() {
           <button className="scroll-button left" onClick={() => scrollCards("left")}>◀</button>
 
           <div className="cdata" id="scrollContainer">
-            <CCard
-  title="Interview Crash Course"
-  description="Master Data Structures and Algorithms for technical interviews. Includes mock tests and live sessions."
-  mentor="Pawan"
-  endDate="25/05/2020"
-  tags={["DSA", "Interview Prep", "Live Sessions", "Mock Tests"]}
-/>
+  <CCard
+    title="Interview Crash Course"
+    description="Master D and Algorithms for technical interviews. Includes mock tests and live sessions."
+    mentor="Pawan"
+    endDate="25/05/2020"
+    tags={["DSA", "Interview Prep", "Live Sessions", "Mock Tests"]}
+  />
 
            {/* {courses.map((course, index) => (
             <CCard

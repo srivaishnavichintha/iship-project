@@ -1,0 +1,59 @@
+.lcv-card {
+  width: 380px;
+  height: 300px;
+  border-radius: 14px;
+  overflow: hidden;
+  color: black;
+  background-color: white;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.lcv-image-container {
+  position: relative;
+  width: 100%;
+  height: 75%;
+  overflow: hidden;
+}
+
+.lcv-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lcv-countdown {
+  position: absolute;
+  bottom: 8px;
+  left: 12px;
+  font-size: 14px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 4px 10px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+}
+
+
+
+.lcv-details {
+  height: 25%;
+  padding: 10px 16px;
+  background-color: #cdcbcb;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.lcv-title {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.lcv-time {
+  font-size: 13px;
+  color: #cfcfcf;
+}

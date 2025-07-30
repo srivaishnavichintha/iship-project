@@ -1,113 +1,71 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./StudentContest.css";
-import Student_navabar from '../Student_navabar';
+import Student_navabar from "../Student_navabar";
+import trophy from "../assets/trophy.png";
 
-const ContestPage = () => {
-  const [timeLeft, setTimeLeft] = useState({ hours: 1, minutes: 24, seconds: 30 });
+export default function StudentContest() {
+  const [activeTab, setActiveTab] = useState("past");
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        let { hours, minutes, seconds } = prev;
-        if (seconds > 0) seconds--;
-        else if (minutes > 0) {
-          minutes--;
-          seconds = 59;
-        } else if (hours > 0) {
-          hours--;
-          minutes = 59;
-          seconds = 59;
-        }
-        return { hours, minutes, seconds };
-      });
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const formatTime = (t) => (t < 10 ? `0${t}` : t);
+  const pastContests = [
+    { id: 1, name: "Weekly Contest 460", date: "Jul 27, 2025 8:00 AM GMT+5:30", type: "regular" },
+    { id: 2, name: "Weekly Contest 459", date: "Jul 20, 2025 8:00 AM GMT+5:30", type: "regular" },
+    { id: 3, name: "Biweekly Contest 161", date: "Jul 19, 2025 8:00 PM GMT+5:30", type: "regular" },
+    { id: 4, name: "Weekly Contest 458", date: "Jul 17, 2025 8:00 PM GMT+5:30", type: "regular" },
+    { id: 5, name: "Virtual Contest", date: "Jul 18, 2025 8:00 PM GMT+5:30", type: "virtual" },
+    { id: 6, name: "Virtual Contest", date: "Jul 19, 2025 8:00 PM GMT+5:30", type: "virtual" }
+  ];
 
   return (
     <>
-    <Student_navabar />
-    <div className="contest-page">
+      <Student_navabar />
       <div className="contest-container">
-        <h1 className="page-title">Contests</h1>
-
-        {/* Current Contest */}
-        <section className="contest-section">
-          <h2>Current Contest</h2>
-          <div className="contest-card live">
-            <div className="contest-info">
-              <h3>Code Clash</h3>
-              <p>Live DSA challenge – solve 5 problems in 1.5 hours</p>
-              <div className="tags">
-                <span className="tag">DSA</span>
-                <span className="tag">Medium</span>
-              </div>
-              <div className="timer">
-                ⏳ {formatTime(timeLeft.hours)}:{formatTime(timeLeft.minutes)}:{formatTime(timeLeft.seconds)} remaining
-              </div>
-            </div>
-            <button className="btn join">Enter Contest</button>
-          </div>
-        </section>
-
-        {/* Upcoming Contests */}
-        <section className="contest-section">
-          <h2>Upcoming Contests</h2>
-          <div className="contest-grid">
-            <div className="contest-card upcoming">
-              <h3>React Wizard</h3>
-              <p>Frontend skills test</p>
-              <div className="meta">
-                <span>📅 Starts: July 30</span>
-                <span>⏰ Register by: July 28</span>
-              </div>
-              <button className="btn register">Register Now</button>
-            </div>
-            <div className="contest-card upcoming">
-              <h3>Algo Hunt</h3>
-              <p>Level up your algorithm skills</p>
-              <div className="meta">
-                <span>📅 Starts: August 3</span>
-                <span>⏰ Register by: August 1</span>
-              </div>
-              <button className="btn register">Register Now</button>
-            </div>
-          </div>
-        </section>
-
-        {/* Past Contests */}
-        <section className="contest-section past-section">
-          <h2>Past Contests</h2>
-          <div className="table-wrapper">
-            <table className="contest-table">
-              <thead>
-                <tr>
-                  <th>Contest</th>
-                  <th>Date</th>
-                  <th>Results</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Spring CodeFest</td>
-                  <td>May 12, 2025</td>
-                  <td><button className="btn view">View</button></td>
-                </tr>
-                <tr>
-                  <td>Algo Blitz</td>
-                  <td>April 3, 2025</td>
-                  <td><button className="btn view">View</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </div>
+        {/* Header Section */}
+        <div className="contest-header">
+  <div className="header-content">
+    <div className="trophy-container">
+      <img src={trophy} alt="Trophy" className="trophy-icon" />
+      <div className="trophy-glow"></div>
     </div>
+    <h1 className="contest-title">Contest</h1>
+    <p className="contest-subtitle">
+      Compete every possible minute. Compete and see your ranking!
+    </p>
+  </div>
+</div>
+
+        {/* Tab Navigation */}
+        <div className="contest-tabs">
+          <button
+            className={`tab-button ${activeTab === "past" ? "active" : ""}`}
+            onClick={() => setActiveTab("past")}
+          >
+            Past Contests
+          </button>
+          <button
+            className={`tab-button ${activeTab === "my" ? "active" : ""}`}
+            onClick={() => setActiveTab("my")}
+          >
+            My Contests
+          </button>
+        </div>
+
+        {/* Contest List */}
+        <div className="contest-list">
+          {pastContests.map((contest) => (
+            <div key={contest.id} className={`contest-item ${contest.type}`}>
+              <div className="contest-info">
+                <h3 className="contest-name">{contest.name}</h3>
+                <p className="contest-date">{contest.date}</p>
+              </div>
+              <div className="contest-status">
+                {contest.type === "virtual" && (
+                  <span className="virtual-badge">Virtual</span>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </>
   );
-};
-
-export default ContestPage;
+}

@@ -6,15 +6,15 @@ export default function EnrollForm() {
   const { courseName } = useParams();
   const { state } = useLocation();
   const coursename = state?.title || courseName.replace(/-/g, " ");
-    const courseid = state?.courseid;
+    const courseid = state?.courseid ;
 
   const [studentid, setStudentId] = useState("");
-  const [studentname, setStudentName] = useState("");
+  const [username, setStudentName] = useState("");
 
   useEffect(() => {
     // Simulate getting from localStorage or auth context
-    setStudentId(localStorage.getItem("studentId") || "stu001");
-    setStudentName(localStorage.getItem("studentName") || "Vaishu");
+    setStudentId(localStorage.getItem("studentId"));
+    setStudentName(localStorage.getItem("studentName")  );
   }, []);
 
   const handleSubmit = async (e) => {
@@ -24,8 +24,8 @@ export default function EnrollForm() {
       courseid,
       coursename,
       studentid,
-      studentname
-    };courseid=1;
+      username
+    };
 
     try {
       await axios.post("http://localhost:3000/enroll", payload);
@@ -45,7 +45,7 @@ export default function EnrollForm() {
       <h2>Enroll in <span style={{ color: "#007777" }}>{coursename}</span></h2>
       <p><strong>Course ID:</strong> {courseid}</p>
       <p><strong>Student ID:</strong> {studentid}</p>
-      <p><strong>Student Name:</strong> {studentname}</p>
+      <p><strong>Student Name:</strong> {username}</p>
 
       <form onSubmit={handleSubmit} style={{ marginTop: "1.5rem" }}>
         <button

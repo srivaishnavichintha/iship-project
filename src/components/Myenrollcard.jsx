@@ -1,4 +1,4 @@
-import "./CCard.css";
+import "./MyEnrollCard.css";
 import { useNavigate } from "react-router-dom";
 
 const cardColors = [
@@ -10,27 +10,22 @@ function getRandomColor() {
   return cardColors[Math.floor(Math.random() * cardColors.length)];
 }
 
-// 🧠 Slugify the course name for URL friendliness
 function slugify(text) {
   return text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "");
 }
 
-export default function CourseCard({ id, title, description, mentor, endDate, tags = [] }) {
-  const bgColor = getRandomColor();
+export default function MyEnrollCard({ id, title, description, progress, tags = [] }) {
   const navigate = useNavigate();
+  const bgColor = getRandomColor();
 
-  const handleEnrollClick = () => {
+  const handleContinueClick = () => {
     const slug = slugify(title);
-    navigate(`/enroll/${slug}`, { state: { title, courseid: id } });
+    navigate(`/course/${slug}`, { state: { title, courseid: id } });
   };
-  const  handlecourseclick = () => {
-    const enrol = slugify(title);
-    navigate(`/course/${enrol}`,{state: {title,courseid: id}});
-  }
 
   return (
     <div className="course-card">
-      <div className="card-top" style={{ backgroundColor: bgColor }} onClick={handlecourseclick}>
+      <div className="card-top" style={{ backgroundColor: bgColor }}>
         <h2 className="course-title">{title}</h2>
         <p className="course-desc">{description}</p>
 
@@ -39,13 +34,18 @@ export default function CourseCard({ id, title, description, mentor, endDate, ta
             <span key={index} className="tag">{tag}</span>
           ))}
         </div>
+
+        <div className="progress-bar-container">
+          <div className="progress-bar">
+            <div className="progress" style={{ width: `${progress}%` }}></div>
+          </div>
+          <p className="progress-text">{progress}% completed</p>
+        </div>
       </div>
 
       <div className="card-bottom">
-        <p>Mentor: <strong>{mentor}</strong></p>
-        <p>Enroll By: <strong>{endDate}</strong></p>
-        <button className="enroll-button" onClick={handleEnrollClick}>
-          Enroll Now
+        <button className="continue-button" onClick={handleContinueClick}>
+          Continue Learning
         </button>
       </div>
     </div>
