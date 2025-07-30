@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const Counter = require("./Counter");
+const Counter = require("./counter");
 
 const mentorSchema = new mongoose.Schema({
   mentorid: {
@@ -27,9 +27,10 @@ const mentorSchema = new mongoose.Schema({
   courseIds: [String]
 });
 
-mentorSchema.pre('save', async function (next) {
-  if (this.isNew) {
-    console.log("Running pre-save hook for new enrollment..."); 
+mentorSchema.pre("save", async function (next) {
+  const mentor = this;
+
+  if (mentor.isNew) {
     const counter = await Counter.findOneAndUpdate(
       { id: "mentorid" },
       { $inc: { seq: 1 } },
