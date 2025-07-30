@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+// const Counter = require("./contest");
 const Counter = require("./counter");
 
 const mentorSchema = new mongoose.Schema({

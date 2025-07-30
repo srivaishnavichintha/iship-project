@@ -24,6 +24,7 @@ export default function Dash() {
     // Fetch upcoming courses
     axios.get("http://localhost:3000/upcoming-course")
       .then((res) => {
+        console.log("📤 Sending courses:", res.data);
         setUpcomingCourse(res.data);
       })
       .catch((err) => {
@@ -86,13 +87,13 @@ export default function Dash() {
           <div className="card_cover scrollable" id="upcoming-scroll">
             {upcomingCourse.map((course) => (
               <Mccard
-                key={course.courseid}
+                  key={course.courseid}
                 id={course.courseid}
-                title={course.coursetitle}
+                title={course.coursename}
                 description={course.description}
-                mentor={course.mentor}
-                endDate={course.endDate}
-                tags={course.tags}
+                mentor={"Platform Mentor"} // Default mentor if not provided
+                endDate={new Date(course.enrollmentend).toLocaleDateString()}
+                tags={course.prerequisites}
               />
             ))}
           </div>
