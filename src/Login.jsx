@@ -61,7 +61,7 @@ export default function Login() {
 
       // Save to localStorage
       const userData = {
-        studentid: user._id || user.studentid,
+        studentid: user.studentid,
         username: user.username,
         email: user.email,
         role: user.role,

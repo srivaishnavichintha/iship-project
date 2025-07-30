@@ -37,15 +37,15 @@ export default function Student_main_dashboard() {
           <button className="scroll-button left" onClick={() => scrollCards("left")}>◀</button>
 
           <div className="cdata" id="scrollContainer">
-  <CCard
+  {/* <CCard
     title="Interview Crash Course"
     description="Master D and Algorithms for technical interviews. Includes mock tests and live sessions."
     mentor="Pawan"
     endDate="25/05/2020"
     tags={["DSA", "Interview Prep", "Live Sessions", "Mock Tests"]}
-  />
+  /> */}
 
-           {/* {courses.map((course, index) => (
+           {courses.map((course, index) => (
             <CCard
               key={index}
               title={course.title}
@@ -54,7 +54,7 @@ export default function Student_main_dashboard() {
               endDate={new Date(course.endDate).toLocaleDateString()}
                tags={course.tags || []}
             />
-          ))} */}
+          ))}
           </div>
 
           <button className="scroll-button right" onClick={() => scrollCards("right")}>▶</button>
