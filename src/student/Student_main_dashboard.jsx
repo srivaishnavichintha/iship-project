@@ -10,14 +10,15 @@ import "./Student_main_dashboard.css";
 export default function Student_main_dashboard() {
   const [courses, setCourses] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:3000/active-courses")
-      .then((res) => {
-        setCourses(res.data);
-      })
-      .catch((err) => {
-        console.error("Error fetching courses", err);
-      });
-  }, []);
+  axios.get("http://localhost:3000/active-courses")
+    .then((res) => {
+      setCourses(res.data.activeCourses); // ✅ Fix here
+    })
+    .catch((err) => {
+      console.error("Error fetching courses", err);
+    });
+}, []);
+
   function scrollCards(direction) {
   const container = document.getElementById("scrollContainer");
   const scrollAmount = 320; 
@@ -37,24 +38,23 @@ export default function Student_main_dashboard() {
           <button className="scroll-button left" onClick={() => scrollCards("left")}>◀</button>
 
           <div className="cdata" id="scrollContainer">
-  <CCard
+  {/* <CCard
     title="Interview Crash Course"
     description="Master D and Algorithms for technical interviews. Includes mock tests and live sessions."
     mentor="Pawan"
     endDate="25/05/2020"
     tags={["DSA", "Interview Prep", "Live Sessions", "Mock Tests"]}
-  />
+  /> */}
 
-           {/* {courses.map((course, index) => (
+           {courses.map((course, index) => (
             <CCard
-              key={index}
-              title={course.title}
+              key={course.courseid} 
+              title={course.coursename}
               description={course.description}
-              mentor={course.mentor}
-              endDate={new Date(course.endDate).toLocaleDateString()}
-               tags={course.tags || []}
-            />
-          ))} */}
+              // mentor={course.mentor}
+             endDate={new Date(course.enrollmentend).toLocaleDateString()}
+            tags={Array.isArray(course.category) ? course.category : [course.category]}            />
+          ))}
           </div>
 
           <button className="scroll-button right" onClick={() => scrollCards("right")}>▶</button>
