@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import Mentor_navbar from "../Mentor_navbar";
 import axios from "axios";
@@ -13,7 +12,6 @@ export default function Problems() {
     const fetchData = async () => {
       try {
         const tagsRes = await axios.get("http://localhost:3000/mentor/problems/tags");
-        console.log(tagsRes.data.companies);
         setTopics(tagsRes.data.topics || []);
         setCompanies(tagsRes.data.companies || []);
 
@@ -28,7 +26,6 @@ export default function Problems() {
   }, []);
 
   const levels = ["Easy", "Medium", "Hard"];
-
   const [showForm, setShowForm] = useState(false);
   const [prerequisites, setPrerequisites] = useState([]);
   const [prereqInput, setPrereqInput] = useState("");
@@ -66,30 +63,27 @@ export default function Problems() {
   };
 
   const handleKeyDown = (e, type) => {
-    if (e.key === "Enter" && (type === "prereq" ? prereqInput : companyInput).trim() !== "") {
+    if (e.key === "Enter") {
       e.preventDefault();
-      const trimmed = (type === "prereq" ? prereqInput : companyInput).trim();
-      if (type === "prereq" && !prerequisites.includes(trimmed)) {
+      const trimmed = type === "prereq" ? prereqInput.trim() : companyInput.trim();
+      if (type === "prereq" && trimmed && !prerequisites.includes(trimmed)) {
         setPrerequisites((prev) => [...prev, trimmed]);
         setPrereqInput("");
       }
-      if (type === "company" && !companyTags.includes(trimmed)) {
+      if (type === "company" && trimmed && !companyTags.includes(trimmed)) {
         setCompanyTags((prev) => [...prev, trimmed]);
         setCompanyInput("");
       }
     }
   };
 
-  const removeTag = (valueToRemove, type) => {
+  const removeTag = (tag, type) => {
     if (type === "prereq") {
-      setPrerequisites((prev) => prev.filter((tag) => tag !== valueToRemove));
+      setPrerequisites((prev) => prev.filter((t) => t !== tag));
     } else {
-      setCompanyTags((prev) => prev.filter((tag) => tag !== valueToRemove));
+      setCompanyTags((prev) => prev.filter((t) => t !== tag));
     }
   };
-
-  const handleclick = () => setShowForm(true);
-  const handleClose = () => setShowForm(false);
 
   const handleAddTestCase = () => {
     setInputs([...inputs, ""]);
@@ -148,51 +142,137 @@ export default function Problems() {
           <div className="form_overlay">
             <div className="course_form slide-down">
               <h2>Add New Problem</h2>
-              {/* [form section remains unchanged] */}
-              {/* ... */}
+              <form onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  name="problemtitle"
+                  placeholder="Problem Title"
+                  value={formData.problemtitle}
+                  onChange={handleInputChange}
+                  required
+                />
+                <textarea
+                  name="description"
+                  placeholder="Description"
+                  value={formData.description}
+                  onChange={handleInputChange}
+                  required
+                />
+                <select
+                  name="level"
+                  value={formData.level}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Difficulty</option>
+                  {levels.map((level) => (
+                    <option key={level} value={level}>{level}</option>
+                  ))}
+                </select>
+
+                {/* Prerequisites */}
+                <div className="tag-input-section">
+                  <input
+                    type="text"
+                    placeholder="Add Topic"
+                    value={prereqInput}
+                    onChange={(e) => setPrereqInput(e.target.value)}
+                    onKeyDown={(e) => handleKeyDown(e, "prereq")}
+                  />
+                  <div className="tags-display">
+                    {prerequisites.map((tag, idx) => (
+                      <span key={idx} onClick={() => removeTag(tag, "prereq")}>
+                        {tag} ✕
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Company Tags */}
+                <div className="tag-input-section">
+                  <input
+                    type="text"
+                    placeholder="Add Company"
+                    value={companyInput}
+                    onChange={(e) => setCompanyInput(e.target.value)}
+                    onKeyDown={(e) => handleKeyDown(e, "company")}
+                  />
+                  <div className="tags-display">
+                    {companyTags.map((tag, idx) => (
+                      <span key={idx} onClick={() => removeTag(tag, "company")}>
+                        {tag} ✕
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Test Cases */}
+                {inputs.map((input, idx) => (
+                  <div key={idx} className="test-case">
+                    <input
+                      type="text"
+                      placeholder={`Input ${idx + 1}`}
+                      value={input}
+                      onChange={(e) => handleChangeInput(idx, e.target.value)}
+                    />
+                    <input
+                      type="text"
+                      placeholder={`Output ${idx + 1}`}
+                      value={outputs[idx]}
+                      onChange={(e) => handleChangeOutput(idx, e.target.value)}
+                    />
+                  </div>
+                ))}
+                <div className="testcase-buttons">
+                  <button type="button" onClick={handleAddTestCase}>+ Add Test Case</button>
+                  <button type="button" onClick={handleRemoveTestCase}>- Remove</button>
+                </div>
+
+                <div className="form-actions">
+                  <button type="submit">Submit</button>
+                  <button type="button" onClick={() => setShowForm(false)}>Cancel</button>
+                </div>
+              </form>
             </div>
           </div>
         )}
 
+        {/* PAGE HEADER */}
         <div className="problems-header">
           <h1>PROBLEMS</h1>
-          <button className="add-problem-btn" onClick={handleclick}>Add Problems</button>
+          <button className="add-problem-btn" onClick={() => setShowForm(true)}>Add Problems</button>
         </div>
 
+        {/* FILTERS */}
         <div className="filters-section">
           <div className="filters-group">
             <div className="filter-item">
-              <label htmlFor="topic-filter">Topic</label>
-              <select id="topic-filter" value={selectedTopic} onChange={(e) => setSelectedTopic(e.target.value)}>
-                <option value="All Topics">All Topics</option>
-                {topics.map(topic => (
-                  <option key={topic} value={topic}>{topic}</option>
-                ))}
+              <label>Topic</label>
+              <select value={selectedTopic} onChange={(e) => setSelectedTopic(e.target.value)}>
+                <option>All Topics</option>
+                {topics.map(topic => <option key={topic}>{topic}</option>)}
               </select>
             </div>
 
             <div className="filter-item">
-              <label htmlFor="level-filter">Level</label>
-              <select id="level-filter" value={selectedLevel} onChange={(e) => setSelectedLevel(e.target.value)}>
-                <option value="All Levels">All Levels</option>
-                {levels.map(level => (
-                  <option key={level} value={level}>{level}</option>
-                ))}
+              <label>Level</label>
+              <select value={selectedLevel} onChange={(e) => setSelectedLevel(e.target.value)}>
+                <option>All Levels</option>
+                {levels.map(level => <option key={level}>{level}</option>)}
               </select>
             </div>
           </div>
 
           <div className="filter-item">
-            <label htmlFor="company-filter">Company</label>
-            <select id="company-filter" value={selectedCompany} onChange={(e) => setSelectedCompany(e.target.value)}>
-              <option value="All Companies">All Companies</option>
-              {companies.map(company => (
-                <option key={company} value={company}>{company}</option>
-              ))}
+            <label>Company</label>
+            <select value={selectedCompany} onChange={(e) => setSelectedCompany(e.target.value)}>
+              <option>All Companies</option>
+              {companies.map(company => <option key={company}>{company}</option>)}
             </select>
           </div>
         </div>
 
+        {/* PROBLEMS LIST */}
         <div className="problems-list">
           <div className="problems-list-header">
             <div className="header-id">#</div>
@@ -208,20 +288,17 @@ export default function Problems() {
               <div className="problem-id">{problem.problemid}</div>
               <div className="problem-title">{problem.problemtitle}</div>
               <div className={`problem-difficulty ${problem.level.toLowerCase()}`}>{problem.level}</div>
-              {/* Acceptance (optional) */}
               <div className="problem-acceptance">--</div>
               <div className="problem-tags-container">
-                <div className="problem-tags-scroll">
-                  <div className="topic-tags">
-                    {problem.prerequisites.map((topic, index) => (
-                      <span key={index} className="topic-tag">{topic}</span>
-                    ))}
-                  </div>
-                  <div className="company-tags">
-                    {problem.companyTags.map((company, index) => (
-                      <span key={index} className="company-tag">{company}</span>
-                    ))}
-                  </div>
+                <div className="topic-tags">
+                  {problem.prerequisites.map((topic, index) => (
+                    <span key={index} className="topic-tag">{topic}</span>
+                  ))}
+                </div>
+                <div className="company-tags">
+                  {problem.companyTags.map((company, index) => (
+                    <span key={index} className="company-tag">{company}</span>
+                  ))}
                 </div>
               </div>
               <div className="problem-action">
