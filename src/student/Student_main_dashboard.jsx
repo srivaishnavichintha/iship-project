@@ -40,8 +40,8 @@ export default function Student_main_dashboard() {
         <div className="cdata" id="scrollContainer">
           {courses.map((course) => (
             <CCard
-              key={course._id || course.courseid}
-              id={ course.courseid} 
+              key={course.courseid} 
+              id={course.courseid}
               title={course.coursename}
               description={course.description}
               endDate={new Date(course.enrollmentend).toLocaleDateString()}

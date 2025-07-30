@@ -8,13 +8,14 @@ export default function EnrollForm() {
   const coursename = state?.title || courseName.replace(/-/g, " ");
     const courseid = state?.courseid ;
 
-  const [studentid, setStudentId] = useState("");
-  const [username, setStudentName] = useState("");
+  const [studentid, setStudentid] = useState("");
+  const [username, setStudentname] = useState("");
 
   useEffect(() => {
     // Simulate getting from localStorage or auth context
-    setStudentId(localStorage.getItem("studentId"));
-    setStudentName(localStorage.getItem("studentName")  );
+     const studentData = JSON.parse(localStorage.getItem("userData"));
+    setStudentid(studentData.studentid);
+    setStudentname(studentData.username);
   }, []);
 
   const handleSubmit = async (e) => {
@@ -24,7 +25,7 @@ export default function EnrollForm() {
       courseid,
       coursename,
       studentid,
-      username
+      // username
     };
 
     try {
