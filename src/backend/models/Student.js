@@ -1,8 +1,13 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const Counter = require("./counter"); // Make sure this path is correct
 
 const studentSchema = new mongoose.Schema({
-  username: { type: String, required: true },
+  studentid: {
+    type: Number,
+    unique: true
+  },
+  username: { type: String, required: true }, // changed from "username"
   email: { type: String, required: true, unique: true },
   level: { type: String, enum: ['Beginner', 'Intermediate', 'Advanced'], default: 'Beginner' },
   points: { type: Number, default: 0 },
@@ -10,11 +15,22 @@ const studentSchema = new mongoose.Schema({
   joinedAt: { type: Date, default: Date.now },
   password: { type: String, required: true },
   courseIds: [String],
-  isactive:{type: Boolean,default:true}
+  isactive: { type: Boolean, default: true }
 });
 
+// Auto-increment studentid
 studentSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next(); // skip if password is unchanged
+  if (this.isNew) {
+    const counter = await Counter.findOneAndUpdate(
+      { id: "studentid" },         // track student ids separately
+      { $inc: { seq: 1 } },
+      { new: true, upsert: true }
+    );
+    this.studentid = counter.seq;
+  }
+
+  // Hash password if changed
+  if (!this.isModified("password")) return next();
   try {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
@@ -23,4 +39,5 @@ studentSchema.pre("save", async function (next) {
     next(err);
   }
 });
+
 module.exports = mongoose.model("Student", studentSchema);

@@ -17,6 +17,24 @@ router.post("/mentor/courses", async (req, res) => {
 });
 
 
+router.get("/active-courses", async (req, res) => {
+  try {
+    const currentDate = new Date();
+    const activeCourses = await Course.find({
+      enrollementend: { $gte: currentDate }
+    });
+    console.log("📤 Sending courses:", activeCourses);
+
+    res.status(200).json({
+      activeCourses: activeCourses
+    });
+  } catch (err) {
+    console.error("Error fetching active courses:", err);
+    res.status(500).json({ error: "Failed to fetch courses" });
+  }
+});
+
+
 
 
 module.exports = router;

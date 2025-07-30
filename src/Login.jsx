@@ -11,7 +11,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    studentname: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -31,7 +31,7 @@ export default function Login() {
 
     const payload = isSignup
       ? {
-          studentname: formData.studentname,
+          username: formData.username,
           email: formData.email,
           password: formData.password,
           role: role,
@@ -100,9 +100,9 @@ export default function Login() {
             <>
               <input
                 type="text"
-                name="studentname"
-                placeholder="studentname"
-                value={formData.studentname}
+                name="username"
+                placeholder="Username"
+                value={formData.username}
                 onChange={handleChange}
                 required
               />
@@ -147,7 +147,7 @@ export default function Login() {
               <input
                 type="text"
                 name="identifier"
-                placeholder="studentname or Email"
+                placeholder="Username or Email"
                 value={formData.identifier}
                 onChange={handleChange}
                 required

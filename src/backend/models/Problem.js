@@ -1,6 +1,12 @@
+// models/Problem.js
 const mongoose = require("mongoose");
+const Counter = require("./counter");
 
 const problemSchema = new mongoose.Schema({
+  problemid: {
+    type: Number,
+    unique: true
+  },
   problemtitle: {
     type: String,
     required: true,
@@ -41,4 +47,17 @@ const problemSchema = new mongoose.Schema({
   }
 });
 
-module.exports  = mongoose.model("Problem", problemSchema);
+// Auto-increment logic for problemId
+problemSchema.pre("save", async function (next) {
+  if (this.isNew) {
+    const counter = await Counter.findOneAndUpdate(
+      { id: "problemid" },              // tracking "problemid" type
+      { $inc: { seq: 1 } },             // increment seq by 1
+      { new: true, upsert: true }       // create if doesn't exist
+    );
+    this.problemid = counter.seq;
+  }
+  next();
+});
+
+module.exports = mongoose.model("Problem", problemSchema);

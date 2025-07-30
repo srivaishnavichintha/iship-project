@@ -25,7 +25,7 @@ export default function EnrollForm() {
       coursename,
       studentid,
       studentname
-    };
+    };courseid=1;
 
     try {
       await axios.post("http://localhost:3000/enroll", payload);

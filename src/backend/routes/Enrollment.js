@@ -3,13 +3,13 @@ const router = express.Router();
 const Enrollment = require("../models/Enrollment");
 
 // POST /api/enroll
-router.post("/", async (req, res) => {
+router.post("/enroll", async (req, res) => {
   try {
-    const { courseid, coursetitle, studentid, studentname } = req.body;
+    const { courseid, coursename, studentid, studentname } = req.body;
 
     const newEnrollment = new Enrollment({
       courseid,
-      coursetitle,
+      coursename,
       studentid,
       studentname,
     });
@@ -21,5 +21,6 @@ router.post("/", async (req, res) => {
     res.status(500).json({ error: "Enrollment failed" });
   }
 });
+
 
 module.exports = router;
