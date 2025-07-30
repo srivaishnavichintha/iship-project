@@ -63,7 +63,7 @@ export default function Login() {
       username: user.username,
       email: user.email,
       role: user.role,
-      ...(user.role === 'mentor' && { mentorId: user.mentorId }) 
+      ...(user.role === 'mentor' && { mentorid: user.mentorid }) 
     }));
 
       if (user.role === "student") {

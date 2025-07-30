@@ -4,10 +4,10 @@ import Student_navbar from "../Student_navabar";
 
 const Peer2peer = () => {
   const [view, setView] = useState("history");
-  const [selectedCourse, setSelectedCourse] = useState("");
   const [courseFilter, setCourseFilter] = useState("All");
   const [statusFilter, setStatusFilter] = useState("All");
   const [dateFilter, setDateFilter] = useState("");
+  const [inviteCourseFilter, setInviteCourseFilter] = useState("All");
 
   const contests = [
     { name: "Array Showdown", date: "2025-07-15", course: "DSA", status: "Won" },
@@ -16,6 +16,24 @@ const Peer2peer = () => {
     { name: "Flex Grid Fight", date: "2025-07-27", course: "Frontend", status: "Virtual" },
   ];
 
+  const peersByCourse = {
+    DSA: [
+      { name: "Ravi Kumar", points: 130, contests: 12, course: "DSA" },
+      { name: "Pooja Sharma", points: 145, contests: 15, course: "DSA" },
+    ],
+    Frontend: [
+      { name: "Kiran Patil", points: 120, contests: 8, course: "Frontend" },
+      { name: "Meena Joshi", points: 110, contests: 10, course: "Frontend" },
+    ],
+    Algorithms: [
+      { name: "Amit Singh", points: 150, contests: 20, course: "Algorithms" },
+      { name: "Priya Patel", points: 125, contests: 18, course: "Algorithms" },
+    ]
+  };
+
+  const currentUser = { name: "You", level: 2, points: 135, nextLevel: 150 };
+
+  // Filter contests for history view
   const filteredContests = contests.filter((c) => {
     const courseMatch = courseFilter === "All" || c.course === courseFilter;
     const statusMatch = statusFilter === "All" || c.status === statusFilter;
@@ -23,41 +41,27 @@ const Peer2peer = () => {
     return courseMatch && statusMatch && dateMatch;
   });
 
-  const peersByCourse = {
-    DSA: [
-      { name: "Ravi Kumar", points: 130 },
-      { name: "Pooja Sharma", points: 145 },
-    ],
-    Frontend: [
-      { name: "Kiran Patil", points: 120 },
-      { name: "Meena Joshi", points: 110 },
-    ],
-  };
-
-  const currentUser = { name: "You", level: 2, points: 135, nextLevel: 150 };
+  // Filter peers for invite view
+  const filteredPeers = inviteCourseFilter === "All" 
+    ? Object.values(peersByCourse).flat() 
+    : peersByCourse[inviteCourseFilter] || [];
 
   return (
     <>
       <Student_navbar />
       <div className="peer-to-peer-container">
-        <div className="view-toggle">
-          <button
-            className={view === "history" ? "active" : ""}
-            onClick={() => setView("history")}
+        <div className="header-section">
+          <h2>{view === "history" ? "Peer-to-Peer Contest History" : "Invite Peers"}</h2>
+          <button 
+            className="btn toggle-view-btn"
+            onClick={() => setView(view === "history" ? "invite" : "history")}
           >
-            History
-          </button>
-          <button
-            className={view === "invite" ? "active" : ""}
-            onClick={() => setView("invite")}
-          >
-            Invite
+            {view === "history" ? "Invite Peers" : "View History"}
           </button>
         </div>
 
         {view === "history" ? (
           <>
-            <h2>Peer-to-Peer Contest History</h2>
             <div className="filters">
               <select value={courseFilter} onChange={(e) => setCourseFilter(e.target.value)}>
                 <option value="All">All Courses</option>
@@ -79,70 +83,84 @@ const Peer2peer = () => {
               </select>
             </div>
 
-            <table className="contest-history-table">
-              <thead>
-                <tr>
-                  <th>Contest Name</th>
-                  <th>Date</th>
-                  <th>Course</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredContests.map((c, idx) => (
-                  <tr key={idx}>
-                    <td>{c.name}</td>
-                    <td>{c.date}</td>
-                    <td>{c.course}</td>
-                    <td className={c.status.toLowerCase()}>{c.status}</td>
+            <div className="table-wrapper">
+              <table className="contest-history-table">
+                <thead>
+                  <tr>
+                    <th>Contest Name</th>
+                    <th>Date</th>
+                    <th>Course</th>
+                    <th>Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {filteredContests.map((c, idx) => (
+                    <tr key={idx}>
+                      <td className="name-cell">{c.name}</td>
+                      <td>{c.date}</td>
+                      <td>{c.course}</td>
+                      <td className={`status ${c.status.toLowerCase()}`}>
+                        <span className="status-badge">{c.status}</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
             <div className="status-summary">
-              <p>🎯 Your Points: {currentUser.points}</p>
-              <p>🎉 Next Level: {currentUser.nextLevel} pts</p>
+              <div className="progress-info">
+                <span>🎯 Your Points: {currentUser.points}</span>
+                <span>🎉 Next Level: {currentUser.nextLevel} pts</span>
+              </div>
+              <div className="progress-bar">
+                <div 
+                  className="progress-fill" 
+                  style={{ width: `${(currentUser.points / currentUser.nextLevel) * 100}%` }}
+                ></div>
+              </div>
             </div>
-            <button className="btn invite" onClick={() => setView("invite")}>
-              Invite Peers
-            </button>
           </>
         ) : (
           <>
-            <h2>Invite Peers</h2>
-            <div className="course-picker">
-              <label>Select Course: </label>
-              <select
-                onChange={(e) => setSelectedCourse(e.target.value)}
-                value={selectedCourse}
+            <div className="filters">
+              <select 
+                value={inviteCourseFilter} 
+                onChange={(e) => setInviteCourseFilter(e.target.value)}
               >
-                <option value="">-- Choose --</option>
-                {Object.keys(peersByCourse).map((course) => (
-                  <option key={course} value={course}>
-                    {course}
-                  </option>
+                <option value="All">All Courses</option>
+                {Object.keys(peersByCourse).map(course => (
+                  <option key={course} value={course}>{course}</option>
                 ))}
               </select>
             </div>
 
-            {selectedCourse && (
-              <div className="invite-section">
-                <h3>Invite Peers from {selectedCourse}</h3>
-                <ul className="peer-list">
-                  {peersByCourse[selectedCourse].map((peer, index) => (
-                    <li key={index}>
-                      <span>{peer.name}</span>
-                      <span className="points">{peer.points} pts</span>
-                      <button className="btn invite-btn">Invite</button>
-                    </li>
+            <div className="table-wrapper">
+              <table className="peer-list-table">
+                <thead>
+                  <tr>
+                    <th>Peer Name</th>
+                    <th>Points</th>
+                    <th>Contests</th>
+                    <th>Course</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredPeers.map((peer, index) => (
+                    <tr key={index}>
+                      <td className="name-cell">{peer.name}</td>
+                      <td>{peer.points} pts</td>
+                      <td>{peer.contests}</td>
+                      <td>{peer.course}</td>
+                      <td>
+                        <button className="btn invite-btn">Invite</button>
+                      </td>
+                    </tr>
                   ))}
-                </ul>
-                <button className="btn back-btn" onClick={() => setView("history")}>
-                  ← Back
-                </button>
-              </div>
-            )}
+                </tbody>
+              </table>
+            </div>
           </>
         )}
       </div>

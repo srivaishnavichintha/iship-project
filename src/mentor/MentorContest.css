@@ -45,7 +45,6 @@
 .contest-card {
   width: 280px;
   height: 180px;
-  background: linear-gradient(to bottom, #f7b733, #fc4a1a);
   border-radius: 15px;
   box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.2);
   padding: 20px;

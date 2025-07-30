@@ -2,19 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./Course.css";
 import Mentor_navbar from "../Mentor_navbar";
-
-const CourseCard = ({ title }) => {
-  return (
-    <div className="card">
-      <div className="rec">
-        <div className="rec1"></div>
-        <div className="rec2"></div>
-        <div className="rec3"></div>
-      </div>
-      {title && <h4 className="card-title">{title}</h4>}
-    </div>
-  );
-};
+import CCard from "../components/CCard"
 
 export default function Course() {
   const [showForm, setShowForm] = useState(false);
@@ -246,9 +234,22 @@ export default function Course() {
         </div>
 
         <div className="card_cover">
-          <CourseCard  />
-          <CourseCard />
-          <CourseCard  />
+           <CCard
+              title="Interview Crash Course"
+              description="Master D and Algorithms for technical interviews. Includes mock tests and live sessions."
+              mentor="Pawan"
+              endDate="25/05/2020"
+              tags={["DSA", "Interview Prep", "Live Sessions", "Mock Tests"]}
+            />
+           {/* <CCard
+                        key={index}
+                        id={course.id}
+                        title={course.title}
+                        description={course.description}
+                        mentor={course.mentor}
+                        endDate={course.endDate}
+                        tags={course.tags}
+                      /> */}
         </div>
       </div>
     </>

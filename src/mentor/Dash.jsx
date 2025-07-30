@@ -1,17 +1,8 @@
 import React from "react";
 import "./Dash.css";
+import CCard from '../components/CCard'
 
-const Card = ({ type }) => {
-  return (
-    <div className={`${type}_card`}>
-      <div className="rec">
-        <div className="rec1"></div>
-        <div className="rec2"></div>
-        <div className="rec3"></div>
-      </div>
-    </div>
-  );
-};
+
 
 const StudentRow = ({ sno, name, points, submissions }) => {
   return (
@@ -24,16 +15,20 @@ const StudentRow = ({ sno, name, points, submissions }) => {
   );
 };
 
-export default function MentorDashboard() {
+export default function Dash() {
   return (
     <div className="mentor_dashboard">
       {/* Popular Courses */}
       <div className="section">
         <h2>Popular Courses</h2>
         <div className="card_cover">
-          <Card type="popular" />
-          <Card type="popular" />
-          <Card type="popular" />
+           <CCard
+              title="Interview Crash Course"
+              description="Master D and Algorithms for technical interviews. Includes mock tests and live sessions."
+              mentor="Pawan"
+              endDate="25/05/2020"
+              tags={["DSA", "Interview Prep", "Live Sessions", "Mock Tests"]}
+            />
         </div>
       </div>
 
@@ -41,9 +36,13 @@ export default function MentorDashboard() {
       <div className="section">
         <h2>Upcoming Courses</h2>
         <div className="card_cover">
-          <Card type="upcoming" />
-          <Card type="upcoming" />
-          <Card type="upcoming" />
+           <CCard
+              title="Interview Crash Course"
+              description="Master D and Algorithms for technical interviews. Includes mock tests and live sessions."
+              mentor="Pawan"
+              endDate="25/05/2020"
+              tags={["DSA", "Interview Prep", "Live Sessions", "Mock Tests"]}
+            />
         </div>
       </div>
 

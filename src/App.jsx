@@ -14,7 +14,6 @@ import StudentContest from "./student/StudentContest";
 import Peer2peer from "./student/Peer2peer";
 import ProblemStatement from "./problems/Problemstmt";
 import EnrollForm from "./components/Enrollform";
-import Contestleaderboard from "./components/Contestleaderboard"
 import CourseLayout from "./courses/CourseLayout";
 import CourseLevels from "./courses/CourseLevels";
 import CourseProblems from "./courses/CourseProblems";
@@ -38,8 +37,8 @@ function App() {
         <Route path="/student/peer2peer" element={<Peer2peer />} />
         <Route path="/problemstatement/:slug" element={<ProblemStatement />} />
         <Route path="/enroll/:courseName" element={<EnrollForm />} />
-        {/* <Route path="/contest/:contestName" element={<ContestPage />} /> */}
-               <Route path="/contest/leaderboard" element={<Contestleaderboard />} />
+
+        {/* ✅ Nested Route for CourseLayout */}
         <Route path="/courses/:courseName" element={<CourseLayout />}>
           <Route path="levels" element={<CourseLevels />} />
           <Route path="problems" element={<CourseProblems />} />

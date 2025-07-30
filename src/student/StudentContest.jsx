@@ -2,54 +2,68 @@ import React, { useState } from "react";
 import "./StudentContest.css";
 import Student_navabar from "../Student_navabar";
 import trophy from "../assets/trophy.png";
-import Past_contests from "../components/Past_contests";
-import Mycontest from "../components/Mycontest";
-import Contest_on_card from "../components/Contest_on_card";
 
 export default function StudentContest() {
   const [activeTab, setActiveTab] = useState("past");
 
+  const pastContests = [
+    { id: 1, name: "Weekly Contest 460", date: "Jul 27, 2025 8:00 AM GMT+5:30", type: "regular" },
+    { id: 2, name: "Weekly Contest 459", date: "Jul 20, 2025 8:00 AM GMT+5:30", type: "regular" },
+    { id: 3, name: "Biweekly Contest 161", date: "Jul 19, 2025 8:00 PM GMT+5:30", type: "regular" },
+    { id: 4, name: "Weekly Contest 458", date: "Jul 17, 2025 8:00 PM GMT+5:30", type: "regular" },
+    { id: 5, name: "Virtual Contest", date: "Jul 18, 2025 8:00 PM GMT+5:30", type: "virtual" },
+    { id: 6, name: "Virtual Contest", date: "Jul 19, 2025 8:00 PM GMT+5:30", type: "virtual" }
+  ];
+
   return (
     <>
       <Student_navabar />
-      <div className="contest-wrapper">
-        <div className="header-section">
-          <img src={trophy} className="trophy-img" alt="Trophy" />
-          <h1><span className="contest">Contest</span></h1>
-          <p className="subheading">Compete every possiable minute. Compete and see your ranking!</p>
-        </div>
+      <div className="contest-container">
+        {/* Header Section */}
+        <div className="contest-header">
+  <div className="header-content">
+    <div className="trophy-container">
+      <img src={trophy} alt="Trophy" className="trophy-icon" />
+      <div className="trophy-glow"></div>
+    </div>
+    <h1 className="contest-title">Contest</h1>
+    <p className="contest-subtitle">
+      Compete every possible minute. Compete and see your ranking!
+    </p>
+  </div>
+</div>
 
-        {/* 📦 Contest Card Display */}
-        <div className="card-container">
-          <Contest_on_card
-            image="https://cdn.pixabay.com/photo/2017/05/23/22/36/banner-2337081_1280.jpg"
-            title="JS Weekly Challenge"
-            countdown="1h 24m"
-            status="Ends in"
-            mentor="Suresh R"
-            level="Intermediate"
-          />
-        </div>
-
-        {/* 🧭 Tab Switcher */}
-        <div className="tab-buttons">
+        {/* Tab Navigation */}
+        <div className="contest-tabs">
           <button
-            className={activeTab === "past" ? "active" : ""}
+            className={`tab-button ${activeTab === "past" ? "active" : ""}`}
             onClick={() => setActiveTab("past")}
           >
             Past Contests
           </button>
           <button
-            className={activeTab === "my" ? "active" : ""}
+            className={`tab-button ${activeTab === "my" ? "active" : ""}`}
             onClick={() => setActiveTab("my")}
           >
             My Contests
           </button>
         </div>
 
-        {/* 🔄 Tab Content */}
-        <div className="tab-content">
-          {activeTab === "past" ? <Past_contests /> : <Mycontest />}
+        {/* Contest List */}
+        <div className="contest-list">
+          {pastContests.map((contest) => (
+            <div key={contest.id} className={`contest-item ${contest.type}`}>
+              <div className="contest-info">
+                <h3 className="contest-name">{contest.name}</h3>
+                <p className="contest-date">{contest.date}</p>
+              </div>
+              <div className="contest-status">
+                {contest.type === "virtual" && (
+                  <span className="virtual-badge">Virtual</span>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </>

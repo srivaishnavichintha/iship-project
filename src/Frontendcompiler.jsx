@@ -39,6 +39,11 @@ export default function Compiler() {
         monacoRef.current.setScrollTop(0);
       }, 100);
     }
+    self.MonacoEnvironment = {
+  getWorkerUrl: function (moduleId, label) {
+    return `/monaco-editor-workers/${label}.worker.js`;
+  }
+};
 
     // Cleanup
     return () => {
