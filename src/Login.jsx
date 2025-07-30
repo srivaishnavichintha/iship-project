@@ -17,7 +17,18 @@ export default function Login() {
     confirmPassword: "",
     identifier: "", // used only for login
   });
+ useEffect(() => {
+    const handleBeforeUnload = () => {
+      localStorage.removeItem("userData");
+    };
 
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    // Cleanup function to remove the event listener
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -58,10 +69,9 @@ export default function Login() {
 
       const user = res.data.user;
       console.log("Authenticated user:", user);
-
       // Save to localStorage
       const userData = {
-        studentid: user._id || user.studentid,
+        studentid: user.studentid,
         username: user.username,
         email: user.email,
         role: user.role,
