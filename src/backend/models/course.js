@@ -11,7 +11,7 @@ const courseSchema = new mongoose.Schema({
     enum: ["Beginner", "Intermediate", "Advanced"],
     required: true
   },
-  enrollementend: { type: Date, required: true },
+ enrollmentend: { type: Date, required: true },
   max_participants: { type: Number, required: true },
   prerequisites: [String],
   createdAt: { type: Date, default: Date.now }

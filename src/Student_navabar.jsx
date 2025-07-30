@@ -18,7 +18,7 @@ export default function Student_navbar() {
       const userData = JSON.parse(localStorage.getItem("userData"));
       const username = userData?.username || "Guest";
 
-      console.log("Username from localStorage:", username);
+      console.log("Username from localStorage:", userData);
 
      console.log("Username from localStorage:", username);
     if (username && username.length > 0) {
