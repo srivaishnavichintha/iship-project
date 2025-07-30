@@ -50,8 +50,16 @@ export default function Course() {
     setShowForm(false);
   };
     useEffect(() => {
-  axios.get("http://localhost:3000/my-mentor-courses") 
-    .then((res) => {
+      const mentorData = JSON.parse(localStorage.getItem("userData")); // assuming this contains mentorid
+      const mentorid = mentorData?.mentorid;
+
+      if (!mentorid) {
+        console.error("Mentor ID not found in localStorage");
+        return;
+      }
+
+      axios.get("http://localhost:3000/my-mentor-courses") 
+      .then((res) => {
       console.log("Mentor courses:", res.data);  
       setmy_mentor_courses(res.data);  
     })
