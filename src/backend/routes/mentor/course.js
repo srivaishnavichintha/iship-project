@@ -15,4 +15,20 @@ router.get("/upcoming-course", async (req, res) => {
   }
 });
 
+// GET /my-mentor-courses?mentorid=123
+router.get("/my-mentor-courses", async (req, res) => {
+  const { mentorid } = req.query;
+
+  if (!mentorid) {
+    return res.status(400).json({ message: "Mentor ID is required" });
+  }
+
+  try {
+    const courses = await Course.find({ mentorid });
+    res.status(200).json(courses);
+  } catch (error) {
+    console.error("Error fetching mentor courses:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 module.exports = router;

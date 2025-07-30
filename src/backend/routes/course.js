@@ -23,7 +23,7 @@ router.get("/active-courses", async (req, res) => {
     const activeCourses = await Course.find({
       enrollmentend: { $gte: currentDate }
     });
-    // console.log("📤 Sending courses:", activeCourses);
+      // console.log("📤 Sending courses:", activeCourses);
 
     res.status(200).json({
       activeCourses: activeCourses
