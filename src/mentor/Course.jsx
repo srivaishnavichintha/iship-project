@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import "./Course.css";
 import Mentor_navbar from "../Mentor_navbar";
-import CCard from "../components/CCard"
+import Mccard from "../components/Mccard"
 
 export default function Course() {
   const [showForm, setShowForm] = useState(false);
   const [prerequisites, setPrerequisites] = useState([]);
   const [prereqInput, setPrereqInput] = useState("");
+  const [my_mentor_courses, setmy_mentor_courses] = useState([]);
   const [formData, setFormData] = useState({
     courseid:"",
     coursename: "",
@@ -48,6 +49,17 @@ export default function Course() {
   const handleClose = () => {
     setShowForm(false);
   };
+    useEffect(() => {
+  axios.get("http://localhost:3000/my-mentor-courses") 
+    .then((res) => {
+      console.log("Mentor courses:", res.data);  
+      setmy_mentor_courses(res.data);  
+    })
+    .catch((err) => {
+      console.error("Error fetching courses:", err);
+    });
+}, []);
+
 
   const handlecourse = async () => {
     if (!formData.coursename || !formData.description || !formData.category ||
@@ -106,7 +118,7 @@ export default function Course() {
         {showForm && (
           <div className="form_overlay">
             <div className="course_form slide-down">
-              <h2>Add New Course</h2>
+              <h2 >Add New Course</h2>
 
               <label>
                 Course Id:<br />
@@ -234,22 +246,25 @@ export default function Course() {
         </div>
 
         <div className="card_cover">
-           <CCard
+           {/* <Mccard
               title="Interview Crash Course"
               description="Master D and Algorithms for technical interviews. Includes mock tests and live sessions."
               mentor="Pawan"
               endDate="25/05/2020"
               tags={["DSA", "Interview Prep", "Live Sessions", "Mock Tests"]}
-            />
-           {/* <CCard
-                        key={index}
-                        id={course.id}
-                        title={course.title}
-                        description={course.description}
-                        mentor={course.mentor}
-                        endDate={course.endDate}
-                        tags={course.tags}
-                      /> */}
+            /> */}
+            {my_mentor_courses.map((course, index) => (
+                <Mccard
+                key={index}
+                id={course.courseid}
+                title={course.coursename}
+                description={course.description}
+                mentor={course.mentorname}
+                endDate={course.enrollmentend}
+                tags={course.prerequisites}
+                />
+            ))}
+
         </div>
       </div>
     </>

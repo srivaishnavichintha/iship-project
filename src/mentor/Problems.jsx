@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../Practice_data.css";
+
 import Mentor_navbar from "../Mentor_navbar";
 import axios from "axios";
 

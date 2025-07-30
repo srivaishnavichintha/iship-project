@@ -1,64 +1,57 @@
 import Student_navabar from "../Student_navabar";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import CCard from "../components/CCard"
+import CCard from "../components/CCard";
 import { Link } from "react-router-dom";
 import "./Student_main_dashboard.css";
 
-
-
 export default function Student_main_dashboard() {
   const [courses, setCourses] = useState([]);
+  
   useEffect(() => {
-  axios.get("http://localhost:3000/active-courses")
-    .then((res) => {
-      setCourses(res.data.activeCourses); // ✅ Fix here
-    })
-    .catch((err) => {
-      console.error("Error fetching courses", err);
-    });
-}, []);
+    axios.get("http://localhost:3000/active-courses")
+      .then((res) => {
+        console.log("Courses data:", res.data.activeCourses); // Debug log
+        setCourses(res.data.activeCourses);
+      })
+      .catch((err) => {
+        console.error("Error fetching courses", err);
+      });
+  }, []);
 
   function scrollCards(direction) {
-  const container = document.getElementById("scrollContainer");
-  const scrollAmount = 320; 
+    const container = document.getElementById("scrollContainer");
+    const scrollAmount = 320; 
 
-  if (direction === "left") {
-    container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-  } else {
-    container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    if (direction === "left") {
+      container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+    } else {
+      container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
   }
-}
+
   return (
     <>
       <Student_navabar />
-      {/* <Stu_dash_con /> */}
       <h1 className="dash-head">Ongoing Courses</h1>
       <div className="cdata-wrapper">
-          <button className="scroll-button left" onClick={() => scrollCards("left")}>◀</button>
+        <button className="scroll-button left" onClick={() => scrollCards("left")}>◀</button>
 
-          <div className="cdata" id="scrollContainer">
-  {/* <CCard
-    title="Interview Crash Course"
-    description="Master D and Algorithms for technical interviews. Includes mock tests and live sessions."
-    mentor="Pawan"
-    endDate="25/05/2020"
-    tags={["DSA", "Interview Prep", "Live Sessions", "Mock Tests"]}
-  /> */}
-
-           {courses.map((course, index) => (
+        <div className="cdata" id="scrollContainer">
+          {courses.map((course) => (
             <CCard
               key={course.courseid} 
               id={course.courseid}
               title={course.coursename}
               description={course.description}
-              // mentor={course.mentor}
-             endDate={new Date(course.enrollmentend).toLocaleDateString()}
-            tags={Array.isArray(course.category) ? course.category : [course.category]}            />
+              endDate={new Date(course.enrollmentend).toLocaleDateString()}
+              tags={Array.isArray(course.category) ? course.category : [course.category]}
+              mentor={course.mentor || "Platform Mentor"} // Default mentor if not provided
+            />
           ))}
-          </div>
+        </div>
 
-          <button className="scroll-button right" onClick={() => scrollCards("right")}>▶</button>
+        <button className="scroll-button right" onClick={() => scrollCards("right")}>▶</button>
       </div>
 
       <div className="dashboard-section">
@@ -82,7 +75,6 @@ export default function Student_main_dashboard() {
         </div>
       </div>
 
-      {/* Upcoming Contests Section */}
       <div className="dashboard-section">
         <h2 className="dashboard-heading">Upcoming Contests</h2>
         <div className="dashboard-card-container">
@@ -104,7 +96,6 @@ export default function Student_main_dashboard() {
         </div>
       </div>
 
-      {/* Student Progress Section */}
       <div className="dashboard-section">
         <h2 className="dashboard-heading">Student Progress</h2>
         <div className="dashboard-card-container">
@@ -123,34 +114,32 @@ export default function Student_main_dashboard() {
         </div>
       </div>
 
-      {/* Recent Activity Timeline Section */}
-<div className="dashboard-section">
-  <h2 className="dashboard-heading">Recent Activity</h2>
-  <div className="timeline">
-    <div className="timeline-item">
-      <div className="timeline-dot"></div>
-      <div className="timeline-content">
-        <h4>Solved “Binary Search Problem”</h4>
-        <p>2 hours ago</p>
+      <div className="dashboard-section">
+        <h2 className="dashboard-heading">Recent Activity</h2>
+        <div className="timeline">
+          <div className="timeline-item">
+            <div className="timeline-dot"></div>
+            <div className="timeline-content">
+              <h4>Solved "Binary Search Problem"</h4>
+              <p>2 hours ago</p>
+            </div>
+          </div>
+          <div className="timeline-item">
+            <div className="timeline-dot"></div>
+            <div className="timeline-content">
+              <h4>Registered for "July Clash" Contest</h4>
+              <p>Yesterday</p>
+            </div>
+          </div>
+          <div className="timeline-item">
+            <div className="timeline-dot"></div>
+            <div className="timeline-content">
+              <h4>Completed "Recursion" Module</h4>
+              <p>3 days ago</p>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div className="timeline-item">
-      <div className="timeline-dot"></div>
-      <div className="timeline-content">
-        <h4>Registered for “July Clash” Contest</h4>
-        <p>Yesterday</p>
-      </div>
-    </div>
-    <div className="timeline-item">
-      <div className="timeline-dot"></div>
-      <div className="timeline-content">
-        <h4>Completed “Recursion” Module</h4>
-        <p>3 days ago</p>
-      </div>
-    </div>
-  </div>
-</div>
-
     </>
   );
 }

@@ -17,7 +17,7 @@ import EnrollForm from "./components/Enrollform";
 import CourseLayout from "./courses/CourseLayout";
 import CourseLevels from "./courses/CourseLevels";
 import CourseProblems from "./courses/CourseProblems";
-//  import ContestData from "./components/ContestData"
+import ContestData from "./components/ContestData"
 
 function App() {
   return (
@@ -41,7 +41,7 @@ function App() {
         <Route path="/courses/:courseName" element={<CourseLayout />}>
           <Route path="levels" element={<CourseLevels />} />
           <Route path="problems" element={<CourseProblems />} />
-         
+        
         </Route>
       </Routes>
     </Router>

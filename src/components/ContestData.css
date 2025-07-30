@@ -1,0 +1,277 @@
+/* Base Styles */
+.contest-data-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  color: rgb(1, 24, 39);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Loading State */
+.contest-data-loading,
+.contest-data-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.loading-spinner {
+  border: 5px solid rgba(1, 24, 39, 0.1);
+  border-top: 5px solid #033a3a;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Header Section */
+.contest-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(1, 24, 39, 0.1);
+}
+
+.contest-header h1 {
+  font-size: 2.5rem;
+  color: rgb(1, 24, 39);
+  margin-bottom: 10px;
+}
+
+.contest-meta {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.status-badge {
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.status-badge.upcoming {
+  background-color: rgba(3, 58, 58, 0.1);
+  color: #033a3a;
+  border: 1px solid #033a3a;
+}
+
+.status-badge.live {
+  background-color: rgba(220, 38, 38, 0.1);
+  color: rgb(220, 38, 38);
+  border: 1px solid rgb(220, 38, 38);
+}
+
+.status-badge.completed {
+  background-color: rgba(5, 150, 105, 0.1);
+  color: rgb(5, 150, 105);
+  border: 1px solid rgb(5, 150, 105);
+}
+
+.difficulty-badge {
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  background-color: rgba(1, 24, 39, 0.1);
+  color: rgb(1, 24, 39);
+  border: 1px solid rgb(1, 24, 39);
+}
+
+/* Main Content Layout */
+.contest-content {
+  display: flex;
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.contest-details-panel {
+  flex: 2;
+}
+
+.leaderboard-panel {
+  flex: 1;
+}
+
+/* Details Card */
+.details-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.details-card h2 {
+  color: rgb(1, 24, 39);
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #033a3a;
+  padding-bottom: 10px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-label {
+  font-weight: 600;
+  color: rgba(1, 24, 39, 0.7);
+  font-size: 0.9rem;
+}
+
+.info-value {
+  font-weight: 500;
+  color: rgb(1, 24, 39);
+  font-size: 1.1rem;
+  margin-top: 5px;
+}
+
+.description-section {
+  margin-top: 25px;
+}
+
+.description-section h3 {
+  color: rgb(1, 24, 39);
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.description-section p {
+  color: rgba(1, 24, 39, 0.8);
+  line-height: 1.6;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.add-problems-btn,
+.edit-contest-btn,
+.back-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-problems-btn {
+  background-color: #033a3a;
+  color: white;
+}
+
+.add-problems-btn:hover {
+  background-color: rgb(1, 24, 39);
+}
+
+.edit-contest-btn {
+  background-color: white;
+  color: #033a3a;
+  border: 1px solid #033a3a;
+}
+
+.edit-contest-btn:hover {
+  background-color: rgba(3, 58, 58, 0.1);
+}
+
+.back-button {
+  background-color: white;
+  color: rgb(1, 24, 39);
+  border: 1px solid rgb(1, 24, 39);
+}
+
+.back-button:hover {
+  background-color: rgba(1, 24, 39, 0.1);
+}
+
+/* Leaderboard Card */
+.leaderboard-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.leaderboard-card h2 {
+  color: rgb(1, 24, 39);
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #033a3a;
+  padding-bottom: 10px;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid rgba(1, 24, 39, 0.1);
+}
+
+.leaderboard-table th {
+  background-color: rgba(3, 58, 58, 0.05);
+  color: rgb(1, 24, 39);
+  font-weight: 600;
+}
+
+.leaderboard-table tr:hover {
+  background-color: rgba(3, 58, 58, 0.03);
+}
+
+.no-leaderboard {
+  text-align: center;
+  padding: 20px;
+  color: rgba(1, 24, 39, 0.6);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .contest-content {
+    flex-direction: column;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .contest-header h1 {
+    font-size: 2rem;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+}
