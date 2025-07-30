@@ -3,6 +3,9 @@ import axios from "axios";
 import "./Course.css";
 import Mentor_navbar from "../Mentor_navbar";
 import Mccard from "../components/Mccard"
+import { useParams } from "react-router-dom";
+
+const { mentorid } = useParams(); 
 
 export default function Course() {
   const [showForm, setShowForm] = useState(false);
@@ -50,18 +53,22 @@ export default function Course() {
     setShowForm(false);
   };
     useEffect(() => {
-  axios.get("http://localhost:3000/my-mentor-courses") 
+  if (!mentorid) return;
+
+  axios.get(`http://localhost:3000/mentor/courses/${mentorid}`)
     .then((res) => {
-      console.log("Mentor courses:", res.data);  
-      setmy_mentor_courses(res.data);  
+      setmy_mentor_courses(res.data);
     })
     .catch((err) => {
-      console.error("Error fetching courses:", err);
+      console.error("Error fetching mentor's courses:", err);
     });
-}, []);
+}, [mentorid]);
+
 
 
   const handlecourse = async () => {
+      const user = JSON.parse(localStorage.getItem("userData"));
+      const mentorid =user?.id;
     if (!formData.coursename || !formData.description || !formData.category ||
         !formData.level || !formData.enrollmentend || !formData.max_participants) {
       alert("Please fill all required fields");
@@ -75,6 +82,7 @@ export default function Course() {
         max_participants: Number(formData.max_participants),
         enrollmentend: new Date(formData.enrollmentend).toISOString(),
         prerequisites,
+        mentorid,
         // created_at: new Date().toISOString()
       };
 

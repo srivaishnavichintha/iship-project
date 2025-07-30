@@ -24,6 +24,16 @@ export default function Mentor_navbar() {
     navigate("/login");
   };
 
+  const handleCoursesClick = () => {
+  const user = JSON.parse(localStorage.getItem("userData"));
+  const mentorid = user?.id;  // Make sure 'id' is the mentorid
+
+  if (mentorid) {
+    navigate(`/mentor/courses/${mentorid}`);
+  } else {
+    alert("Mentor ID not found");
+  }
+}; 
   useEffect(() => {
     const username = localStorage.getItem("username");
     if (username) setFirstLetter(username[0].toUpperCase());
@@ -33,7 +43,7 @@ export default function Mentor_navbar() {
     <nav id="nava">
       <div className="nav-left">
         <img src={logo} alt="logo" className="logo" />
-        <Link to="/mentor/courses" className="nav-con">Courses</Link>
+        <p className="nav-con" onClick={handleCoursesClick}>Courses</p>
         <Link to="/mentor/mentorcontest" className="nav-con">Contest</Link>
         <Link to="/mentor/problems" className="nav-con">Problems</Link>
         <Link to="/mentor/leaderboard" className="nav-con">Leaderboard</Link>

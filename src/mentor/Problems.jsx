@@ -327,7 +327,7 @@ export default function Problems() {
                 </div>
               </div>
               <div className="problem-action">
-                <button className="solve-button">Solve Challenge</button>
+                <button className="solve-button">View Challenge</button>
               </div>
             </div>
           ))}

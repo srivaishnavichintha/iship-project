@@ -12,6 +12,7 @@ export default function Student_navbar() {
   const [firstLetter, setFirstLetter] = useState("");
 
   const navigate = useNavigate();
+  
 
   const toggleDropdown = () => setShowDropdown((prev) => !prev);
   const toggleEnvelopeBox = () => setShowEnvelopeBox((prev) => !prev);

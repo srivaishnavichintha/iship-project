@@ -17,20 +17,10 @@ export default function Login() {
     email: "",
     password: "",
     confirmPassword: "",
-    identifier: "", // used only for login
+    identifier: "", 
   });
-//  useEffect(() => {
-//     const handleBeforeUnload = () => {
-//       localStorage.removeItem("userData");
-//     };
 
-//     window.addEventListener("beforeunload", handleBeforeUnload);
 
-//     // Cleanup function to remove the event listener
-//     return () => {
-//       window.removeEventListener("beforeunload", handleBeforeUnload);
-//     };
-//   }, []);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -70,19 +60,15 @@ export default function Login() {
       alert(res.data.message);
 
       const user = res.data.user;
-      console.log("Authenticated user:", user);
-      // Save to localStorage
-     const userData = {
-  username: user.username,
-  email: user.email,
+      // console.log("Authenticated user:", user);
+       const userData = {
   role: user.role,
-  ...(user.role === "mentor" && { mentorid: user.mentorid }),
-  ...(user.role === "student" && { studentid: user.studentid }),
+  id: user.role === "mentor" ? user.mentorid : user.studentid,
+  name:  user.username,
 };
 localStorage.setItem("userData", JSON.stringify(userData));
 console.log("Saved to localStorage:", localStorage.getItem("userData"));
 
-// Navigate with state
 if (user.role === "student") {
   navigate("/student/dashboard", { state: { user: userData } });
 } else if (user.role === "mentor") {
