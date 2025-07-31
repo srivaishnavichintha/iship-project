@@ -54,3 +54,62 @@
 .glow {
   box-shadow: 0 0 12px #3b6a70;
 }
+
+
+/* ✅ Tablet screens (≤ 768px) */
+@media (max-width: 768px) {
+  .icon-grid {
+    grid-template-columns: repeat(2, 120px);
+    grid-gap: 12px;
+    transform: rotateZ(10deg);
+  }
+
+  .icon-card {
+    width: 110px;
+    height: 130px;
+  }
+
+  .icon {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+/* ✅ Mobile screens (≤ 500px) */
+@media (max-width: 500px) {
+  .icon-grid {
+    grid-template-columns: repeat(2, 100px);
+    grid-gap: 10px;
+    transform: rotateZ(5deg);
+    padding: 5px;
+  }
+
+  .icon-card {
+    width: 95px;
+    height: 110px;
+    border-radius: 15px;
+  }
+
+  .icon {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+/* ✅ Extra small screens (≤ 380px) */
+@media (max-width: 380px) {
+  .icon-grid {
+    grid-template-columns: repeat(2, 90px);
+    grid-gap: 8px;
+  }
+
+  .icon-card {
+    width: 85px;
+    height: 100px;
+  }
+
+  .icon {
+    width: 28px;
+    height: 28px;
+  }
+}

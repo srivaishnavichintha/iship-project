@@ -1,3 +1,24 @@
+/* -----------------------
+   🌐 GLOBAL SETTINGS
+----------------------- */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+a {
+  color: teal;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* -----------------------
+   🧭 NAVBAR STYLES
+----------------------- */
 nav {
   display: flex;
   justify-content: space-between;
@@ -11,16 +32,55 @@ nav img {
   width: auto;
 }
 
+.nav_bar {
+  float: right;
+  display: flex;
+  list-style-type: none;
+  height: 50px;
+  gap: 20px;
+  transition: right 0.3s ease-in-out;
+}
+
+.nav_bar > li {
+  margin-right: 40px;
+  font-family: "Inter", sans-serif;
+  font-weight: 200;
+}
+
+.nav_bar > li > a {
+  color: white;
+}
+
+.nav_bar > li a:hover {
+  color: #ddd;
+}
+
+/* -----------------------
+   🍔 HAMBURGER MENU
+----------------------- */
+.hamburger {
+  position: absolute;
+  right: -5px;
+  font-size: 30px;
+  color: black;
+  cursor: pointer;
+  z-index: 1100;
+  display: none;
+}
+
+/* -----------------------
+   🌌 LANDING PAGE (ABOUT)
+----------------------- */
 .about {
- margin:0px;
- padding: 0px;
+  margin: 0;
+  padding: 1.5rem;
   position: relative;
   height: 100vh;
   background: linear-gradient(to right, rgb(1, 24, 39), #033a3a);
   color: white;
-  padding: 1.5rem;
   overflow: hidden;
 }
+
 .about::after {
   content: '';
   position: absolute;
@@ -32,54 +92,60 @@ nav img {
   clip-path: ellipse(100% 100% at 80% 170%);
 }
 
- a{
-    color: teal;
+/* -----------------------
+   ✨ LANDING CONTENT
+----------------------- */
+.land-content {
+  width: 100%;
+  height: 60%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
-.nav_bar{
-    float:right;
-    display: flex;
-    list-style-type:none;
-    height: 50px;
-    /* margin-top: -5px; */
+
+.land-content > img {
+  width: 300px;
+  height: 300px;
+  transform: rotateZ(0deg);
 }
-.nav_bar > li{
-    margin-right: 40px;
-    font-family: "Inter", sans-serif;
-    font-weight: 200;
+
+.land-content > div {
+  max-width: 600px;
 }
-.nav_bar > li > a{
-    color: white;
+
+.land-content > div > h1 {
+  text-align: center;
+  font-size: 40px;
+  font-weight: 900;
 }
-.land-content{
-    width: 100%;
-    height: 60%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center; 
+
+.land-content > div > p {
+  text-align: center;
+  font-weight: 200;
 }
-.land-content > img{
-    width: 300px;
-    height: 300px;
-    transform: rotateZ(0deg);
+
+.colorings {
+  background: linear-gradient(to right,#012626, #036868,#056969,#87e4e4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
-.land-content > div{
-    max-width: 600px;
+
+/* -----------------------
+   🚀 EXPLORE SECTION
+----------------------- */
+.land-explore {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 50svh;
 }
-.land-content >div >h1{
-    text-align: center;
-    font-size: 40px;
-    font-weight: 900;
+
+.explore-data {
+  text-align: left;
+  max-width: 600px;
 }
-.land-content > div >p{
-    text-align: center;
-    font-weight: 200;
-}
-.land-explore{
-    display: flex;
-    justify-content:space-evenly;
-    align-items: center;
-    height: 50svh;
-}
+
+/* Floating boxes */
 .floating {
   position: relative;
   width: 300px;
@@ -93,16 +159,13 @@ nav img {
   height: 220px;
   border-radius: 24px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-  perspective: 1000;
   transition: transform 2s ease;
 }
-
 
 .float-box:hover {
   transform: scale(1.05) translateY(-5px);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
 }
-
 
 .box1 {
   background-color: #bfe8f4;
@@ -115,12 +178,12 @@ nav img {
 }
 
 .box2 {
-  background-color:  #1b1f22;
+  background-color: #1b1f22;
   top: 26px;
   left: 20px;
   z-index: 2;
   transform: rotateZ(-5deg);
-   animation: floatupdown 10s ease-out infinite;
+  animation: floatupdown 10s ease-out infinite;
 }
 
 .box3 {
@@ -150,50 +213,38 @@ nav img {
 }
 
 @keyframes floatupdown {
-  0% { transform: translateY(0px) rotateZ(0deg); }
-  10%{ transform: translateY(0px) rotateZ(10deg); }
-  20%{ transform: translateY(0px) rotateZ(20deg); }
-  25% { transform: translateY(0px) rotateZ(30deg); }
-  40%{ transform: translateY(0px) rotateZ(40deg); }
+  0%,100% { transform: translateY(0px) rotateZ(0deg); }
   50% { transform: translateY(-10px) rotateZ(50deg); }
-  60%{ transform: translateY(0px) rotateZ(60deg); }
-  70%{ transform: translateY(0px) rotateZ(70deg); }
-  75%{ transform: translateY(0px) rotateZ(80deg); }
-  85%{ transform: translateY(0px) rotateZ(90deg); }
-  100% { transform: translateY(0px) rotateZ(0deg); }
 }
 
-
-.explore-data{
-    text-align: left;
-    max-width: 600px;
-}
-.colorings {
-  background: linear-gradient(to right,#012626, #036868,#056969,#87e4e4);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.product{
-    display: flex;
-    justify-content: space-evenly;
-    height: 80svh;
-    align-items: center;
-}
-.product > div{
-    height: 300px;
-    width: 500px;
+/* -----------------------
+   📦 PRODUCT SECTION
+----------------------- */
+.product {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 80svh;
 }
 
+.product > div {
+  height: 300px;
+  width: 500px;
+}
+
+/* -----------------------
+   💻 COMPILER SECTION
+----------------------- */
 .land-compiler {
   padding: 20px;
-  height: auto;  
+  height: auto;
 }
-.comp{
-    text-align: center;
-     padding-right: 12%;
-    padding-left:12%;
+
+.comp {
+  text-align: center;
+  padding: 0 12%;
 }
+
 .comp-div {
   width: 90%;
   margin: auto;
@@ -205,49 +256,101 @@ nav img {
   box-shadow: 0px 8px 24px rgba(0,0,0,0.4);
 }
 
+/* -----------------------
+   ℹ️ ABOUT SECTION
+----------------------- */
+.land-about {
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+  align-items: center;
+  justify-content: center;
+}
 
-.land-about{
-    display: flex;
-    flex-direction: column;
-    height: 100svh;
-    align-items: center;
-    justify-content: center;
+.land-about > p {
+  text-align: center;
+  padding: 0 20%;
 }
-.land-about > p{
-    text-align: center;
-    padding-left: 20%;
-    padding-right: 20%;
-}
- .nav_bar > li a:hover {
-    color: #ddd;
-}
-@media (max-width: 768px) {
+
+/* -----------------------
+   📱 RESPONSIVE DESIGN
+----------------------- */
+@media (max-width: 1024px) {
   .land-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+    padding: 2rem 1rem;
+    height: auto;
+  }
+  .land-content > div { max-width: 90%; }
+  .land-content h1 { font-size: 30px; }
+  .land-content p { font-size: 16px; }
+}
+
+@media (max-width: 992px) {
+  .land-explore, .product {
     flex-direction: column;
     height: auto;
     padding: 2rem 1rem;
+    gap: 30px;
     text-align: center;
   }
-
-  .product {
-    flex-direction: column;
-    height: auto;
-    gap: 40px;
-  }
-
-  .nav_bar {
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 12px;
-  }
-
-  .comp-div {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .land-about > p {
-    padding: 0 10%;
-  }
+  .product > div { width: 90%; height: auto; }
+  .comp { padding: 0 5%; }
+  .comp-div { width: 100%; height: 60vh; }
 }
 
+@media (max-width: 768px) {
+  nav { padding: 0 1rem; }
+  .land-about { padding: 2rem 1rem; height: auto; }
+  .land-about > p { padding: 0 5%; font-size: 16px; }
+  .floating { width: 200px; height: 200px; }
+  .float-box { width: 150px; height: 150px; }
+  .hamburger { display: block; }
+}
+
+/* -----------------------
+   📂 SIDEBAR (MOBILE)
+----------------------- */
+/* ----------------------- */
+@media (max-width: 768px) {
+  .nav_bar {
+    position: fixed;
+    top: 0;
+    right: -250px;
+    height: 100%;
+    width: 220px;
+    background-color: #046666; /* ✅ Updated Gradient */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding-top: 60px;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+  }
+
+  .nav_bar.open {
+    right: 0;
+  }
+
+  .nav_bar li a {
+    color: #fff;
+    font-size: 18px;
+    padding: 14px 25px;
+    width: 80%;
+    text-align: center;
+    display: block;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .nav_bar li a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #00e6e6;
+    transform: scale(1.1); /* ✅ Reduced from 1.5 to avoid overflow */
+  }
+}

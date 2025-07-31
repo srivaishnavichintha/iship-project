@@ -90,3 +90,189 @@ body.dark {
   max-height: 500px;
   pointer-events: auto;
 }
+
+/* ✅ Sidebar Styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: #1f1f1f;
+  color: white;
+  padding-top: 60px;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: left 0.3s ease-in-out;
+  z-index: 2000;
+}
+
+.sidebar.open {
+  right: 0;
+}
+
+.sidebar .close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+}
+
+.sidebar .nav-con {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.sidebar .nav-con:hover {
+  text-decoration: underline;
+}
+
+/* ✅ Hamburger Menu */
+.hamburger {
+  display: none;
+  font-size: 26px;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+/* ✅ Responsive Design: Show sidebar on small screens */
+@media (max-width: 720px) {
+  /* Hide normal navbar links */
+  .nav-left .nav-con {
+    display: none;
+  }
+
+  /* Show hamburger icon */
+  .hamburger {
+    display: block;
+  }
+}
+
+/* ✅ Responsive text and spacing for medium screens (tablet) */
+@media (max-width: 768px) {
+  .nav-con {
+    margin-left: 15px;
+    font-size: 14px;
+  }
+
+  .profile_circle {
+    width: 6svh;
+    height: 6svh;
+    font-size: 14px;
+  }
+
+  .nav-right > img {
+    width: 6svh;
+    height: 6svh;
+  }
+}
+
+/* ✅ Responsive text and spacing for small screens (mobile ≤480px) */
+@media (max-width: 580px) {
+  /* Sidebar links */
+  .sidebar .nav-con {
+    font-size: 14px;
+    margin: 10px 0;
+  }
+
+  /* Profile circle */
+  .profile_circle {
+    width: 5.5svh;
+    height: 5.5svh;
+    font-size: 12px;
+  }
+
+  /* Reduce icon sizes */
+  .nav-right > img {
+    width: 5.5svh;
+    height: 5.5svh;
+    margin: 5px;
+  }
+
+  /* Reduce logo size */
+  .nav-left img.logo {
+    height: 7svh;
+  }
+
+  /* Reduce navbar height slightly */
+  #nava {
+    height: 8svh;
+  }
+}
+
+/* ✅ Smooth Slide Animation for Sidebar */
+.sidebar {
+  transition: right 0.3s ease-in-out !important;
+}
+
+/* ✅ Hover effect for navbar links */
+.nav-con:hover {
+  color: #00aaff;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+/* ✅ Add shadow and blur effect to sidebar */
+.sidebar.open {
+  box-shadow: -3px 0 10px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+}
+
+/* ✅ Animation for dropdown menu */
+.dash-drop {
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, max-height 0.3s ease, transform 0.3s ease;
+}
+
+.dash-drop.open {
+  transform: translateY(0);
+}
+
+/* ✅ Highlight active nav links */
+.nav-con.active {
+  color: #007bff;
+  font-weight: bold;
+}
+
+/* ✅ Smooth hover effect for profile circle */
+.profile_circle:hover {
+  background-color: #ccc;
+  transform: scale(1.05);
+  transition: all 0.2s ease;
+}
+
+/* ✅ Sidebar link hover effect */
+.sidebar .nav-con:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding-left: 25px;
+  transition: all 0.3s ease;
+}
+
+/* ✅ Extra small screens (<400px) adjustments */
+@media (max-width: 400px) {
+  .hamburger {
+    font-size: 22px;
+    margin-right: 10px;
+  }
+
+  .profile_circle {
+    width: 5svh;
+    height: 5svh;
+  }
+
+  .sidebar {
+    width: 200px;
+    padding-left: 15px;
+  }
+
+  .sidebar .nav-con {
+    font-size: 13px;
+  }
+}
