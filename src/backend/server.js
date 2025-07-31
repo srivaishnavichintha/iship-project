@@ -8,6 +8,8 @@ const problemRoutes = require("./routes/mentor/problems");
 const contestRoutes = require("./routes/mentor/contests");
 const mentorcourseRoutes=require("./routes/mentor/course")
 const enrollmentRoutes = require("./routes/enrollment");
+const peerRoutes = require("./routes/peerroutes");
+
 
 dotenv.config();
 connectDB();
@@ -18,12 +20,15 @@ app.use(cors());
 app.use(express.json());
 
 
+
 app.use("/", authRoutes);
 app.use("/", courseRoutes);
 app.use("/mentor/problems",problemRoutes);
 app.use("/", contestRoutes);
 app.use("/",enrollmentRoutes);
 app.use("/mentor", mentorcourseRoutes); // instead of using "/"
+app.use("/", peerRoutes);
+
 
 
 const PORT = process.env.PORT || 3000;

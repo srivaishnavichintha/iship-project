@@ -2,19 +2,18 @@ const express = require("express");
 const router = express.Router();
 const Enrollment = require("../models/Enrollment");
 const Course = require("../models/course");
+const Student=require("../models/Student")
 
 // POST /enroll
 router.post("/enroll", async (req, res) => {
   try {
     const { courseid, coursename, studentid } = req.body;
 
-    // Fetch course to get username and enrollmentend
+    // 1. Fetch course by courseid
     const course = await Course.findOne({ courseid });
+    if (!course) return res.status(404).json({ error: "Course not found" });
 
-    if (!course) {
-      return res.status(404).json({ error: "Course not found" });
-    }
-
+    // 2. Create Enrollment document
     const enrollment = new Enrollment({
       courseid,
       coursename,
@@ -23,9 +22,18 @@ router.post("/enroll", async (req, res) => {
       isenrolled: true,
     });
 
-    console.log("Before saving enrollment:", enrollment); // ✅ ensure username is visible here
-
     await enrollment.save();
+
+    // 3. Update student's enrolledCourses with course._id
+    const student = await Student.findOne({ studentid });
+    if (!student) return res.status(404).json({ error: "Student not found" });
+
+    // Avoid duplicates
+    if (!student.enrolledCourses.includes(course.coursename)) {
+      student.enrolledCourses.push(course.coursename);
+      student.courseids.push(course.courseid);
+      await student.save();
+    }
 
     res.status(201).json({ message: "Enrolled successfully", enrollment });
   } catch (err) {

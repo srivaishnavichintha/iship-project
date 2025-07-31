@@ -112,7 +112,7 @@ export default function Problems() {
   const handleSubmit = async (e) => {
   e.preventDefault();
   const userData = JSON.parse(localStorage.getItem("userData"));
-  const mentorid = userData?.id;
+  const mentorid = String(userData?.id);
   const mentorname = userData?.name;
 
   if (!mentorid || !mentorname) {
@@ -136,17 +136,23 @@ export default function Problems() {
   }
 
   const payload = {
-    ...formData,
-    prerequisites,
-    companyTags,
-    inputs: cleanedInputs,
-    outputs: cleanedOutputs,
-    mentorid
-  };
+  problemtitle: formData.problemtitle.trim(),
+  description: formData.description.trim(),
+  level: formData.level,
+  prerequisites,
+  companyTags,
+  inputs: cleanedInputs,
+  outputs: cleanedOutputs,
+  mentorid
+};
+
 
   try {
     console.log("Submitting payload:", payload);
-    await axios.post("http://localhost:3000/mentor/problems/add", payload);
+    await axios.post("http://localhost:3000/mentor/problems/add", payload, {
+  headers: { "Content-Type": "application/json" }
+});
+
     alert("Problem added successfully!");
 
     // Reset state
@@ -156,10 +162,11 @@ export default function Problems() {
     setOutputs([""]);
     setPrerequisites([]);
     setCompanyTags([]);
-  } catch (err) {
-    console.error("Submit error:", err);
-    alert(`Failed to add problem: ${err.response?.data?.error || err.message}`);
-  }
+  }catch (err) {
+  console.error("Submit error:", err.response?.data || err.message);
+  alert(`Failed to add problem: ${err.response?.data?.error || err.message}`);
+}
+
 };
 
 
