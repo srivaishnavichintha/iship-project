@@ -1,0 +1,32 @@
+.playground-container {
+  padding: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+}
+
+.playground-title {
+  text-align: center;
+  margin-bottom: 40px;
+  color: #2c3e50;
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+.p2p-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
+  justify-items: center;
+}
+
+@media (max-width: 768px) {
+  .playground-container {
+    padding: 20px;
+  }
+  
+  .p2p-grid {
+    grid-template-columns: 1fr;
+  }
+}

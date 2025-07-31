@@ -1,0 +1,664 @@
+:root {
+  --primary-color: #2563eb;
+  --primary-light: #3b82f6;
+  --secondary-color: #10b981;
+  --danger-color: #ef4444;
+  --warning-color: #f59e0b;
+  --dark-color: #1e293b;
+  --light-color: #f8fafc;
+  --gray-color: #64748b;
+  --border-color: #e2e8f0;
+  --success-bg: #ecfdf5;
+  --success-text: #065f46;
+  --error-bg: #fee2e2;
+  --error-text: #b91c1c;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.practice-compiler-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+/* Problem Panel Styles */
+.problem-panel {
+  flex: 0 0 45%;
+  min-width: 400px;
+  max-width: 700px;
+  padding: 1.5rem;
+  overflow-y: auto;
+  background-color: #ffffff;
+  border-right: 1px solid var(--border-color);
+}
+
+.problem-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.problem-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--dark-color);
+}
+
+.difficulty {
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+}
+
+.difficulty.easy {
+  background-color: var(--secondary-color);
+}
+
+.difficulty.medium {
+  background-color: var(--warning-color);
+}
+
+.difficulty.hard {
+  background-color: var(--danger-color);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.like-button, .dislike-button {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: var(--light-color);
+  color: var(--gray-color);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.like-button:hover, .dislike-button:hover {
+  background-color: #e2e8f0;
+}
+
+.problem-content {
+  line-height: 1.6;
+  color: var(--dark-color);
+}
+
+.description {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  color: #334155;
+}
+
+.examples-section {
+  margin-bottom: 1.5rem;
+}
+
+.examples-section h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--dark-color);
+}
+
+.example-card {
+  background-color: #f8fafc;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--primary-color);
+}
+
+.example-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.example-number {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.test-button {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--primary-color);
+  background-color: white;
+  color: var(--primary-color);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.test-button:hover {
+  background-color: #eff6ff;
+}
+
+.example-io div {
+  margin: 0.5rem 0;
+  font-size: 0.9375rem;
+}
+
+.example-io strong {
+  font-weight: 600;
+  color: var(--dark-color);
+}
+
+.constraints-section {
+  margin-bottom: 1.5rem;
+}
+
+.constraints-section h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--dark-color);
+}
+
+.constraints-section ul {
+  padding-left: 1.25rem;
+  list-style-type: disc;
+}
+
+.constraints-section li {
+  margin-bottom: 0.5rem;
+  font-size: 0.9375rem;
+  color: #334155;
+}
+
+.problem-footer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.tags-section h4 {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: var(--dark-color);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.topic-tag, .company-tag {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.topic-tag {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+.company-tag {
+  background-color: #e0e7ff;
+  color: #4f46e5;
+}
+
+/* Editor Panel Styles */
+.editor-panel {
+  flex: 1;
+  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+}
+
+.editor-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 1rem;
+}
+
+.editor-tabs button {
+  padding: 0.75rem 1.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--gray-color);
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+}
+
+.editor-tabs button:hover {
+  color: var(--primary-color);
+}
+
+.editor-tabs button.active {
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.editor-tabs button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+}
+
+.editor-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.editor-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #f8fafc;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.language-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.language-selector select {
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--border-color);
+  background-color: white;
+  font-size: 0.875rem;
+  color: var(--dark-color);
+  cursor: pointer;
+}
+
+.editor-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.run-button, .submit-button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.run-button {
+  background-color: white;
+  border: 1px solid var(--border-color);
+  color: var(--dark-color);
+}
+
+.run-button:hover {
+  background-color: #f1f5f9;
+}
+
+.run-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.submit-button {
+  background-color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  color: white;
+}
+
+.submit-button:hover {
+  background-color: var(--primary-light);
+}
+
+.submit-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background-color: var(--primary-color);
+}
+
+.monaco-editor {
+  flex: 1;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* IO Section Styles */
+.io-section {
+  height: 40%;
+  min-height: 200px;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border-color);
+}
+
+.io-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 1rem;
+}
+
+.io-tabs button {
+  padding: 0.75rem 1.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--gray-color);
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.io-tabs button.active {
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.io-tabs button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+}
+
+.input-area {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.input-area h4 {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  color: var(--dark-color);
+}
+
+.input-area textarea {
+  width: 100%;
+  height: 80px;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--border-color);
+  font-family: 'Consolas', monospace;
+  font-size: 0.875rem;
+  resize: none;
+}
+
+.output-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.output-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background-color: #f8fafc;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.output-header h4 {
+  font-size: 0.875rem;
+  color: var(--dark-color);
+  margin: 0;
+}
+
+.clear-button {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  border: none;
+  background-color: transparent;
+  color: var(--gray-color);
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.clear-button:hover {
+  background-color: #f1f5f9;
+}
+
+.output-content {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 0.875rem;
+}
+
+.output-content pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Add these styles to your PracticeCompiler.css */
+
+.solution-container {
+  padding: 1rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.solution-container h3 {
+  margin-bottom: 1rem;
+  color: var(--dark-color);
+}
+
+.solution-content {
+  line-height: 1.6;
+}
+
+.solution-content p {
+  margin-bottom: 0.75rem;
+}
+
+.solution-content ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.solution-content li {
+  margin-bottom: 0.5rem;
+}
+
+.submissions-container {
+  padding: 1rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.submissions-container h3 {
+  margin-bottom: 1rem;
+  color: var(--dark-color);
+}
+
+.no-submissions {
+  text-align: center;
+  color: var(--gray-color);
+  margin-top: 2rem;
+}
+
+.submissions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.submission-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.submission-card.accepted {
+  border-left: 4px solid var(--secondary-color);
+}
+
+.submission-card.rejected {
+  border-left: 4px solid var(--danger-color);
+}
+
+.submission-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.submission-time {
+  font-size: 0.875rem;
+  color: var(--gray-color);
+}
+
+.submission-status {
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.submission-status.accepted {
+  background-color: var(--success-bg);
+  color: var(--success-text);
+}
+
+.submission-status.rejected {
+  background-color: var(--error-bg);
+  color: var(--error-text);
+}
+
+.submission-language {
+  font-size: 0.875rem;
+  color: var(--gray-color);
+  margin-bottom: 0.5rem;
+}
+
+.submission-test-results {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.test-result {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.test-result.passed {
+  background-color: var(--success-bg);
+  color: var(--success-text);
+}
+
+.test-result.failed {
+  background-color: var(--error-bg);
+  color: var(--error-text);
+}
+
+.submission-code {
+  background-color: #f8fafc;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  font-family: 'Consolas', monospace;
+  font-size: 0.8125rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 0;
+  overflow-x: auto;
+}
+/* Add these to your PracticeCompiler.css */
+.output-content {
+  white-space: pre-wrap;
+  font-family: 'Consolas', 'Courier New', monospace;
+}
+
+.test-pass {
+  color: #10b981; /* Green for passed tests */
+  font-weight: bold;
+}
+
+.test-fail {
+  color: #ef4444; /* Red for failed tests */
+  font-weight: bold;
+}
+
+.test-case {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.test-input, .test-expected, .test-actual {
+  margin-left: 1rem;
+  font-size: 0.9em;
+}
+
+/* Loading Spinner */
+.fa-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

@@ -1,0 +1,207 @@
+.student-problems-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.student-problems-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.student-problems-header h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+.student-filters-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.student-filters-group {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.student-filter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.student-filter-item label {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.student-filter-item select {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  min-width: 180px;
+}
+
+.student-problems-list {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.student-problems-list-header {
+  display: grid;
+  grid-template-columns: 50px 2fr 100px 100px 2fr 150px;
+  padding: 12px 16px;
+  background-color: #f5f5f5;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  gap: 15px;
+}
+
+.student-problem-card {
+  display: grid;
+  grid-template-columns: 50px 2fr 100px 100px 2fr 150px;
+  padding: 12px 16px;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  gap: 15px;
+}
+
+.student-problem-card:hover {
+  background-color: #f9f9f9;
+}
+
+.header-id, .problem-id {
+  text-align: center;
+}
+
+.header-title, .problem-title {
+  padding-left: 8px;
+  font-weight: 500;
+}
+
+.header-difficulty, .problem-difficulty {
+  text-align: center;
+  font-weight: 500;
+  margin-right: 15px;
+}
+
+.header-acceptance, .problem-acceptance {
+  text-align: center;
+  margin-left: 15px;
+}
+
+.header-tags, .problem-tags-container {
+  padding: 0 8px;
+}
+
+.header-action, .problem-action {
+  text-align: right;
+}
+
+/* Difficulty Colors */
+.problem-difficulty.easy {
+  color: #00B8A3;
+}
+
+.problem-difficulty.medium {
+  color: #FFC01E;
+}
+
+.problem-difficulty.hard {
+  color: #FF375F;
+}
+
+/* Tags Container */
+.problem-tags-container {
+  overflow: hidden;
+}
+
+.problem-tags-scroll {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 60px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.problem-tags-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.problem-tags-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2px;
+}
+
+.problem-tags-scroll::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 2px;
+}
+
+.problem-tags-scroll::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.topic-tags, .company-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.topic-tag {
+  background-color: #e1f5fe;
+  color: #0288d1;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.company-tag {
+  background-color: #e8f5e9;
+  color: #388e3c;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.solve-button {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+  min-width: 120px;
+}
+
+.solve-button:hover {
+  background-color: #303f9f;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .student-problems-list-header,
+  .student-problem-card {
+    grid-template-columns: 40px 1fr 80px 80px 120px;
+  }
+
+  .header-tags, .problem-tags-container {
+    display: none;
+  }
+
+  .student-filters-section {
+    flex-direction: column;
+  }
+}
