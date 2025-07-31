@@ -91,6 +91,15 @@ export default function Course() {
     alert("Mentor information is missing. Please log in again.");
     return;
   }
+   if (new Date(payload.enrollmentend) < new Date()) {
+      alert("Enrollment end date must be in the future");
+      return;
+    }
+
+    if (payload.max_participants <= 0) {
+      alert("Max participants must be a positive number");
+      return;
+    }
 
   try {
     const endpoint = "http://localhost:3000/mentor/courses";

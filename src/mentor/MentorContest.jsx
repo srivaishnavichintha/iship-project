@@ -15,8 +15,6 @@ export default function MentorContest() {
   });
 
   const [contests, setContests] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [contestTypeFilter, setContestTypeFilter] = useState("all");

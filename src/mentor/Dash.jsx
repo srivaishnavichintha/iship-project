@@ -22,7 +22,7 @@ export default function Dash() {
       });
 
     // Fetch upcoming courses
-    axios.get("http://localhost:3000/upcoming-course")
+    axios.get("http://localhost:3000/mentor/upcoming-course")
       .then((res) => {
         console.log("📤 Sending courses:", res.data);
         setUpcomingCourse(res.data);

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./ContestCard.css";
 
-function ContestCard({ id, title, date, status, description, mentor }) {
+function ContestCard({ id, title, date, status, description, mentor,courseid }) {
   const navigate = useNavigate();
 
   const handleViewClick = () => {
