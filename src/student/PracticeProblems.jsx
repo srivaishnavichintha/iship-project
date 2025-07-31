@@ -1,60 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Student_navabar from "../Student_navabar";
-import "./PracticeProblems.css"; 
+import axios from "axios";
+import "./PracticeProblems.css";
 import { useNavigate } from "react-router-dom";
+
 export default function Problems() {
-  const topics = ["Arrays", "Strings", "Recursion"];
-  const companies = ["Google", "Amazon", "Meta"];
-  const levels = ["Easy", "Medium", "Hard"];
-
-  const problems = [
-    {
-      id: 1,
-      title: "Two Sum",
-      level: "Easy",
-      acceptance: "78%",
-      topics: ["Arrays"],
-      companies: ["Google", "Amazon"]
-    },
-    {
-      id: 2,
-      title: "Longest Substring Without Repeating Characters",
-      level: "Medium",
-      acceptance: "60%",
-      topics: ["Strings"],
-      companies: ["Meta"]
-    },
-    {
-      id: 3,
-      title: "Word Break",
-      level: "Hard",
-      acceptance: "43%",
-      topics: ["Recursion", "Strings"],
-      companies: ["Amazon"]
-    }
-  ];
-  const navigate = useNavigate();
-
-// const handleSolveClick = (problemId) => {
-//   navigate(`/solve/${problemId}`);
-// };
-
-
+  const [problems, setProblems] = useState([]);
+  const [topics, setTopics] = useState([]);
+  const [companies, setCompanies] = useState([]);
   const [selectedTopic, setSelectedTopic] = useState("All Topics");
   const [selectedCompany, setSelectedCompany] = useState("All Companies");
   const [selectedLevel, setSelectedLevel] = useState("All Levels");
   const [searchQuery, setSearchQuery] = useState("");
 
+  const levels = ["Easy", "Medium", "Hard"];
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const tagsRes = await axios.get("http://localhost:3000/mentor/problems/tags");
+        setTopics(tagsRes.data.topics || []);
+        setCompanies(tagsRes.data.companies || []);
+
+        const problemsRes = await axios.get("http://localhost:3000/mentor/problems");
+        setProblems(problemsRes.data || []);
+      } catch (error) {
+        console.error("Error fetching problems:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const filteredProblems = problems.filter((problem) => {
     const matchesTopic =
-      selectedTopic === "All Topics" || problem.topics.includes(selectedTopic);
+      selectedTopic === "All Topics" || problem.prerequisites.includes(selectedTopic);
     const matchesLevel =
       selectedLevel === "All Levels" || problem.level === selectedLevel;
     const matchesCompany =
-      selectedCompany === "All Companies" || problem.companies.includes(selectedCompany);
-    const matchesSearch = problem.title.toLowerCase().includes(searchQuery.toLowerCase());
+      selectedCompany === "All Companies" || problem.companyTags.includes(selectedCompany);
+    const matchesSearch =
+      problem.problemtitle.toLowerCase().includes(searchQuery.toLowerCase());
+
     return matchesTopic && matchesLevel && matchesCompany && matchesSearch;
   });
+
+  const handleSolveClick = (problemId) => {
+    navigate(`/solve/${problemId}`);
+  };
 
   return (
     <>
@@ -107,40 +101,38 @@ export default function Problems() {
             <div className="header-tags">Tags</div>
             <div className="header-action"></div>
           </div>
-            {filteredProblems.map(problem => (
-                <div key={problem.id} className="student-problem-card">
-                <div className="problem-id">{problem.id}</div>
-                <div className="problem-title">{problem.title}</div>
-                <div className={`problem-difficulty ${problem.level.toLowerCase()}`}>
+
+          {filteredProblems.map((problem, index) => (
+            <div key={problem._id} className="student-problem-card">
+              <div className="problem-id">{index + 1}</div>
+              <div className="problem-title">{problem.problemtitle}</div>
+              <div className={`problem-difficulty ${problem.level.toLowerCase()}`}>
                 {problem.level}
-                </div>
+              </div>
+              <div className="problem-acceptance">--</div>
 
-                <div className="problem-acceptance">{problem.acceptance}</div>
-
-                <div className="problem-tags-container">
+              <div className="problem-tags-container">
                 <div className="problem-tags-scroll">
-                <div className="topic-tags">
-                {problem.topics.map((topic, index) => (
-                <span key={index} className="topic-tag">{topic}</span>
-                ))}
+                  <div className="topic-tags">
+                    {problem.prerequisites.map((topic, index) => (
+                      <span key={index} className="topic-tag">{topic}</span>
+                    ))}
+                  </div>
+                  <div className="company-tags">
+                    {problem.companyTags.map((company, index) => (
+                      <span key={index} className="company-tag">{company}</span>
+                    ))}
+                  </div>
                 </div>
-                <div className="company-tags">
-                {problem.companies.map((company, index) => (
-                <span key={index} className="company-tag">{company}</span>
-            ))}
-            </div>
-            </div>
-            </div>
+              </div>
 
-            <div className="problem-action">
-             <button className="solve-button" onClick={() => handleSolveClick(problem.id)}>
-                 Solve Challenge
-             </button>
-
+              <div className="problem-action">
+                <button className="solve-button" onClick={() => handleSolveClick(problem._id)}>
+                  Solve Challenge
+                </button>
+              </div>
             </div>
-            </div>
-            ))}
-
+          ))}
         </div>
       </div>
     </>
