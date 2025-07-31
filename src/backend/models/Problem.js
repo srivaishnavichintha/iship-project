@@ -37,7 +37,7 @@ const problemSchema = new mongoose.Schema({
     type: [String],
     required: true
   },
-  mentorId: {
+  mentorid: {
     type: String,
     required: false
   },

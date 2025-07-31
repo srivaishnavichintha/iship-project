@@ -28,7 +28,7 @@ function App() {
         <Route path="/practice" element={<Practice_board />} />
         <Route path="/login" element={<Login />} />
         <Route path="/mentor/dashboard" element={<Mentor_dashboard />} />
-        <Route path="/mentor/courses" element={<Course />} />
+        <Route path="/mentor/courses/:mentorid" element={<Course />} />
         <Route path="/mentor/mentorcontest" element={<MentorContest />} />
         <Route path="/mentor/leaderboard" element={<LeaderBoard />} />
         <Route path="/mentor/problems" element={<Problems />} />

@@ -14,7 +14,12 @@ const courseSchema = new mongoose.Schema({
  enrollmentend: { type: Date, required: true },
   max_participants: { type: Number, required: true },
   prerequisites: [String],
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  mentorid: {
+  type: String,
+  required: true,
+  default: "2"
+}
 });
 
 // Auto-increment logic

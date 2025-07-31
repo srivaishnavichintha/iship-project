@@ -1,16 +1,19 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Course.css";
 import Mentor_navbar from "../Mentor_navbar";
-import Mccard from "../components/Mccard"
+import Mccard from "../components/Mccard";
+import { useParams } from "react-router-dom";
 
 export default function Course() {
+  const { mentorid } = useParams(); // ⬅️ Move this line here
+
   const [showForm, setShowForm] = useState(false);
   const [prerequisites, setPrerequisites] = useState([]);
   const [prereqInput, setPrereqInput] = useState("");
   const [my_mentor_courses, setmy_mentor_courses] = useState([]);
   const [formData, setFormData] = useState({
-    courseid:"",
+    courseid: "",
     coursename: "",
     description: "",
     category: "",
@@ -18,6 +21,8 @@ export default function Course() {
     enrollmentend: "",
     max_participants: ""
   });
+
+  // rest of your code...
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -50,26 +55,24 @@ export default function Course() {
     setShowForm(false);
   };
     useEffect(() => {
-      const mentorData = JSON.parse(localStorage.getItem("userData")); // assuming this contains mentorid
-      const mentorid = mentorData?.mentorid;
+  if (!mentorid) return;
 
-      if (!mentorid) {
-        console.error("Mentor ID not found in localStorage");
-        return;
-      }
-
-      axios.get("http://localhost:3000/my-mentor-courses") 
-      .then((res) => {
-      console.log("Mentor courses:", res.data);  
-      setmy_mentor_courses(res.data);  
+  axios.get(`http://localhost:3000/mentor/courses/${mentorid}`)
+    .then((res) => {
+      console.log(res.data);
+      setmy_mentor_courses(res.data);
     })
     .catch((err) => {
-      console.error("Error fetching courses:", err);
+      console.error("Error fetching mentor's courses:", err);
     });
-}, []);
+}, [mentorid]);
+
+
 
 
   const handlecourse = async () => {
+      const user = JSON.parse(localStorage.getItem("userData"));
+      const mentorid =user?.id;
     if (!formData.coursename || !formData.description || !formData.category ||
         !formData.level || !formData.enrollmentend || !formData.max_participants) {
       alert("Please fill all required fields");
@@ -83,6 +86,7 @@ export default function Course() {
         max_participants: Number(formData.max_participants),
         enrollmentend: new Date(formData.enrollmentend).toISOString(),
         prerequisites,
+        mentorid,
         // created_at: new Date().toISOString()
       };
 
@@ -263,12 +267,12 @@ export default function Course() {
             /> */}
             {my_mentor_courses.map((course, index) => (
                 <Mccard
-                key={index}
+                key={course.courseid}
                 id={course.courseid}
                 title={course.coursename}
                 description={course.description}
-                mentor={course.mentorname}
-                endDate={course.enrollmentend}
+                mentor={"DEMO Mentor"}
+                endDate={new Date(course.enrollmentend).toLocaleDateString()}                
                 tags={course.prerequisites}
                 />
             ))}
