@@ -284,23 +284,23 @@ router.get("/history/:studentId", async (req, res) => {
 
 
 // PUT /challenge/:id/status
-router.put("/challenge/:id/status", async (req, res) => {
-  try {
-    const { status, result } = req.body;
-    const updated = await peers.findOneAndUpdate(
-      { challengeId: req.params.id },
-      { status, result },
-      { new: true }
-    );
+// router.put("/challenge/:id/status", async (req, res) => {
+//   try {
+//     const { status, result } = req.body;
+//     const updated = await peers.findOneAndUpdate(
+//       { challengeId: req.params.id },
+//       { status, result },
+//       { new: true }
+//     );
 
-    if (!updated) return res.status(404).json({ error: "Challenge not found" });
+//     if (!updated) return res.status(404).json({ error: "Challenge not found" });
 
-    res.json(updated);
-  } catch (err) {
-    console.error("Error updating challenge:", err);
-    res.status(500).json({ error: "Server error" });
-  }
-});
+//     res.json(updated);
+//   } catch (err) {
+//     console.error("Error updating challenge:", err);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// });
 
 //Get route
 router.get("/peers/:courseName/:studentid", async (req, res) => {
@@ -338,6 +338,52 @@ router.get("/peers/:courseName/:studentid", async (req, res) => {
   }
 });
 
+router.get("/p2p-matches", async (req, res) => {
+  try {
+    // Step 1: Get all peer challenges
+    const matches = await peers.find().sort({ datetime: -1 });
+
+    // Step 2: Extract unique student IDs involved in challenges
+    const studentIds = Array.from(
+      new Set(matches.flatMap(m => [m.challengerId, m.opponentId]))
+    );
+
+    // Step 3: Fetch those students to get their usernames
+    const students = await Student.find({ studentid: { $in: studentIds } });
+
+    // Step 4: Create a mapping from studentid to username
+    const studentMap = {};
+    students.forEach(s => {
+      studentMap[s.studentid] = s.username;
+    });
+
+    // Step 5: Format response for frontend
+    const formattedMatches = matches.map(match => {
+      const date = new Date(match.datetime);
+      const matchDate = date.toISOString().split("T")[0];
+      const contestTime = date.toLocaleTimeString("en-IN", {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+
+      return {
+        id: `p2p-${match.challengeId}`,
+        student1: studentMap[match.challengerId] || "Unknown",
+        student2: studentMap[match.opponentId] || "Unknown",
+        course: match.course,
+        level: "Intermediate", // or dynamic if needed
+        contestTime,
+        matchDate,
+        tags: ["Peer Match"]
+      };
+    });
+
+    res.status(200).json(formattedMatches);
+  } catch (err) {
+    console.error("Error fetching peer matches:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
 
 
 
