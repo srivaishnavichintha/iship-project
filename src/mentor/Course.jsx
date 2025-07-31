@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import "./Course.css";
 import Mentor_navbar from "../Mentor_navbar";
-import CCard from "../components/CCard"
+import Mccard from "../components/Mccard"
 
 export default function Course() {
   const [showForm, setShowForm] = useState(false);
   const [prerequisites, setPrerequisites] = useState([]);
   const [prereqInput, setPrereqInput] = useState("");
+  const [my_mentor_courses, setmy_mentor_courses] = useState([]);
   const [formData, setFormData] = useState({
     courseid:"",
     coursename: "",
@@ -48,56 +49,83 @@ export default function Course() {
   const handleClose = () => {
     setShowForm(false);
   };
+    useEffect(() => {
+  axios.get("http://localhost:3000/my-mentor-courses") 
+    .then((res) => {
+      console.log("Mentor courses:", res.data);  
+      setmy_mentor_courses(res.data);  
+    })
+    .catch((err) => {
+      console.error("Error fetching courses:", err);
+    });
+}, []);
+
 
   const handlecourse = async () => {
-    if (!formData.coursename || !formData.description || !formData.category ||
-        !formData.level || !formData.enrollmentend || !formData.max_participants) {
-      alert("Please fill all required fields");
+  if (
+    !formData.coursename ||
+    !formData.description ||
+    !formData.category ||
+    !formData.level ||
+    !formData.enrollmentend ||
+    !formData.max_participants
+  ) {
+    alert("Please fill all required fields");
+    return;
+  }
+
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const mentorid = userData?.mentorid;
+  const mentorname = userData?.username;
+  console.log(mentorid,mentorname);
+  if (!mentorid || !mentorname) {
+    alert("Mentor information is missing. Please log in again.");
+    return;
+  }
+
+  try {
+    const endpoint = "http://localhost:3000/mentor/courses";
+    const payload = {
+      ...formData,
+      max_participants: Number(formData.max_participants),
+      enrollmentend: new Date(formData.enrollmentend).toISOString(),
+      prerequisites,
+      mentorid,
+      mentorname,
+    };
+
+    if (new Date(payload.enrollmentend) < new Date()) {
+      alert("Enrollment end date must be in the future");
       return;
     }
 
-    try {
-      const endpoint = "http://localhost:3000/mentor/courses";
-      const payload = {
-        ...formData,
-        max_participants: Number(formData.max_participants),
-        enrollmentend: new Date(formData.enrollmentend).toISOString(),
-        prerequisites,
-        // created_at: new Date().toISOString()
-      };
+    if (payload.max_participants <= 0) {
+      alert("Max participants must be a positive number");
+      return;
+    }
 
-      if (new Date(payload.enrollmentend) < new Date()) {
-        alert("Enrollment end date must be in the future");
-        return;
-      }
+    const res = await axios.post(endpoint, payload);
+    console.log("Course added:", res.data);
+    alert("Course added successfully!");
 
-      if (payload.max_participants <= 0) {
-        alert("Max participants must be a positive number");
-        return;
-      }
+    setShowForm(false);
+    setFormData({
+      courseid: "",
+      coursename: "",
+      description: "",
+      category: "",
+      level: "",
+      enrollmentend: "",
+      max_participants: ""
+    });
+    setPrerequisites([]);
 
-      const res = await axios.post(endpoint, payload);
+  } catch (error) {
+    console.error("Error adding course:", error.response?.data || error.message);
+    alert(`Failed to add course: ${error.response?.data?.message || error.message}`);
+  }
+};
 
-      console.log("Course added:", res.data);
-      alert("Course added successfully!");
-
-      setShowForm(false);
-      setFormData({
-        courseid:"",
-        coursename: "",
-        description: "",
-        category: "",
-        level: "",
-        enrollmentend: "",
-        max_participants: ""
-      });
-      setPrerequisites([]);
-
-    } catch (error) {
-  console.error("Error adding course:", error.response?.data || error.message);
-  alert(`Failed to add course: ${error.response?.data?.message || error.message}`);
-}
-  };
 
   return (
     <>
@@ -106,7 +134,7 @@ export default function Course() {
         {showForm && (
           <div className="form_overlay">
             <div className="course_form slide-down">
-              <h2>Add New Course</h2>
+              <h2 >Add New Course</h2>
 
               <label>
                 Course Id:<br />
@@ -234,22 +262,25 @@ export default function Course() {
         </div>
 
         <div className="card_cover">
-           <CCard
+           {/* <Mccard
               title="Interview Crash Course"
               description="Master D and Algorithms for technical interviews. Includes mock tests and live sessions."
               mentor="Pawan"
               endDate="25/05/2020"
               tags={["DSA", "Interview Prep", "Live Sessions", "Mock Tests"]}
-            />
-           {/* <CCard
-                        key={index}
-                        id={course.id}
-                        title={course.title}
-                        description={course.description}
-                        mentor={course.mentor}
-                        endDate={course.endDate}
-                        tags={course.tags}
-                      /> */}
+            /> */}
+            {my_mentor_courses.map((course, index) => (
+                <Mccard
+                key={index}
+                id={course.courseid}
+                title={course.coursename}
+                description={course.description}
+                mentor={course.mentorname}
+                endDate={course.enrollmentend}
+                tags={course.prerequisites}
+                />
+            ))}
+
         </div>
       </div>
     </>

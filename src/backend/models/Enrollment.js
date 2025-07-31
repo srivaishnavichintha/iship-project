@@ -2,30 +2,35 @@
     const Counter = require("./counter");
 
     const enrollmentSchema = new mongoose.Schema({
-    enrollmentid: {
-        type: Number,
-        unique: true,
-    },
-    courseid: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    coursename: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    studentid: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    isenrolled: {
-        type: Boolean,
-        default: false
-    }
-    }, { timestamps: true }); // adds createdAt and updatedAt
+  enrollmentid: {
+    type: Number,
+    unique: true,
+  },
+  courseid: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  coursename: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  studentid: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  enrollmentend: {
+    type: Date, // Use Date type
+    required: true
+  },
+  isenrolled: {
+    type: Boolean,
+    default: false
+  }
+}, { timestamps: true });
+
 
     // Auto-increment logic for problemId
    enrollmentSchema.pre("save", async function (next) {

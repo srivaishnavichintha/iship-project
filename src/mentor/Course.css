@@ -15,10 +15,13 @@
   justify-content: space-between;
   align-items: center;
 }
+.title_bar >h1{
+  color: #033a3a;
+}
 
 .plus_btn {
   font-size: 30px;
-  background-color: #4a74e9;
+  background-color:#033a3a;
   color: white;
   border: none;
   border-radius: 50%;
@@ -29,7 +32,7 @@
 }
 
 .plus_btn:hover {
-  background-color: #3d67c2;
+  background-color:#046e6e;
 }
 
 .card_cover {
@@ -40,48 +43,9 @@
   flex-wrap: wrap;
 }
 
-.card {
-  width: 300px;
-  height: 300px;
-  box-shadow: 2px 5px 8px #888888;
-  border-radius: 14px;
-  background: linear-gradient(to bottom, rgb(227, 97, 97) 75%, transparent 25%);
-  position: relative;
-  transition: transform 0.3s ease;
-}
 
 .card:hover {
   transform: translateY(-20px);
-}
-
-.rec {
-  position: absolute;
-  top: 25%;
-  left: 10%;
-  opacity: 0.5;
-}
-
-.rec1,
-.rec2,
-.rec3 {
-  border-radius: 3px;
-  background-color: white;
-  margin: 5px;
-}
-
-.rec1 {
-  width: 40px;
-  height: 10px;
-}
-
-.rec2 {
-  width: 70px;
-  height: 10px;
-}
-
-.rec3 {
-  width: 90px;
-  height: 10px;
 }
 
 .form_overlay {
@@ -89,8 +53,8 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: auto;
-  background-color: rgba(0, 0, 0, 0.4);
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
   z-index: 1000;
   display: flex;
   justify-content: center;
@@ -98,7 +62,7 @@
 }
 
 .course_form {
-  background-color: #f0f4f8;
+  background-color:#f5fcfc;
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
@@ -110,6 +74,12 @@
   gap: 15px;
   font-family: "Inter", sans-serif;
 }
+.course_form >h1{
+  color: #033a3a;
+}
+.course_form >label{
+  color: #033a3a;
+}
 
 .course_form input,
 .course_form textarea {
@@ -118,6 +88,7 @@
   border: 1px solid #ccc;
   border-radius: 8px;
   width: 100%;
+  background-color: #f9ffff;
 }
 
 .course_form textarea {
@@ -141,7 +112,9 @@
 }
 
 .submit_btn {
-  background-color: #10b981;
+  height: 7svh;
+  background-color:#033a3a;
+  font-size: 14px;
 }
 
 .submit_btn:hover {
@@ -149,6 +122,7 @@
 }
 
 .cancel_btn {
+  font-size: 14px;
   background-color: #ef4444;
 }
 

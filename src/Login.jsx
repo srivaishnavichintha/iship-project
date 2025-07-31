@@ -19,18 +19,18 @@ export default function Login() {
     confirmPassword: "",
     identifier: "", // used only for login
   });
- useEffect(() => {
-    const handleBeforeUnload = () => {
-      localStorage.removeItem("userData");
-    };
+//  useEffect(() => {
+//     const handleBeforeUnload = () => {
+//       localStorage.removeItem("userData");
+//     };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+//     window.addEventListener("beforeunload", handleBeforeUnload);
 
-    // Cleanup function to remove the event listener
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
+//     // Cleanup function to remove the event listener
+//     return () => {
+//       window.removeEventListener("beforeunload", handleBeforeUnload);
+//     };
+//   }, []);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };

@@ -5,9 +5,8 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/auth");
 const courseRoutes = require("./routes/course");
 const problemRoutes = require("./routes/mentor/problems");
-const enrollmentRoutes = require("./routes/enrollment");
-// const enrollmentRoutes = require("./routes/Enrollment");
 const contestRoutes = require("./routes/mentor/contests");
+const enrollmentRoutes = require("./routes/enrollment");
 
 dotenv.config();
 connectDB();
@@ -20,9 +19,8 @@ app.use(express.json());
 app.use("/", authRoutes);
 app.use("/", courseRoutes);
 app.use("/mentor/problems",problemRoutes);
-app.use("/",enrollmentRoutes);
-// app.use("/enroll",enrollmentRoutes);
 app.use("/", contestRoutes);
+app.use("/",enrollmentRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

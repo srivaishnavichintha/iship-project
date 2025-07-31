@@ -1,0 +1,101 @@
+.black-highlight-leaderboard {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+
+.leaderboard-header {
+  display: grid;
+  grid-template-columns: 70px 1.5fr 90px 110px 2fr;
+  background: #012323; /* Teal from your palette */
+  color: white;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 20px 20px 0px 0px;
+}
+
+.leaderboard-body {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+
+.data-row {
+  display: grid;
+  grid-template-columns: 70px 1.5fr 90px 110px 2fr;
+  padding: 10px 20px;
+  align-items: center;
+  background: #ffffff; 
+  color: rgb(8, 8, 8);
+  border-bottom: 1px solid #333333;
+  font-size: 0.9rem;
+}
+
+.data-row:hover {
+  background: #cecaca; 
+  transition: translateY(10px);
+}
+
+.data-cell {
+  padding: 6px 0;
+}
+
+.header-cell {
+  padding: 6px 0;
+}
+
+.sno,.name, .points, .submissions,.course {
+  text-align: left;
+} 
+
+.points {
+  font-weight: 600;
+  color: #4ade80; /* Green for points */
+}
+
+.submissions {
+  color: #60a5fa; /* Blue for submissions */
+}
+
+.course {
+  font-style: italic;
+  margin-left: 50px;
+  margin-right: -20px;
+}
+
+/* Scrollbar styling */
+.leaderboard-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.leaderboard-body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.leaderboard-body::-webkit-scrollbar-thumb {
+  background: #033a3a;
+  border-radius: 3px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .leaderboard-header,
+  .data-row {
+    grid-template-columns: 50px 1fr 70px 80px 1fr;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .leaderboard-title {
+    font-size: 1rem;
+    padding: 10px 15px;
+  }
+}
