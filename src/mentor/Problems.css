@@ -1,0 +1,376 @@
+/* Main Container */
+.problems-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header Section */
+.problems-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.problems-header h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+.add-problem-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.add-problem-btn:hover {
+  background-color: #45a049;
+}
+
+/* Filters Section */
+.filters-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.filters-group {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.filter-item label {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.filter-item select {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  min-width: 180px;
+}
+
+.search-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.search-input-container {
+  position: relative;
+}
+
+.search-input-container input {
+  padding: 8px 12px 8px 32px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  width: 250px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Problems List */
+.problems-list {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.problems-list-header {
+  display: grid;
+  grid-template-columns: 50px 2fr 100px 100px 2fr 150px;
+  padding: 12px 16px;
+  background-color: #f5f5f5;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  gap: 15px;
+}
+
+.problem-card {
+  display: grid;
+  grid-template-columns: 50px 2fr 100px 100px 2fr 150px;
+  padding: 12px 16px;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  gap: 15px;
+}
+
+.problem-card:hover {
+  background-color: #f9f9f9;
+}
+
+/* Column Styles */
+.header-id, .problem-id {
+  text-align: center;
+}
+
+.header-title, .problem-title {
+  padding-left: 8px;
+  font-weight: 500;
+}
+
+.header-difficulty, .problem-difficulty {
+  text-align: center;
+  font-weight: 500;
+  margin-right: 15px;
+}
+
+.header-acceptance, .problem-acceptance {
+  text-align: center;
+  margin-left: 15px;
+}
+
+.header-tags, .problem-tags-container {
+  padding: 0 8px;
+}
+
+.header-action, .problem-action {
+  text-align: right;
+}
+
+/* Difficulty Colors */
+.problem-difficulty.easy {
+  color: #00B8A3;
+}
+
+.problem-difficulty.medium {
+  color: #FFC01E;
+}
+
+.problem-difficulty.hard {
+  color: #FF375F;
+}
+
+/* Tags Container */
+.problem-tags-container {
+  overflow: hidden;
+}
+
+.problem-tags-scroll {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 60px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+/* Scrollbar styling */
+.problem-tags-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.problem-tags-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2px;
+}
+
+.problem-tags-scroll::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 2px;
+}
+
+.problem-tags-scroll::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Tags Styling */
+.topic-tags, .company-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.topic-tag {
+  background-color: #e1f5fe;
+  color: #0288d1;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.company-tag {
+  background-color: #e8f5e9;
+  color: #388e3c;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* Solve Button */
+.solve-button {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+  min-width: 120px;
+}
+
+.solve-button:hover {
+  background-color: #303f9f;
+}
+
+.course_form {
+  background-color: white;
+  padding: 24px;
+  border-radius: 10px;
+  width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Inputs & Selects */
+.course_form input[type="text"],
+.course_form input[type="number"],
+.course_form select,
+.course_form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.course_form input:focus,
+.course_form textarea:focus,
+.course_form select:focus {
+  border-color: #4CAF50;
+}
+
+/* Textarea */
+.course_form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Tag Section */
+.tag-input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tags-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tags-display span {
+  background-color: #e0f7fa;
+  color: #00796b;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* Test case row */
+.test-case {
+  display: flex;
+  gap: 10px;
+}
+
+.test-case input {
+  flex: 1;
+}
+
+/* Add/Remove Test Case */
+.testcase-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.testcase-buttons button {
+  padding: 6px 10px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Form actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.form-actions button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.form-actions button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.form-actions button[type="button"] {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .course_form {
+    width: 95%;
+    padding: 16px;
+  }
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .problems-list-header,
+  .problem-card {
+    grid-template-columns: 40px 1fr 80px 80px 120px;
+  }
+  
+  .header-tags, .problem-tags-container {
+    display: none;
+  }
+  
+  .filters-section {
+    flex-direction: column;
+  }
+  
+  .course_form {
+    width: 90%;
+  }
+}

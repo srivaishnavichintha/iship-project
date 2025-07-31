@@ -2,26 +2,44 @@ const express = require("express");
 const router = express.Router();
 const Problem = require("../../models/Problem");
 
-// POST: Add a new problem
+// POST /mentor/problems/add
 router.post("/add", async (req, res) => {
   try {
-    const problem = new Problem(req.body);
-    // console.log(req.body);
-    await problem.save();
-    res.status(201).json(problem);
+    const {
+      problemtitle,
+      description,
+      level,
+      prerequisites,
+      companyTags,
+      inputs,
+      outputs,
+      mentorid
+    } = req.body;
+
+    // Validation
+    if (!mentorid || !problemtitle || !description || !level || !inputs || !outputs) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    // Do not send problemId manually — let schema handle it
+    const newProblem = new Problem({
+      problemtitle,
+      description,
+      level,
+      prerequisites,
+      companyTags,
+      inputs,
+      outputs,
+      mentorid
+    });
+
+    await newProblem.save(); // ⚠️ Triggers pre('save') hook
+
+    res.status(201).json({ message: "Problem added successfully", problem: newProblem });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.error("Error adding problem:", err);
+    res.status(500).json({ message: "Internal Server Error", error: err.message });
   }
 });
-
-// GET: Fetch all problems
-// router.get("/", async (req, res) => {
-//   try {
-//     const problems = await Problem.find();
-//     res.json(problems);
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
 
 module.exports = router;

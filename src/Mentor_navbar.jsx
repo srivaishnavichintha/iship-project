@@ -1,59 +1,90 @@
 import "./Student_navbar.css";
-import { Link } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import logo from "./assets/react.png";
-import moon from "./assets/moon.png";
-import sun from "./assets/sun.png";
-import env from "./assets/envelope.png"
-import whiteenv from "./assets/white_env.png"
+import env from "./assets/envelope.png";
+import { Link, useNavigate } from "react-router-dom";
+import { FaUser, FaListOl, FaFileAlt, FaSignOutAlt } from "react-icons/fa";
 
-export default function Student_navbar() {
-  const [isDark, setIsDark] = useState(false);
-  const navRef = useRef(null);
+export default function Mentor_navbar() {
   const [showDropdown, setShowDropdown] = useState(false);
-   const toggleDropdown = () => {
-    setShowDropdown((prev) => !prev);
+  const [showEnvelopeBox, setShowEnvelopeBox] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [firstLetter, setFirstLetter] = useState("");
+
+  const navigate = useNavigate();
+
+  const toggleDropdown = () => setShowDropdown((prev) => !prev);
+  const toggleEnvelopeBox = () => setShowEnvelopeBox((prev) => !prev);
+  const confirmLogout = () => setShowLogoutConfirm(true);
+  const cancelLogout = () => setShowLogoutConfirm(false);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    setShowLogoutConfirm(false);
+    navigate("/login");
   };
 
+  const handleCoursesClick = () => {
+  const user = JSON.parse(localStorage.getItem("userData"));
+  const mentorid = user?.id;  // Make sure 'id' is the mentorid
+
+  if (mentorid) {
+    navigate(`/mentor/courses/${mentorid}`);
+  } else {
+    alert("Mentor ID not found");
+  }
+}; 
   useEffect(() => {
-    document.body.className = isDark ? "dark" : "light";
-    if (navRef.current) {
-      navRef.current.className = isDark ? "dtheme" : "";
-    }
-  }, [isDark]);
-
-  const theme = () => {
-    setIsDark((prev) => !prev);
-  };
+    const username = localStorage.getItem("username");
+    if (username) setFirstLetter(username[0].toUpperCase());
+  }, []);
 
   return (
-    <nav ref={navRef} id="nava">
+    <nav id="nava">
       <div className="nav-left">
-        <img src={logo} alt="logo" className="logo"/>
-        <Link className="nav-con" to="/mentor/courses" >Courses</Link>
-         <Link className="nav-con" to="/mentor/mentorcontest" >Contest</Link>
-           <Link className="nav-con" to="/mentor/problems" >Problems</Link>
-           <Link className="nav-con" to="/mentor/leaderboard" >Leaderboard</Link>
+        <img src={logo} alt="logo" className="logo" />
+        <p className="nav-con" onClick={handleCoursesClick}>Courses</p>
+        <Link to="/mentor/mentorcontest" className="nav-con">Contest</Link>
+        <Link to="/mentor/problems" className="nav-con">Problems</Link>
+        <Link to="/mentor/leaderboard" className="nav-con">Leaderboard</Link>
       </div>
+
       <div className="nav-right">
-         <div className="profile_circle" onClick={toggleDropdown}></div>
-         <img src={isDark ? whiteenv : env} />
-         <div id="main_nav"></div>
-        <img
-        src={isDark ? sun : moon}
-        alt="theme toggle"
-        onClick={theme}
-        className="theme"
-      />
-       {showDropdown && (
-        <div className="dropdown-content">
-          <a href="#">Profile</a>
-          <a href="#">Settings</a>
-          <a href="#">Logout</a>
+        <div className="profile_wrapper">
+          <div className="profile_circle" onClick={toggleDropdown}>
+            {firstLetter}
+          </div>
+          <div className={`dash-drop ${showDropdown ? "open" : ""}`}>
+            <p><FaUser /> My Profile</p>
+            <p><FaListOl /> Submissions</p>
+            <p><FaFileAlt /> Problem Sets</p>
+            <p onClick={confirmLogout}><FaSignOutAlt /> Log Out</p>
+          </div>
+        </div>
+
+        <div className="envelope-wrapper">
+          <img src={env} alt="Envelope" onClick={toggleEnvelopeBox} className="envelope-icon" />
+          {showEnvelopeBox && (
+            <div className="envelope-popup">
+              <p>(empty)</p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutConfirm && (
+        <div className="logout-modal">
+          <div className="logout-box">
+            <h3>Confirm Logout</h3>
+            <p>Are you sure you want to log out?</p>
+            <div className="logout-actions">
+              <button onClick={handleLogout} className="logout-btn confirm">Yes</button>
+              <button onClick={cancelLogout} className="logout-btn cancel">No</button>
+            </div>
+          </div>
         </div>
       )}
-      </div>
     </nav>
-
   );
 }

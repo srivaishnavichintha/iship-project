@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const counterSchema = new mongoose.Schema({
   id: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   seq: {
     type: Number,
@@ -11,5 +12,4 @@ const counterSchema = new mongoose.Schema({
   }
 });
 
-// ✅ Export the model safely
-module.exports = mongoose.models.Counter || mongoose.model("Counter", counterSchema);
+module.exports = mongoose.model("Counter", counterSchema);
