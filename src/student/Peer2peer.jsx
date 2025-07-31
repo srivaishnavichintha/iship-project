@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Peer2peer.css";
 import Student_navbar from "../Student_navabar";
 
@@ -8,32 +8,115 @@ const Peer2peer = () => {
   const [statusFilter, setStatusFilter] = useState("All");
   const [dateFilter, setDateFilter] = useState("");
   const [inviteCourseFilter, setInviteCourseFilter] = useState("All");
+  const [selectedPeer, setSelectedPeer] = useState(null);
+  const [inviteDateTime, setInviteDateTime] = useState("");
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [allCourses, setAllCourses] = useState([]);
+  const [contests, setContests] = useState([]);
+  const [filteredPeers, setFilteredPeers] = useState([]);
 
-  const contests = [
-    { name: "Array Showdown", date: "2025-07-15", course: "DSA", status: "Won" },
-    { name: "String Sprint", date: "2025-07-20", course: "DSA", status: "Lost" },
-    { name: "React Duel", date: "2025-07-10", course: "Frontend", status: "Won" },
-    { name: "Flex Grid Fight", date: "2025-07-27", course: "Frontend", status: "Virtual" },
-  ];
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const studentid = userData?.id;
 
-  const peersByCourse = {
-    DSA: [
-      { name: "Ravi Kumar", points: 130, contests: 12, course: "DSA" },
-      { name: "Pooja Sharma", points: 145, contests: 15, course: "DSA" },
-    ],
-    Frontend: [
-      { name: "Kiran Patil", points: 120, contests: 8, course: "Frontend" },
-      { name: "Meena Joshi", points: 110, contests: 10, course: "Frontend" },
-    ],
-    Algorithms: [
-      { name: "Amit Singh", points: 150, contests: 20, course: "Algorithms" },
-      { name: "Priya Patel", points: 125, contests: 18, course: "Algorithms" },
-    ]
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/courses/student/${studentid}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+        const data = await response.json();
+        setAllCourses(data);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
+
+    const fetchHistory = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/history/${studentid}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+        const data = await response.json();
+        setContests(data);
+      } catch (error) {
+        console.error("Error fetching history:", error);
+      }
+    };
+
+    if (studentid) {
+      fetchCourses();
+      fetchHistory();
+    }
+  }, [studentid]);
+
+  useEffect(() => {
+    const fetchPeers = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/peers/${inviteCourseFilter}/${studentid}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+        const data = await response.json();
+        setFilteredPeers(data);
+      } catch (error) {
+        console.error("Error fetching peers:", error);
+      }
+    };
+
+    if (view === "invite" && inviteCourseFilter !== "All") {
+      fetchPeers();
+    } else {
+      setFilteredPeers([]);
+    }
+  }, [inviteCourseFilter, view]);
+
+  const handleInviteClick = (peer) => {
+    setSelectedPeer(peer);
+    setIsFormOpen(true);
   };
 
-  const currentUser = { name: "You", level: 2, points: 135, nextLevel: 150 };
+  const handleSendInvite = async () => {
+    if (!inviteDateTime) {
+      alert("Please select date and time");
+      return;
+    }
 
-  // Filter contests for history view
+    const payload = {
+      challengerId: studentid,
+      opponentId: selectedPeer.id,
+      course: selectedPeer.course,
+      datetime: inviteDateTime,
+    };
+
+    try {
+      const response = await fetch("http://localhost:3000/challenge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        alert(`Invite successfully sent to ${selectedPeer.name}`);
+      } else {
+        alert("Failed to send invite");
+      }
+    } catch (error) {
+      console.error("Error sending invite:", error);
+    }
+
+    setIsFormOpen(false);
+    setSelectedPeer(null);
+    setInviteDateTime("");
+  };
+
+  const handleCancelInvite = () => {
+    setIsFormOpen(false);
+    setSelectedPeer(null);
+    setInviteDateTime("");
+  };
+
   const filteredContests = contests.filter((c) => {
     const courseMatch = courseFilter === "All" || c.course === courseFilter;
     const statusMatch = statusFilter === "All" || c.status === statusFilter;
@@ -41,128 +124,151 @@ const Peer2peer = () => {
     return courseMatch && statusMatch && dateMatch;
   });
 
-  // Filter peers for invite view
-  const filteredPeers = inviteCourseFilter === "All" 
-    ? Object.values(peersByCourse).flat() 
-    : peersByCourse[inviteCourseFilter] || [];
-
   return (
     <>
       <Student_navbar />
-      <div className="peer-to-peer-container">
-        <div className="header-section">
-          <h2>{view === "history" ? "Peer-to-Peer Contest History" : "Invite Peers"}</h2>
-          <button 
-            className="btn toggle-view-btn"
-            onClick={() => setView(view === "history" ? "invite" : "history")}
+      <div className="peer-container">
+        <header className="peer-header">
+          <div className="header-content">
+            <h1 className="peer-title">
+              {view === "history" ? "Contest History" : "Peer Challenges"}
+            </h1>
+            <p className="peer-subtitle">
+              {view === "history" ? "Your complete battle record" : "Find worthy opponents"}
+            </p>
+          </div>
+          <button
+            className="view-toggle-btn"
+            onClick={() => {
+              setView(view === "history" ? "invite" : "history");
+              setIsFormOpen(false);
+            }}
           >
             {view === "history" ? "Invite Peers" : "View History"}
+            <span className="toggle-icon">→</span>
           </button>
-        </div>
+        </header>
 
-        {view === "history" ? (
-          <>
-            <div className="filters">
-              <select value={courseFilter} onChange={(e) => setCourseFilter(e.target.value)}>
-                <option value="All">All Courses</option>
-                <option value="DSA">DSA</option>
-                <option value="Frontend">Frontend</option>
-              </select>
-
-              <input
-                type="date"
-                value={dateFilter}
-                onChange={(e) => setDateFilter(e.target.value)}
-              />
-
-              <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-                <option value="All">All Status</option>
-                <option value="Won">Won</option>
-                <option value="Lost">Lost</option>
-                <option value="Virtual">Virtual</option>
-              </select>
-            </div>
-
-            <div className="table-wrapper">
-              <table className="contest-history-table">
-                <thead>
-                  <tr>
-                    <th>Contest Name</th>
-                    <th>Date</th>
-                    <th>Course</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredContests.map((c, idx) => (
-                    <tr key={idx}>
-                      <td className="name-cell">{c.name}</td>
-                      <td>{c.date}</td>
-                      <td>{c.course}</td>
-                      <td className={`status ${c.status.toLowerCase()}`}>
-                        <span className="status-badge">{c.status}</span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <div className="status-summary">
-              <div className="progress-info">
-                <span>🎯 Your Points: {currentUser.points}</span>
-                <span>🎉 Next Level: {currentUser.nextLevel} pts</span>
+        <main className="peer-main">
+          <section className="filters-section">
+            {view === "history" ? (
+              <div className="vertical-filters">
+                <div className="filter-item">
+                  <label>Course</label>
+                  <select value={courseFilter} onChange={(e) => setCourseFilter(e.target.value)}>
+                    <option value="All">All Courses</option>
+                    {allCourses.map((course) => (
+                      <option key={course} value={course}>{course}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="filter-item">
+                  <label>Date</label>
+                  <input type="date" value={dateFilter} onChange={(e) => setDateFilter(e.target.value)} />
+                </div>
+                <div className="filter-item">
+                  <label>Status</label>
+                  <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+                    <option value="All">All Status</option>
+                    <option value="Won">Won</option>
+                    <option value="Lost">Lost</option>
+                  </select>
+                </div>
               </div>
-              <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${(currentUser.points / currentUser.nextLevel) * 100}%` }}
-                ></div>
+            ) : (
+              <div className="filter-single">
+                <div className="filter-item">
+                  <label>Filter Peers</label>
+                  <select value={inviteCourseFilter} onChange={(e) => setInviteCourseFilter(e.target.value)}>
+                    <option value="All">All Courses</option>
+                    {allCourses.map((course) => (
+                      <option key={course} value={course}>{course}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            )}
+          </section>
+
+          <section className="data-section">
+            {view === "history" ? (
+              <div className="table-card">
+                <table className="data-table">
+                  <thead>
+                    <tr>
+                      <th>Contest</th>
+                      <th>Date</th>
+                      <th>Course</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredContests.map((contest, index) => (
+                      <tr key={index}>
+                        <td>{contest.name}</td>
+                        <td>{new Date(contest.date).toLocaleDateString()}</td>
+                        <td><span className="course-badge">{contest.course}</span></td>
+                        <td><span className={`status-badge ${contest.status.toLowerCase()}`}>{contest.status}</span></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="table-card">
+                <table className="data-table">
+                  <thead>
+                    <tr>
+                      <th>Peer</th>
+                      <th>Points</th>
+                      <th>Contests</th>
+                      <th>Course</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredPeers.map((peer) => (
+                      <tr key={peer.id}>
+                        <td>{peer.name}</td>
+                        <td>{peer.points}</td>
+                        <td>{peer.contests}</td>
+                        <td>{peer.course}</td>
+                        <td><button className="challenge-btn" onClick={() => handleInviteClick(peer)}>Challenge</button></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </section>
+
+          {isFormOpen && selectedPeer && (
+            <div className="invite-modal-overlay">
+              <div className="invite-modal">
+                <div className="modal-header">
+                  <h3>Challenge {selectedPeer.name}</h3>
+                  <button className="close-btn" onClick={handleCancelInvite}>×</button>
+                </div>
+                <div className="modal-body">
+                  <div className="form-group">
+                    <label>Select Date & Time</label>
+                    <input
+                      type="datetime-local"
+                      value={inviteDateTime}
+                      onChange={(e) => setInviteDateTime(e.target.value)}
+                      min={new Date().toISOString().slice(0, 16)}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button className="cancel-btn" onClick={handleCancelInvite}>Cancel</button>
+                  <button className="send-btn" onClick={handleSendInvite}>Send Invite</button>
+                </div>
               </div>
             </div>
-          </>
-        ) : (
-          <>
-            <div className="filters">
-              <select 
-                value={inviteCourseFilter} 
-                onChange={(e) => setInviteCourseFilter(e.target.value)}
-              >
-                <option value="All">All Courses</option>
-                {Object.keys(peersByCourse).map(course => (
-                  <option key={course} value={course}>{course}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="table-wrapper">
-              <table className="peer-list-table">
-                <thead>
-                  <tr>
-                    <th>Peer Name</th>
-                    <th>Points</th>
-                    <th>Contests</th>
-                    <th>Course</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredPeers.map((peer, index) => (
-                    <tr key={index}>
-                      <td className="name-cell">{peer.name}</td>
-                      <td>{peer.points} pts</td>
-                      <td>{peer.contests}</td>
-                      <td>{peer.course}</td>
-                      <td>
-                        <button className="btn invite-btn">Invite</button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </>
-        )}
+          )}
+        </main>
       </div>
     </>
   );
