@@ -7,6 +7,7 @@ router.post("/add", async (req, res) => {
   try {
     const problem = new Problem(req.body);
     // console.log(req.body);
+    console.log("📦 Received payload:", req.body);
     await problem.save();
     res.status(201).json(problem);
   } catch (err) {
@@ -18,7 +19,7 @@ router.post("/add", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const problems = await Problem.find();
-    console.log(problems)
+    // console.log(problems)
     res.json(problems);
   } catch (err) {
     res.status(500).json({ error: err.message });

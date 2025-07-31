@@ -111,6 +111,7 @@ export default function Problems() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const mentorid = localStorage.getItem("mentorid"); // adjust if stored differently
     try {
       const payload = {
         ...formData,
@@ -118,7 +119,7 @@ export default function Problems() {
         companyTags,
         inputs,
         outputs,
-        // mentorId: "tej"
+        mentorid
       };
       await axios.post("http://localhost:3000/mentor/problems/add", payload);
       alert("Problem added successfully!");
@@ -143,7 +144,6 @@ export default function Problems() {
             <div className="course_form slide-down">
               <h2>Add New Problem</h2>
               <form onSubmit={handleSubmit}>
-                <label>Problem title</label>
                 <input
                   type="text"
                   name="problemtitle"
@@ -152,7 +152,6 @@ export default function Problems() {
                   onChange={handleInputChange}
                   required
                 />
-                 <label>Problem description</label>
                 <textarea
                   name="description"
                   placeholder="Description"
@@ -160,7 +159,6 @@ export default function Problems() {
                   onChange={handleInputChange}
                   required
                 />
-                <label>Difficulty level</label>
                 <select
                   name="level"
                   value={formData.level}
@@ -174,7 +172,6 @@ export default function Problems() {
                 </select>
 
                 {/* Prerequisites */}
-                <label>Topics</label>
                 <div className="tag-input-section">
                   <input
                     type="text"
@@ -192,7 +189,7 @@ export default function Problems() {
                   </div>
                 </div>
 
-                <label>Company tags</label>
+                {/* Company Tags */}
                 <div className="tag-input-section">
                   <input
                     type="text"
@@ -210,7 +207,7 @@ export default function Problems() {
                   </div>
                 </div>
 
-                <label>Test cases</label>
+                {/* Test Cases */}
                 {inputs.map((input, idx) => (
                   <div key={idx} className="test-case">
                     <input
@@ -229,7 +226,7 @@ export default function Problems() {
                 ))}
                 <div className="testcase-buttons">
                   <button type="button" onClick={handleAddTestCase}>+ Add Test Case</button>
-                  <button type="button" onClick={handleRemoveTestCase}>- Remove Test Case</button>
+                  <button type="button" onClick={handleRemoveTestCase}>- Remove</button>
                 </div>
 
                 <div className="form-actions">
@@ -276,7 +273,7 @@ export default function Problems() {
           </div>
         </div>
 
-        
+        {/* PROBLEMS LIST */}
         <div className="problems-list">
           <div className="problems-list-header">
             <div className="header-id">#</div>

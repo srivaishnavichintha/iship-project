@@ -39,7 +39,6 @@ const problemSchema = new mongoose.Schema({
   },
   mentorid: {
     type: String,
-    required: false
   },
   createdAt: {
     type: Date,
