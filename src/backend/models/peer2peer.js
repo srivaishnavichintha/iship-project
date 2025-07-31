@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
-
+const Counter =require("./counter");
 const challengeSchema = new mongoose.Schema({
-    // challengeId:{
-    //     type:Number
-    // },
+    challengeId:{
+        type:Number
+    },
   challengerId: {
     type: Number,
     ref: "Student",
@@ -36,6 +36,18 @@ const challengeSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
+});
+
+challengeSchema.pre("save", async function (next) {
+  if (this.isNew) {
+    const counter = await Counter.findOneAndUpdate(
+      { id: "challengeId" },
+      { $inc: { seq: 1 } },
+      { new: true, upsert: true }
+    );
+    this.challengeId = counter.seq;
+  }
+  next();
 });
 
 module.exports = mongoose.model("PeerChallenge", challengeSchema);

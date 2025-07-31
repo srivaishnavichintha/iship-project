@@ -16,12 +16,10 @@ router.post("/add", async (req, res) => {
       mentorid
     } = req.body;
 
-    // Validation
     if (!mentorid || !problemtitle || !description || !level || !inputs || !outputs) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    // Do not send problemId manually — let schema handle it
     const newProblem = new Problem({
       problemtitle,
       description,
@@ -33,8 +31,7 @@ router.post("/add", async (req, res) => {
       mentorid
     });
 
-    await newProblem.save(); // ⚠️ Triggers pre('save') hook
-
+    await newProblem.save();
     res.status(201).json({ message: "Problem added successfully", problem: newProblem });
   } catch (err) {
     console.error("Error adding problem:", err);
@@ -42,5 +39,37 @@ router.post("/add", async (req, res) => {
   }
 });
 
+// ✅ GET /mentor/problems/tags
+router.get("/tags", async (req, res) => {
+  try {
+    const problems = await Problem.find();
+    const allTopics = new Set();
+    const allCompanies = new Set();
+
+    problems.forEach(p => {
+      (p.prerequisites || []).forEach(tag => allTopics.add(tag));
+      (p.companyTags || []).forEach(tag => allCompanies.add(tag));
+    });
+
+    res.json({
+      topics: Array.from(allTopics),
+      companies: Array.from(allCompanies)
+    });
+  } catch (err) {
+    console.error("Error fetching tags:", err);
+    res.status(500).json({ message: "Failed to fetch tags", error: err.message });
+  }
+});
+
+// ✅ GET /mentor/problems — fetch all problems
+router.get("/", async (req, res) => {
+  try {
+    const problems = await Problem.find();
+    res.json(problems);
+  } catch (err) {
+    console.error("Error fetching problems:", err);
+    res.status(500).json({ message: "Failed to fetch problems", error: err.message });
+  }
+});
 
 module.exports = router;

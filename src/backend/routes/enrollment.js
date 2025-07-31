@@ -10,9 +10,12 @@ router.post("/enroll", async (req, res) => {
     const { courseid, coursename, studentid } = req.body;
 
     // 1. Fetch course by courseid
+    // 1. Fetch course by courseid
     const course = await Course.findOne({ courseid });
     if (!course) return res.status(404).json({ error: "Course not found" });
+    if (!course) return res.status(404).json({ error: "Course not found" });
 
+    // 2. Create Enrollment document
     // 2. Create Enrollment document
     const enrollment = new Enrollment({
       courseid,

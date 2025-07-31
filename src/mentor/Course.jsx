@@ -6,7 +6,7 @@ import Mccard from "../components/Mccard";
 import { useParams } from "react-router-dom";
 
 export default function Course() {
-  const { mentorid } = useParams(); // ⬅️ Move this line here
+  const { mentorid } = useParams(); // ⬅ Move this line here
 
   const [showForm, setShowForm] = useState(false);
   const [prerequisites, setPrerequisites] = useState([]);
