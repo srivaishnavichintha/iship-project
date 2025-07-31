@@ -1,5 +1,5 @@
-.course-card {
-  width: 350px;
+.p2p-card {
+  width: 320px;
   height: 300px;
   border-radius: 16px;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
@@ -9,45 +9,53 @@
   display: flex;
   flex-direction: column;
   transition: transform 0.3s ease;
+  cursor: pointer;
 }
 
-.course-card:hover {
+.p2p-card:hover {
   transform: scale(1.05);
 }
 
 .card-top {
-  height: 80%;
+  height: 70%;
   padding: 20px;
   color: rgb(16, 16, 16);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  text-align: center;
+  justify-content: space-between;
 }
 
-.course-title {
-  font-size: 1.6rem;
+.pair-title {
+  font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 10px;
   color: rgb(15, 15, 15);
+  text-align: center;
 }
 
-
-.course-desc {
-  font-size: 0.8rem;
+.pair-details {
+  font-size: 0.9rem;
   color: #1e1c1c;
-  line-height: 1.4;
-  max-height: 3.6em; /* roughly 2 lines */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; /* number of lines */
-  -webkit-box-orient: vertical;
+  line-height: 1.6;
+  margin: 10px 0;
 }
 
+.pair-details p {
+  margin: 5px 0;
+}
+
+.session-time {
+  margin-top: 8px !important;
+  font-size: 0.85rem;
+  color: #555;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 6px 10px;
+  border-radius: 6px;
+  display: inline-block;
+}
 
 .card-bottom {
-  height: 40%; 
+  height: 30%;
   background-color: white;
   padding: 10px 15px;
   color: #333;
@@ -64,12 +72,12 @@
   font-size: 0.85rem;
 }
 
-.enroll-button {
+.details-button {
   margin-top: 4px;
   padding: 6px 16px;
   border: none;
   border-radius: 20px;
-  background: linear-gradient(to right, #022442, #014a4e);
+  background: linear-gradient(to right, #4a6fa5, #166088);
   color: white;
   font-weight: bold;
   font-size: 0.9rem;
@@ -77,37 +85,22 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.enroll-button:hover {
+.details-button:hover {
   transform: scale(1.08);
-  box-shadow: 0 6px 14px rgba(1, 74, 78, 0.5);
+  box-shadow: 0 6px 14px rgba(22, 96, 136, 0.5);
 }
 
 .tags-container {
   display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  white-space: nowrap;
-  padding-bottom: 6px;
-  margin-top: 12px;
+  flex-wrap: wrap;
   gap: 8px;
-  scrollbar-width: thin;
-  scrollbar-color: #ffffff33 transparent;
+  margin-top: 10px;
+  justify-content: center;
 }
-
-.tags-container::-webkit-scrollbar {
-  height: 6px;
-}
-
-.tags-container::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
-}
-
-
 
 .tag {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #fff;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #333;
   font-size: 0.75rem;
   padding: 4px 10px;
   border-radius: 14px;
@@ -117,6 +110,5 @@
 }
 
 .tag:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(0, 0, 0, 0.2);
 }
-

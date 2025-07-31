@@ -1,10 +1,10 @@
 import { useState } from "react";
-
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-// import { useEffect } from 'react';
 import "./Login.css";
 import logo from "./assets/react.svg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Login() {
   const [role, setRole] = useState("student");
@@ -17,9 +17,8 @@ export default function Login() {
     email: "",
     password: "",
     confirmPassword: "",
-    identifier: "", 
+    identifier: "",
   });
-
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -46,7 +45,7 @@ export default function Login() {
         };
 
     if (isSignup && formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+      toast.error("Passwords do not match!");
       return;
     }
 
@@ -57,25 +56,25 @@ export default function Login() {
         headers: { "Content-Type": "application/json" },
       });
 
-      alert(res.data.message);
+      toast.success(res.data.message);
 
       const user = res.data.user;
-      // console.log("Authenticated user:", user);
-       const userData = {
-  role: user.role,
-  id: user.role === "mentor" ? user.mentorid : user.studentid,
-  name:  user.username,
-};
-localStorage.setItem("userData", JSON.stringify(userData));
-console.log("Saved to localStorage:", localStorage.getItem("userData"));
+      const userData = {
+        role: user.role,
+        id: user.role === "mentor" ? user.mentorid : user.studentid,
+        name: user.username,
+      };
 
-if (user.role === "student") {
-  navigate("/student/dashboard", { state: { user: userData } });
-} else if (user.role === "mentor") {
-  navigate("/mentor/dashboard", { state: { user: userData } });
-}
+      localStorage.setItem("userData", JSON.stringify(userData));
+      console.log("Saved to localStorage:", localStorage.getItem("userData"));
+
+      if (user.role === "student") {
+        navigate("/student/dashboard", { state: { user: userData } });
+      } else if (user.role === "mentor") {
+        navigate("/mentor/dashboard", { state: { user: userData } });
+      }
     } catch (err) {
-      alert(`Failed to login: ${err.response?.data?.message || err.message}`);
+      toast.error(`Failed to login: ${err.response?.data?.message || err.message}`);
     } finally {
       setLoading(false);
     }
@@ -102,7 +101,7 @@ if (user.role === "student") {
 
         {/* Logo */}
         <img src={logo} alt="Logo" className="logo" />
-        <h3>YourPlatform</h3>
+        <h3>Welcome to Code verse</h3>
 
         {/* Form */}
         <form onSubmit={handleSubmit}>
@@ -186,6 +185,18 @@ if (user.role === "student") {
           )}
         </form>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }
