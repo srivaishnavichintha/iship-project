@@ -13,7 +13,7 @@ export default function Dash() {
 
   useEffect(() => {
     // Fetch popular courses
-    axios.get("http://localhost:3000/popular-course")
+    axios.get("http://localhost:3000/popular-courses")
       .then((res) => {
         setPopularCourse(res.data);
       })
@@ -22,7 +22,7 @@ export default function Dash() {
       });
 
     // Fetch upcoming courses
-    axios.get("http://localhost:3000/upcoming-course")
+    axios.get("http://localhost:3000/mentor/upcoming-course")
       .then((res) => {
         console.log("📤 Sending courses:", res.data);
         setUpcomingCourse(res.data);
@@ -65,11 +65,11 @@ export default function Dash() {
               <Mccard
                 key={course.courseid}
                 id={course.courseid}
-                title={course.coursetitle}
-                description={course.description}
-                mentor={course.mentor}
-                endDate={course.endDate}
-                tags={course.tags}
+                title={course.coursename}
+                description={course.description || ""}
+                username={course.mentorname}  // ✅ was mentor before
+                endDate={course.enrollmentend}
+                tags={course.tags || []}
               />
             ))}
           </div>

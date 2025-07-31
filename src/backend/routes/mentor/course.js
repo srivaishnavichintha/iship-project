@@ -15,10 +15,11 @@ router.get("/upcoming-course", async (req, res) => {
   }
 });
 // GET /mentor/courses/:mentorid
-router.get("/mentor/courses/:mentorid", async (req, res) => {
+router.get("/courses/:mentorid", async (req, res) => {
   try {
     const { mentorid } = req.params;
-    const courses = await Course.find({ mentorid: mentorid });
+    const courses = await Course.find({ mentorid });
+    console.log(courses);
     res.status(200).json(courses);
   } catch (err) {
     res.status(500).json({ error: err.message });

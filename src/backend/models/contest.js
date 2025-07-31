@@ -16,7 +16,8 @@ const contestSchema = new mongoose.Schema({
   },
   conteststatus: {
     type: String,
-    enum: ['upcoming', 'live'],  // keep lowercase enums
+    enum: ['upcoming', 'live','completed'],  // keep lowercase enums
+    default: 'upcoming',
     required: true
   },
   contestdifficulty: {

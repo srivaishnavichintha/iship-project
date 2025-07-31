@@ -33,6 +33,7 @@ export default function Course() {
   };
 
   const handleKeyDown = (e) => {
+    
     if (e.key === "Enter" && prereqInput.trim() !== "") {
       e.preventDefault();
       const trimmedValue = prereqInput.trim();
@@ -271,7 +272,7 @@ export default function Course() {
                 id={course.courseid}
                 title={course.coursename}
                 description={course.description}
-                mentor={"DEMO Mentor"}
+                mentor={course.mentorname}
                 endDate={new Date(course.enrollmentend).toLocaleDateString()}                
                 tags={course.prerequisites}
                 />

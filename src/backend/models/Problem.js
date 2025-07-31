@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Counter = require("./counter");
 
 const problemSchema = new mongoose.Schema({
-  problemid: {
+  problemId: {
     type: Number,
     unique: true
   },
@@ -50,13 +50,14 @@ const problemSchema = new mongoose.Schema({
 problemSchema.pre("save", async function (next) {
   if (this.isNew) {
     const counter = await Counter.findOneAndUpdate(
-      { id: "problemid" },              // tracking "problemid" type
-      { $inc: { seq: 1 } },             // increment seq by 1
-      { new: true, upsert: true }       // create if doesn't exist
+      { id: "problemId" },             // ← updated counter id too
+      { $inc: { seq: 1 } },
+      { new: true, upsert: true }
     );
-    this.problemid = counter.seq;
+    this.problemId = counter.seq;
   }
   next();
 });
+
 
 module.exports = mongoose.model("Problem", problemSchema);
