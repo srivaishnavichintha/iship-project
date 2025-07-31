@@ -7,29 +7,25 @@ import Myenrollcard from "../components/Myenrollcard";
 const coursesData = {
   enrolled: [
     {
-      title: 'DSA Mastery',
-      description: 'Data Structures and Algorithms for beginners and intermediates',
-      image: '/images/dsa-course.png',
-      progress: 60,
+     id: 2,
+      title: 'SQL for Developers',
+      description: 'Learn to query and manage databases effectively Learn to query and manage databases effectively Learn to query and manage databases effectively',
+      image: '/images/sql-course.png',
+      tags: ['Backend', 'Beginner'],
+      duration: '10 hrs | 7 modules',
+      mentor: 'Prof. R. Kumar',
+      endDate: 'Aug 18, 2025'
     },
     {
-      title: 'Web Development',
-      description: 'HTML, CSS, JS and React - Build responsive websites',
-      image: '/images/web-course.png',
-      progress: 35,
+      id: 2,
+      title: 'SQL for Developers',
+      description: 'Learn to query and manage databases effectively',
+      image: '/images/sql-course.png',
+      tags: ['Backend', 'Beginner'],
+      duration: '10 hrs | 7 modules',
+      mentor: 'Prof. R. Kumar',
+      endDate: 'Aug 18, 2025'
     }
-  ],
-  available: [
-    {
-      id: 1,
-      title: 'Machine Learning Basics',
-      description: 'Learn Python and ML algorithms from scratch',
-      image: '/images/ml-course.png',
-      tags: ['New', 'ML', 'Beginner'],
-      duration: '12 hrs | 10 modules',
-      mentor: 'Dr. A. Sharma',
-      endDate: 'Aug 10, 2025'
-    },
   ],
   recommended: [
     {
@@ -68,7 +64,7 @@ const StudentCourses = () => {
           />
         </div>
 
-        <h1 className="section-title">📘 My Enrolled Courses</h1>
+        <h1 className="section-title">My Enrolled Courses</h1>
         <div className="courses-grid">
           {filterCourses(coursesData.enrolled).map((course, index) => (
             <Myenrollcard
@@ -76,28 +72,13 @@ const StudentCourses = () => {
               id={index}
               title={course.title}
               description={course.description}
-              progress={course.progress}
+              mentor={course.mentor}
+              endDate={course.endDate}
               tags={course.tags || []}
             />
           ))}
         </div>
-
-        <h1 className="section-title">🆕 Available Courses</h1>
-        <div className="courses-grid">
-          {filterCourses(coursesData.available).map((course, index) => (
-            <CCard
-              key={index}
-              id={course.id}
-              title={course.title}
-              description={course.description}
-              mentor={course.mentor}
-              endDate={course.endDate}
-              tags={course.tags}
-            />
-          ))}
-        </div>
-
-        <h1 className="section-title">✨ Recommended for You</h1>
+        <h1 className="section-title">Recommended for You</h1>
         <div className="courses-grid">
           {filterCourses(coursesData.recommended).map((course, index) => (
             <CCard
@@ -110,39 +91,8 @@ const StudentCourses = () => {
               tags={course.tags}
             />
           ))}
-           {filterCourses(coursesData.recommended).map((course, index) => (
-            <CCard
-              key={index}
-              id={course.id}
-              title={course.title}
-              description={course.description}
-              mentor={course.mentor}
-              endDate={course.endDate}
-              tags={course.tags}
-            />
-          ))}
-           {filterCourses(coursesData.recommended).map((course, index) => (
-            <CCard
-              key={index}
-              id={course.id}
-              title={course.title}
-              description={course.description}
-              mentor={course.mentor}
-              endDate={course.endDate}
-              tags={course.tags}
-            />
-          ))}
-          {filterCourses(coursesData.recommended).map((course, index) => (
-            <CCard
-              key={index}
-              id={course.id}
-              title={course.title}
-              description={course.description}
-              mentor={course.mentor}
-              endDate={course.endDate}
-              tags={course.tags}
-            />
-          ))}
+           
+           
         </div>
       </div>
     </>
