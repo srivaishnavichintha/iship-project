@@ -11,10 +11,10 @@ const studentSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   level: { type: String, enum: ['Beginner', 'Intermediate', 'Advanced'], default: 'Beginner' },
   points: { type: Number, default: 0 },
-  enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
+  enrolledCourses: [{ type: String}],
   joinedAt: { type: Date, default: Date.now },
   password: { type: String, required: true },
-  courseIds: [String],
+  courseIds: [Number],
   isactive: { type: Boolean, default: true }
 });
 

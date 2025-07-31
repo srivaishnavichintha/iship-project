@@ -14,8 +14,8 @@ export default function EnrollForm() {
   useEffect(() => {
     // Simulate getting from localStorage or auth context
      const studentData = JSON.parse(localStorage.getItem("userData"));
-    setStudentid(studentData.studentid);
-    setStudentname(studentData.username);
+    setStudentid(studentData.id);
+    setStudentname(studentData.name);
   }, []);
 
   const handleSubmit = async (e) => {

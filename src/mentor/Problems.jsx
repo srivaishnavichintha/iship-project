@@ -110,29 +110,65 @@ export default function Problems() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const payload = {
-        ...formData,
-        prerequisites,
-        companyTags,
-        inputs,
-        outputs,
-        mentorId: "tej"
-      };
-      await axios.post("http://localhost:3000/mentor/problems/add", payload);
-      alert("Problem added successfully!");
-      setShowForm(false);
-      setFormData({ problemtitle: "", description: "", level: "" });
-      setInputs([""]);
-      setOutputs([""]);
-      setPrerequisites([]);
-      setCompanyTags([]);
-    } catch (err) {
-      console.error("Submit error:", err);
-      alert("Failed to add problem!");
-    }
-  };
+  e.preventDefault();
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const mentorid = String(userData?.id);
+  const mentorname = userData?.name;
+
+  if (!mentorid || !mentorname) {
+    alert("Mentor information is missing. Please log in again.");
+    return;
+  }
+
+  // ✅ Filter out empty test cases
+  const cleanedInputs = inputs.map(i => i.trim()).filter(i => i !== "");
+  const cleanedOutputs = outputs.map(o => o.trim()).filter(o => o !== "");
+
+  if (
+    !formData.problemtitle ||
+    !formData.description ||
+    !formData.level ||
+    cleanedInputs.length === 0 ||
+    cleanedOutputs.length === 0
+  ) {
+    alert("Please fill in all required fields including at least one valid test case.");
+    return;
+  }
+
+  const payload = {
+  problemtitle: formData.problemtitle.trim(),
+  description: formData.description.trim(),
+  level: formData.level,
+  prerequisites,
+  companyTags,
+  inputs: cleanedInputs,
+  outputs: cleanedOutputs,
+  mentorid
+};
+
+
+  try {
+    console.log("Submitting payload:", payload);
+    await axios.post("http://localhost:3000/mentor/problems/add", payload, {
+  headers: { "Content-Type": "application/json" }
+});
+
+    alert("Problem added successfully!");
+
+    // Reset state
+    setShowForm(false);
+    setFormData({ problemtitle: "", description: "", level: "" });
+    setInputs([""]);
+    setOutputs([""]);
+    setPrerequisites([]);
+    setCompanyTags([]);
+  }catch (err) {
+  console.error("Submit error:", err.response?.data || err.message);
+  alert(`Failed to add problem: ${err.response?.data?.error || err.message}`);
+}
+
+};
+
 
   return (
     <>
@@ -143,7 +179,6 @@ export default function Problems() {
             <div className="course_form slide-down">
               <h2>Add New Problem</h2>
               <form onSubmit={handleSubmit}>
-                <label>Problem title</label>
                 <input
                   type="text"
                   name="problemtitle"
@@ -152,7 +187,6 @@ export default function Problems() {
                   onChange={handleInputChange}
                   required
                 />
-                 <label>Problem description</label>
                 <textarea
                   name="description"
                   placeholder="Description"
@@ -160,7 +194,6 @@ export default function Problems() {
                   onChange={handleInputChange}
                   required
                 />
-                <label>Difficulty level</label>
                 <select
                   name="level"
                   value={formData.level}
@@ -174,7 +207,6 @@ export default function Problems() {
                 </select>
 
                 {/* Prerequisites */}
-                <label>Topics</label>
                 <div className="tag-input-section">
                   <input
                     type="text"
@@ -192,7 +224,7 @@ export default function Problems() {
                   </div>
                 </div>
 
-                <label>Company tags</label>
+                {/* Company Tags */}
                 <div className="tag-input-section">
                   <input
                     type="text"
@@ -210,7 +242,7 @@ export default function Problems() {
                   </div>
                 </div>
 
-                <label>Test cases</label>
+                {/* Test Cases */}
                 {inputs.map((input, idx) => (
                   <div key={idx} className="test-case">
                     <input
@@ -229,7 +261,7 @@ export default function Problems() {
                 ))}
                 <div className="testcase-buttons">
                   <button type="button" onClick={handleAddTestCase}>+ Add Test Case</button>
-                  <button type="button" onClick={handleRemoveTestCase}>- Remove Test Case</button>
+                  <button type="button" onClick={handleRemoveTestCase}>- Remove</button>
                 </div>
 
                 <div className="form-actions">
@@ -276,7 +308,7 @@ export default function Problems() {
           </div>
         </div>
 
-        
+        {/* PROBLEMS LIST */}
         <div className="problems-list">
           <div className="problems-list-header">
             <div className="header-id">#</div>
@@ -289,7 +321,7 @@ export default function Problems() {
 
           {filteredProblems.map(problem => (
             <div key={problem._id} className="problem-card">
-              <div className="problem-id">{problem.problemid}</div>
+              <div className="problem-id">{problem.problemId}</div>
               <div className="problem-title">{problem.problemtitle}</div>
               <div className={`problem-difficulty ${problem.level.toLowerCase()}`}>{problem.level}</div>
               <div className="problem-acceptance">--</div>

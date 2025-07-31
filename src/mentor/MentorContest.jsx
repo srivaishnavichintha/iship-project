@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./MentorContest.css";
@@ -7,6 +6,8 @@ import ContestCard from "../components/ContestCard";
 
 export default function MentorContest() {
   const [showForm, setShowForm] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);   // ✅ Add this
+  const [error, setError] = useState(null); 
   const [formData, setFormData] = useState({
     contesttitle: "",
     contestdate: "",
@@ -22,26 +23,29 @@ export default function MentorContest() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [difficultyFilter, setDifficultyFilter] = useState("all");
 
+  
+
   const userData = JSON.parse(localStorage.getItem("userData"));
-  const mentorid = userData?.mentorid;
-  const mentorname = userData?.username;
+  const mentorid = userData?.id;
+  const mentorname = userData?.name;
 
   useEffect(() => {
-    const fetchContests = async () => {
-      try {
-        setIsLoading(true);
-        const response = await axios.get("http://localhost:3000/contests");
-        setContests(response.data);
-      } catch (err) {
-        setError(err.message || "Failed to fetch contests");
-        console.error("Error fetching contests:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const fetchContests = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get("http://localhost:3000/contests");
+      setContests(response.data);
+    } catch (err) {
+      setError(err.message || "Failed to fetch contests");
+      console.error("Error fetching contests:", err);
+    } finally {
+      setIsLoading(false);  // ✅ fix here
+    }
+  };
 
-    fetchContests();
-  }, []);
+  fetchContests();
+}, []);
+
 
   useEffect(() => {
     const filteredContests = contests.filter(contest => {
