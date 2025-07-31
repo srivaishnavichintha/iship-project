@@ -6,7 +6,6 @@ const Problem = require("../../models/Problem");
 router.post("/add", async (req, res) => {
   try {
     const problem = new Problem(req.body);
-    // console.log(req.body);
     console.log("📦 Received payload:", req.body);
     await problem.save();
     res.status(201).json(problem);
@@ -14,6 +13,7 @@ router.post("/add", async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
+
 
 // GET: Fetch all problems
 router.get("/", async (req, res) => {

@@ -56,7 +56,7 @@ export default function Course() {
   };
     useEffect(() => {
   if (!mentorid) return;
-
+  console.log(mentorid);
   axios.get(`http://localhost:3000/mentor/courses/${mentorid}`)
     .then((res) => {
       console.log(res.data);
@@ -71,57 +71,70 @@ export default function Course() {
 
 
   const handlecourse = async () => {
-      const user = JSON.parse(localStorage.getItem("userData"));
-      const mentorid =user?.id;
-    if (!formData.coursename || !formData.description || !formData.category ||
-        !formData.level || !formData.enrollmentend || !formData.max_participants) {
-      alert("Please fill all required fields");
+  if (
+    !formData.coursename ||
+    !formData.description ||
+    !formData.category ||
+    !formData.level ||
+    !formData.enrollmentend ||
+    !formData.max_participants
+  ) {
+    alert("Please fill all required fields");
+    return;
+  }
+
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const mentorid = userData?.mentorid;
+  const mentorname = userData?.username;
+  console.log(mentorid,mentorname);
+  if (!mentorid || !mentorname) {
+    alert("Mentor information is missing. Please log in again.");
+    return;
+  }
+
+  try {
+    const endpoint = "http://localhost:3000/mentor/courses";
+    const payload = {
+      ...formData,
+      max_participants: Number(formData.max_participants),
+      enrollmentend: new Date(formData.enrollmentend).toISOString(),
+      prerequisites,
+      mentorid,
+      mentorname,
+    };
+
+    if (new Date(payload.enrollmentend) < new Date()) {
+      alert("Enrollment end date must be in the future");
       return;
     }
 
-    try {
-      const endpoint = "http://localhost:3000/mentor/courses";
-      const payload = {
-        ...formData,
-        max_participants: Number(formData.max_participants),
-        enrollmentend: new Date(formData.enrollmentend).toISOString(),
-        prerequisites,
-        mentorid,
-        // created_at: new Date().toISOString()
-      };
+    if (payload.max_participants <= 0) {
+      alert("Max participants must be a positive number");
+      return;
+    }
 
-      if (new Date(payload.enrollmentend) < new Date()) {
-        alert("Enrollment end date must be in the future");
-        return;
-      }
+    const res = await axios.post(endpoint, payload);
+    console.log("Course added:", res.data);
+    alert("Course added successfully!");
 
-      if (payload.max_participants <= 0) {
-        alert("Max participants must be a positive number");
-        return;
-      }
+    setShowForm(false);
+    setFormData({
+      courseid: "",
+      coursename: "",
+      description: "",
+      category: "",
+      level: "",
+      enrollmentend: "",
+      max_participants: ""
+    });
+    setPrerequisites([]);
 
-      const res = await axios.post(endpoint, payload);
+  } catch (error) {
+    console.error("Error adding course:", error.response?.data || error.message);
+    alert(`Failed to add course: ${error.response?.data?.message || error.message}`);
+  }
+};
 
-      console.log("Course added:", res.data);
-      alert("Course added successfully!");
-
-      setShowForm(false);
-      setFormData({
-        courseid:"",
-        coursename: "",
-        description: "",
-        category: "",
-        level: "",
-        enrollmentend: "",
-        max_participants: ""
-      });
-      setPrerequisites([]);
-
-    } catch (error) {
-  console.error("Error adding course:", error.response?.data || error.message);
-  alert(`Failed to add course: ${error.response?.data?.message || error.message}`);
-}
-  };
 
   return (
     <>
@@ -271,7 +284,7 @@ export default function Course() {
                 id={course.courseid}
                 title={course.coursename}
                 description={course.description}
-                mentor={"DEMO Mentor"}
+                mentor={course.mentorname}
                 endDate={new Date(course.enrollmentend).toLocaleDateString()}                
                 tags={course.prerequisites}
                 />

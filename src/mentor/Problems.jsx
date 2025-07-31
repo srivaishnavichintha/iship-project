@@ -110,30 +110,58 @@ export default function Problems() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const mentorid = localStorage.getItem("mentorid"); // adjust if stored differently
-    try {
-      const payload = {
-        ...formData,
-        prerequisites,
-        companyTags,
-        inputs,
-        outputs,
-        mentorid
-      };
-      await axios.post("http://localhost:3000/mentor/problems/add", payload);
-      alert("Problem added successfully!");
-      setShowForm(false);
-      setFormData({ problemtitle: "", description: "", level: "" });
-      setInputs([""]);
-      setOutputs([""]);
-      setPrerequisites([]);
-      setCompanyTags([]);
-    } catch (err) {
-      console.error("Submit error:", err);
-      alert("Failed to add problem!");
-    }
+  e.preventDefault();
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const mentorid = userData?.id;
+  const mentorname = userData?.name;
+
+  if (!mentorid || !mentorname) {
+    alert("Mentor information is missing. Please log in again.");
+    return;
+  }
+
+  // ✅ Filter out empty test cases
+  const cleanedInputs = inputs.map(i => i.trim()).filter(i => i !== "");
+  const cleanedOutputs = outputs.map(o => o.trim()).filter(o => o !== "");
+
+  if (
+    !formData.problemtitle ||
+    !formData.description ||
+    !formData.level ||
+    cleanedInputs.length === 0 ||
+    cleanedOutputs.length === 0
+  ) {
+    alert("Please fill in all required fields including at least one valid test case.");
+    return;
+  }
+
+  const payload = {
+    ...formData,
+    prerequisites,
+    companyTags,
+    inputs: cleanedInputs,
+    outputs: cleanedOutputs,
+    mentorid
   };
+
+  try {
+    console.log("Submitting payload:", payload);
+    await axios.post("http://localhost:3000/mentor/problems/add", payload);
+    alert("Problem added successfully!");
+
+    // Reset state
+    setShowForm(false);
+    setFormData({ problemtitle: "", description: "", level: "" });
+    setInputs([""]);
+    setOutputs([""]);
+    setPrerequisites([]);
+    setCompanyTags([]);
+  } catch (err) {
+    console.error("Submit error:", err);
+    alert(`Failed to add problem: ${err.response?.data?.error || err.message}`);
+  }
+};
+
 
   return (
     <>
@@ -286,7 +314,7 @@ export default function Problems() {
 
           {filteredProblems.map(problem => (
             <div key={problem._id} className="problem-card">
-              <div className="problem-id">{problem.problemid}</div>
+              <div className="problem-id">{problem.problemId}</div>
               <div className="problem-title">{problem.problemtitle}</div>
               <div className={`problem-difficulty ${problem.level.toLowerCase()}`}>{problem.level}</div>
               <div className="problem-acceptance">--</div>
