@@ -6,6 +6,8 @@ import ContestCard from "../components/ContestCard";
 
 export default function MentorContest() {
   const [showForm, setShowForm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);   // ✅ Add this
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     contesttitle: "",
     contestdate: "",
@@ -22,8 +24,8 @@ export default function MentorContest() {
   const [difficultyFilter, setDifficultyFilter] = useState("all");
 
   const userData = JSON.parse(localStorage.getItem("userData"));
-  const mentorid = userData?.mentorid;
-  const mentorname = userData?.username;
+  const mentorid = userData?.id;
+  const mentorname = userData?.name;
 
   useEffect(() => {
     const fetchContests = async () => {

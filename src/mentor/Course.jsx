@@ -74,6 +74,7 @@ export default function Course() {
   const handlecourse = async () => {
       const user = JSON.parse(localStorage.getItem("userData"));
       const mentorid =user?.id;
+      const mentorname=user?.name;
     if (!formData.coursename || !formData.description || !formData.category ||
         !formData.level || !formData.enrollmentend || !formData.max_participants) {
       alert("Please fill all required fields");
@@ -88,6 +89,7 @@ export default function Course() {
         enrollmentend: new Date(formData.enrollmentend).toISOString(),
         prerequisites,
         mentorid,
+        mentorname
         // created_at: new Date().toISOString()
       };
 
