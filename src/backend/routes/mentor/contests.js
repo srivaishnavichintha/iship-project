@@ -51,11 +51,33 @@ router.post("/mentor/contests", async (req, res) => {
 router.get("/contests", async (req, res) => {
   try {
     const contests = await Contest.find().sort({ contestdate: 1 });
-    res.json(contests);
+
+    // Get today as ISO date (midnight)
+    const today = new Date();
+today.setHours(0, 0, 0, 0); // Normalize to midnight
+
+const updatedContests = contests.map((contest) => {
+  const contestDate = new Date(contest.contestdate);
+  contestDate.setHours(0, 0, 0, 0); // Normalize to midnight
+
+  if (contestDate > today) {
+    contest.conteststatus = "upcoming";
+  } else {
+    contest.conteststatus = "completed";
+  }
+
+  return contest;
+});
+
+
+    res.json(updatedContests);
   } catch (err) {
     console.error("Error fetching contests:", err);
     res.status(500).json({ error: "Server error while fetching contests" });
   }
 });
+
+
+
 
 module.exports = router;
