@@ -21,6 +21,7 @@ app.use(express.json());
 app.use("/", authRoutes);
 app.use("/", courseRoutes);
 app.use("/mentor/problems",problemRoutes);
+app.use("/",mentorcourseRoutes);
 app.use("/", contestRoutes);
 app.use("/",enrollmentRoutes);
 app.use("/mentor", mentorcourseRoutes); // instead of using "/"
