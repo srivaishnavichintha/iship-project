@@ -11,6 +11,7 @@ const enrollmentRoutes = require("./routes/enrollment");
 const peer2peerRoutes = require("./routes/peer2peer");
 const practiceRoutes = require("./routes/compiler");
 const submissionRoutes = require("./routes/submission");
+const studentRoutes = require("./routes/student");
 // const studentCourseRoutes = require("./routes/studentcourses");
 // const playgroundRoutes = require('./routes/playground');
 
@@ -35,6 +36,7 @@ app.use("/mentor", mentorcourseRoutes); // instead of using "/"
 app.use("/",peer2peerRoutes);
 app.use("/", practiceRoutes);
 app.use("/submissions", submissionRoutes);
+app.use("/", studentRoutes);
 // app.use("/", studentCourseRoutes);
 // app.use('/p2p-matches', playgroundRoutes);
 

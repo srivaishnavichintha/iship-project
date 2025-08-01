@@ -49,7 +49,7 @@ router.get("/enrolled-courses/:studentid", async (req, res) => {
       title: course.coursename,
       description: course.description,
       mentor: course.mentorname,
-      endDate: course.enrollmentend,
+      endDate: course.enrollmentend ? new Date(course.enrollmentend).toISOString().split("T")[0] : null,
       tags: course.prerequisites || []
     }));
 
