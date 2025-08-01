@@ -3,27 +3,19 @@ const router = express.Router();
 const Problem = require("../models/Problem");
 const Submission = require("../models/submission");
 
-// ✅ GET /problems/:problemId
-router.get("/problems/:problemId", async (req, res) => {
+// ✅ GET /api/problems/:problemId
+router.get("/solve/:problemId", async (req, res) => {
   try {
     const numericProblemId = Number(req.params.problemId);
+    console.log(numericProblemId);
     if (isNaN(numericProblemId)) {
       return res.status(400).json({ error: "Invalid problemId" });
     }
 
-    console.log("Searching for problemId:", numericProblemId);
-    const problem = await Problem.findOne({ problemId: numericProblemId });
-    console.log("Found problem:", problem);
+   console.log("Searching for problemId:", numericProblemId);
+const problem = await Problem.findOne({ problemId: numericProblemId });
+console.log("Found problem:", problem);
 
-    if (!problem) {
-      return res.status(404).json({ error: "Problem not found" });
-    }
-
-    // Structure the response
-    const examples = (problem.inputs || []).map((input, idx) => ({
-      input,
-      output: problem.outputs[idx] || "",
-    }));
 
     res.json({
       title: problem.problemtitle,
@@ -31,16 +23,15 @@ router.get("/problems/:problemId", async (req, res) => {
       level: problem.level,
       topics: problem.prerequisites || [],
       companies: problem.companyTags || [],
-      examples: examples,
+      examples: problem.examples || [],  // ✅ include examples here if needed
     });
-
   } catch (err) {
     console.error("Problem fetch error:", err);
     res.status(500).json({ error: "Server error" });
   }
 });
 
-// ✅ POST /submissions
+// ✅ POST /api/submissions
 router.post("/submissions", async (req, res) => {
   try {
     const { problemId } = req.body;
@@ -51,7 +42,7 @@ router.post("/submissions", async (req, res) => {
 
     const submission = new Submission({
       ...req.body,
-      problemId: Number(problemId),
+      problemId: Number(problemId), // ensure it's saved as a number
     });
 
     await submission.save();
@@ -62,7 +53,7 @@ router.post("/submissions", async (req, res) => {
   }
 });
 
-// ✅ GET /submissions?problemId=123
+// ✅ GET /api/submissions?problemId=123
 router.get("/submissions", async (req, res) => {
   try {
     const numericProblemId = Number(req.query.problemId);
