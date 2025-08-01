@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import logo from "./assets/react.svg";
+import logo from "./assets/react.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -33,13 +33,13 @@ export default function Login() {
 
     const payload = isSignup
       ? {
-          username: formData.username,
-          email: formData.email,
+          username: formData.username.trim(),
+          email: formData.email.trim(),
           password: formData.password,
           role: role,
         }
       : {
-          identifier: formData.identifier,
+          identifier: formData.identifier.trim(),
           password: formData.password,
           role: role,
         };

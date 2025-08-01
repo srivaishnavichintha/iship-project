@@ -9,6 +9,9 @@ const contestRoutes = require("./routes/mentor/contests");
 const mentorcourseRoutes=require("./routes/mentor/course")
 const enrollmentRoutes = require("./routes/enrollment");
 const peer2peerRoutes = require("./routes/peer2peer");
+const practiceRoutes = require("./routes/compiler");
+const submissionRoutes = require("./routes/submission");
+
 
 dotenv.config();
 connectDB();
@@ -28,6 +31,8 @@ app.use("/", contestRoutes);
 app.use("/",enrollmentRoutes);
 app.use("/mentor", mentorcourseRoutes); // instead of using "/"
 app.use("/",peer2peerRoutes);
+app.use("/", practiceRoutes);
+app.use("/", submissionRoutes);
 
 
 const PORT = process.env.PORT || 3000;

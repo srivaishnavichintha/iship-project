@@ -1,8 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as monaco from "monaco-editor";
+import { useParams } from "react-router-dom";
 import "./PracticeCompiler.css";
 
+
+// API configuration
+const API_BASE_URL = 'http://localhost:3000'; // Replace with your backend API URL
+
 export default function PracticeCompiler() {
+  const { problemId } = useParams();
   const editorRef = useRef(null);
   const monacoRef = useRef(null);
   const [languageId, setLanguageId] = useState("71");
@@ -12,34 +18,9 @@ export default function PracticeCompiler() {
   const [userInput, setUserInput] = useState("");
   const [isRunning, setIsRunning] = useState(false);
   const [submissions, setSubmissions] = useState([]);
-
-  const problemData = {
-    title: "898. Bitwise ORs of Subarrays",
-    description: `Given an integer array arr, return the number of distinct bitwise ORs of all the non-empty subarrays of arr.
-
-The bitwise OR of a subarray is the bitwise OR of each integer in the subarray. The bitwise OR of a subarray of one integer is that integer.
-
-A subarray is a contiguous non-empty sequence of elements within an array.`,
-    examples: [
-      {
-        input: "[0]",
-        output: "1",
-        explanation: "There is only one possible result: 0."
-      },
-      {
-        input: "[1,2,4]",
-        output: "6",
-        explanation: "The possible subarrays are: [1], [2], [4], [1,2], [2,4], [1,2,4]. Their bitwise ORs are: 1, 2, 4, 3, 6, 7. There are 6 unique values."
-      }
-    ],
-    level: "Medium",
-    topics: ["Array", "Bit Manipulation", "Dynamic Programming"],
-    companies: ["Google", "Amazon", "Microsoft"],
-    constraints: [
-      "1 <= arr.length <= 5 * 10^4",
-      "0 <= arr[i] <= 10^9"
-    ]
-  };
+  const [problemData, setProblemData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const languageMap = {
     "71": "python",
@@ -50,35 +31,87 @@ A subarray is a contiguous non-empty sequence of elements within an array.`,
   };
 
   const defaultCode = {
-    "71": `print("Hello, World!")`,
+    "71": `def solution(arr):
+    # Write your code here
+    pass`,
     "50": `#include <stdio.h>
 
 int main() {
-  printf("Hello World!");
-  return 0;
+    // Write your code here
+    return 0;
 }`,
     "54": `#include <iostream>
+#include <vector>
 using namespace std;
 
 int main() {
-  cout << "Hello World!";
-  return 0;
+    // Write your code here
+    return 0;
 }`,
     "62": `public class Main {
-  public static void main(String[] args) {
-    System.out.println("Hello World");
-  }
-}
-`,
+    public static void main(String[] args) {
+        // Write your code here
+    }
+}`,
     "63": `/**
  * @param {number[]} arr
  * @return {number}
  */
-    console.log("Hello, World!");`
+var solution = function(arr) {
+    // Write your code here
+};`
   };
 
+  // Fetch problem data
   useEffect(() => {
-    if (editorRef.current && !monacoRef.current) {
+    const fetchProblemData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`${API_BASE_URL}/problems/${problemId}`);
+console.log(response); // <-- this is your issue
+
+        if (!response.ok) {
+          throw new Error('Problem not found');
+        }
+        const data = await response.json();
+        setProblemData(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProblemData();
+  }, [problemId]);
+
+  // Fetch submissions for this problem
+  useEffect(() => {
+    const fetchSubmissions = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/submissions?problemId=${problemId}`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}` // If using auth
+          }
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch submissions');
+        }
+        const data = await response.json();
+        setSubmissions(data);
+      } catch (err) {
+        console.error('Error fetching submissions:', err);
+      }
+    };
+
+    if (problemId) {
+      fetchSubmissions();
+    }
+  }, [problemId]);
+
+  // Initialize Monaco editor
+  useEffect(() => {
+    if (editorRef.current && !monacoRef.current && !loading && problemData) {
       monacoRef.current = monaco.editor.create(editorRef.current, {
         value: defaultCode[languageId],
         language: languageMap[languageId],
@@ -104,8 +137,9 @@ int main() {
       monacoRef.current?.dispose();
       monacoRef.current = null;
     };
-  }, []);
+  }, [loading, problemData]);
 
+  // Handle language change
   useEffect(() => {
     if (monacoRef.current) {
       const model = monacoRef.current.getModel();
@@ -119,6 +153,8 @@ int main() {
   }, [languageId]);
 
   const runCode = async () => {
+    if (!problemData) return;
+    
     setIsRunning(true);
     const code = monacoRef.current.getValue();
     setOutput("⏳ Running your code...");
@@ -136,7 +172,7 @@ int main() {
           body: JSON.stringify({
             source_code: code,
             language_id: parseInt(languageId),
-            stdin: userInput || problemData.examples[0].input,
+            stdin: userInput || problemData.examples[0]?.input || "",
           }),
         }
       );
@@ -157,7 +193,7 @@ int main() {
       }
       
       const newTestCase = {
-        input: userInput || problemData.examples[0].input,
+        input: userInput || problemData.examples[0]?.input || "",
         output: outputText,
         status: result.stderr || result.compile_output ? "failed" : "passed",
         timestamp: new Date().toLocaleString()
@@ -173,81 +209,138 @@ int main() {
   };
 
   const submitCode = async () => {
-  setIsRunning(true);
-  const code = monacoRef.current.getValue();
-  setOutput("⏳ Submitting your solution...");
-
-  try {
-    const testResults = [];
-    let allPassed = true;
+    if (!problemData) return;
     
-    for (const example of problemData.examples) {
-      const response = await fetch(
-        "https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=false&wait=true",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-RapidAPI-Key": "06a2a6a537msh32bb0379fd0eaa6p1ff34djsn067f549dfdd6",
-            "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
-          },
-          body: JSON.stringify({
-            source_code: code,
-            language_id: parseInt(languageId),
-            stdin: example.input,
-          }),
+    setIsRunning(true);
+    const code = monacoRef.current.getValue();
+    setOutput("⏳ Submitting your solution...");
+
+    try {
+      // First execute the code against test cases
+      const testResults = [];
+      let allPassed = true;
+      
+      for (const example of problemData.examples) {
+        const response = await fetch(
+          "https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=false&wait=true",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-RapidAPI-Key": "06a2a6a537msh32bb0379fd0eaa6p1ff34djsn067f549dfdd6",
+              "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
+            },
+            body: JSON.stringify({
+              source_code: code,
+              language_id: parseInt(languageId),
+              stdin: example.input,
+            }),
+          }
+        );
+        
+        const result = await response.json();
+        const output = result.stdout ? result.stdout.trim() : "";
+        const isPassed = output === example.output;
+        
+        if (!isPassed) {
+          allPassed = false;
         }
-      );
-      
-      const result = await response.json();
-      const output = result.stdout ? result.stdout.trim() : "";
-      const isPassed = output === example.output;
-      
-      if (!isPassed) {
-        allPassed = false;
+        
+        testResults.push({
+          input: example.input,
+          expected: example.output,
+          actual: output,
+          passed: isPassed
+        });
       }
       
-      testResults.push({
-        input: example.input,
-        expected: example.output,
-        actual: output,
-        passed: isPassed
+      // Prepare submission data for backend
+      const submissionData = {
+        problemId,
+        code,
+        language: languageMap[languageId],
+        status: allPassed ? "Accepted" : "Wrong Answer",
+        testResults,
+        executionTime: new Date().toISOString()
+      };
+
+      // Save submission to backend
+      const saveResponse = await fetch(`${API_BASE_URL}/submissions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(submissionData)
       });
+
+      if (!saveResponse.ok) {
+        throw new Error('Failed to save submission');
+      }
+
+      const savedSubmission = await saveResponse.json();
+
+      // Update local state with the new submission
+      const newSubmission = {
+        ...savedSubmission,
+        timestamp: new Date(savedSubmission.executionTime).toLocaleString()
+      };
+      
+      setSubmissions(prev => [newSubmission, ...prev]);
+      
+      // Generate output message
+      let outputText = "";
+      if (allPassed) {
+        outputText = "✅ All test cases passed!\n\n";
+      } else {
+        outputText = "❌ Some test cases failed:\n\n";
+      }
+      
+      testResults.forEach((test, idx) => {
+        outputText += `Test Case ${idx + 1}: ${test.passed ? "✅ Passed" : "❌ Failed"}\n`;
+        outputText += `Input: ${test.input}\n`;
+        outputText += `Expected: ${test.expected}\n`;
+        outputText += `Actual: ${test.actual}\n\n`;
+      });
+      
+      setOutput(outputText);
+      
+    } catch (error) {
+      setOutput(`❌ Error during submission: ${error.message}`);
+    } finally {
+      setIsRunning(false);
     }
-    
-    const newSubmission = {
-      code,
-      language: languageMap[languageId],
-      timestamp: new Date().toLocaleString(),
-      status: allPassed ? "Accepted" : "Wrong Answer",
-      testResults
-    };
-    
-    setSubmissions(prev => [newSubmission, ...prev]);
-    
-    // Generate formatted output for test cases
-    let outputText = "";
-    if (allPassed) {
-      outputText = "✅ All test cases passed!\n\n";
-    } else {
-      outputText = "❌ Some test cases failed:\n\n";
-    }
-    
-    testResults.forEach((test, idx) => {
-      outputText += `Test Case ${idx + 1}: ${test.passed ? "✅ Passed" : "❌ Failed"}\n`;
-      outputText += `Input: ${test.input}\n`;
-      outputText += `Expected: ${test.expected}\n`;
-      outputText += `Actual: ${test.actual}\n\n`;
-    });
-    
-    setOutput(outputText);
-    
-  } catch (error) {
-    setOutput(`❌ Error during submission: ${error.message}`);
-  } finally {
-    setIsRunning(false);
+  };
+
+  if (loading) {
+    return (
+      <div className="practice-compiler-container">
+        <div className="loading-spinner">
+          <i className="fas fa-spinner fa-spin"></i> Loading problem...
+        </div>
+      </div>
+    );
   }
-};
+
+  if (error) {
+    return (
+      <div className="practice-compiler-container">
+        <div className="error-message">
+          <i className="fas fa-exclamation-triangle"></i> {error}
+        </div>
+      </div>
+    );
+  }
+
+  if (!problemData) {
+    return (
+      <div className="practice-compiler-container">
+        <div className="no-problem">
+          Problem data not available
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="practice-compiler-container">
@@ -259,7 +352,6 @@ int main() {
               {problemData.level}
             </span>
           </div>
-        
         </div>
         
         <div className="problem-content">
@@ -290,33 +382,24 @@ int main() {
               </div>
             ))}
           </div>
-          
-          <div className="constraints-section">
-            <h3>Constraints:</h3>
-            <ul>
-              {problemData.constraints.map((constraint, index) => (
-                <li key={index}>{constraint}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
         
-        <div className="problem-footer">
-          <div className="tags-section">
-            <div className="topics">
-              <h4>Related Topics</h4>
-              <div className="tags">
-                {problemData.topics.map((topic, index) => (
-                  <span key={index} className="topic-tag">{topic}</span>
-                ))}
+          <div className="problem-footer">
+            <div className="tags-section">
+              <div className="topics">
+                <h4>Related Topics</h4>
+                <div className="tags">
+                  {problemData.topics.map((topic, index) => (
+                    <span key={index} className="topic-tag">{topic}</span>
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className="companies">
-              <h4>Asked By</h4>
-              <div className="tags">
-                {problemData.companies.map((company, index) => (
-                  <span key={index} className="company-tag">{company}</span>
-                ))}
+              <div className="companies">
+                <h4>Asked By</h4>
+                <div className="tags">
+                  {problemData.companies.map((company, index) => (
+                    <span key={index} className="company-tag">{company}</span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -401,7 +484,7 @@ int main() {
                     </div>
                     <div className="submission-language">{submission.language}</div>
                     <div className="submission-test-results">
-                      {submission.testResults.map((test, testIdx) => (
+                      {submission.testResults?.map((test, testIdx) => (
                         <div key={testIdx} className={`test-result ${test.passed ? "passed" : "failed"}`}>
                           Test Case {testIdx + 1}: {test.passed ? "✓ Passed" : "✗ Failed"}
                         </div>

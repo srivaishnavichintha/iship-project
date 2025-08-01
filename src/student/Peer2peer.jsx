@@ -131,7 +131,7 @@ const Peer2peer = () => {
         <header className="peer-header">
           <div className="header-content">
             <h1 className="peer-title">
-              {view === "history" ? "Peer to Peer BattleGround" : "Peer Challenges"}
+              {view === "history" ? "Peer2peer Battleground" : "Peer Challenges"}
             </h1>
             <p className="peer-subtitle">
               {view === "history" ? "Your complete battle record" : "Find worthy opponents"}
@@ -144,7 +144,7 @@ const Peer2peer = () => {
               setIsFormOpen(false);
             }}
           >
-            {view === "history" ? "Invite Peers" : "Goto BattleGround"}
+            {view === "history" ? "Invite Peers" : "goto battleground"}
             <span className="toggle-icon">→</span>
           </button>
         </header>

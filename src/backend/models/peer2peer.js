@@ -50,4 +50,4 @@ challengeSchema.pre("save", async function (next) {
   next();
 });
 
-module.exports = mongoose.model("PeerChallenge", challengeSchema);
+module.exports = mongoose.model("Peer2peer", challengeSchema);

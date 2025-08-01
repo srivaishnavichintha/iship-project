@@ -48,7 +48,7 @@ function App() {
   <Route path="leaderboard" element={<LeaderBoard />} />
 </Route>
         <Route path="/practice" element={<PracticeProblems />} />
-        <Route path="/practiceproblem" element={<PracticeCompiler />} />
+        <Route path="/solve/:problemId" element={<PracticeCompiler />} />
         <Route path="/student/playground" element={<Playground/>} />
         <Route path="/p2p/p2pmatching" element={<Playground/>} />
          <Route path="/p2p/:id" element={<P2pmatching />} />
