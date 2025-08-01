@@ -222,6 +222,22 @@ body.dark {
   background-color: #95a5a6;
 }
 
+.points {
+  border: 1px solid rgb(1, 135, 169);
+  background: linear-gradient(to right, rgb(235, 235, 191), rgb(245, 197, 107));
+  width: 100px;
+  height: 30px;
+  border-radius: 20px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+
 /* Optional animation */
 @keyframes scaleIn {
   from {
