@@ -63,7 +63,6 @@ const SubmissionsPage = () => {
                 <th>Problem ID</th>
                 <th>Language</th>
                 <th>Status</th>
-                <th>Execution Time</th>
                 <th>Test Results</th>
                 <th>Code</th>
               </tr>
@@ -79,7 +78,6 @@ const SubmissionsPage = () => {
                         {submission.status}
                       </span>
                     </td>
-                    <td>{formatDate(submission.executionTime)}</td>
                     <td className="test-results">
                       {submission.testResults.length} test cases
                       {submission.testResults.length > 0 && (

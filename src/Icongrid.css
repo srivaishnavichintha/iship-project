@@ -35,9 +35,10 @@
   background-image: url('https://img.icons8.com/ios-filled/50/ffffff/user.png');
 }
 
-.trophy-icon {
+ .trophy-icon {
   background-color: #fdbd2d;
-}
+  color: #fdbd2d;
+} 
 
 .trophy-icon .icon {
   background-image: url('https://img.icons8.com/ios-filled/50/ffffff/trophy.png');
@@ -50,7 +51,11 @@
 .code-icon .icon {
   background-image: url('https://img.icons8.com/ios-filled/50/ffffff/source-code.png');
 }
+.glowing{
+  background-color: #fdbd2d;
+}
 
 .glow {
   box-shadow: 0 0 12px #3b6a70;
+  
 }

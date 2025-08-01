@@ -102,15 +102,15 @@ useEffect(() => {
         <div className="dashboard-card-container">
           <div className="dashboard-card">
             <h3>Problems Solved</h3>
-            <p><strong>{progress.problemsSolved}</strong></p>
+            <p><strong>20</strong></p>
           </div>
           <div className="dashboard-card">
             <h3>Accuracy</h3>
-            <p><strong>{progress.accuracy}%</strong></p>
+            <p><strong>50%</strong></p>
           </div>
           <div className="dashboard-card">
             <h3>Contests Attended</h3>
-            <p><strong>{progress.contests}</strong></p>
+            <p><strong>10</strong></p>
           </div>
         </div>
       </div>

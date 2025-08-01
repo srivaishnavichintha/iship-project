@@ -9,7 +9,6 @@ import LeaderBoard from "./mentor/LeaderBoard";
 import Problems from "./mentor/Problems";
 import StudentCourses from "./student/StudentCourses";
 import StudentLeader from "./student/StudentLeader";
-import StudentContest from "./student/StudentContest";
 import Peer2peer from "./student/Peer2peer";
 import EnrollForm from "./components/Enrollform";
 import CourseLayout from "./courses/CourseLayout";
@@ -38,7 +37,6 @@ function App() {
         <Route path="/mentor/problems" element={<Problems />} />
         <Route path="/student/courses" element={<StudentCourses />} />
         <Route path="/student/leaderboard" element={<StudentLeader />} />
-        <Route path="/student/contest" element={<StudentContest />} />
         <Route path="/student/peer2peer" element={<Peer2peer />} />
         <Route path="/enroll/:courseName" element={<EnrollForm />} />
          <Route path="/student/courses/:courseName" element={<CourseLayout />}>

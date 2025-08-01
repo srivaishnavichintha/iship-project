@@ -3,18 +3,28 @@ import { useState, useEffect } from "react";
 import logo from "./assets/react.png";
 import env from "./assets/envelope.png";
 import { Link, useNavigate } from "react-router-dom";
-import { FaUser, FaListOl, FaFileAlt, FaSignOutAlt } from "react-icons/fa";
+import {
+  FaUser,
+  FaListOl,
+  FaFileAlt,
+  FaSignOutAlt,
+  FaBars,
+  FaTimes
+} from "react-icons/fa";
 
 export default function Mentor_navbar() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showEnvelopeBox, setShowEnvelopeBox] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [firstLetter, setFirstLetter] = useState("");
+  const [showSidebar, setShowSidebar] = useState(false);
+  const [mentorid, setMentorId] = useState(null);
 
   const navigate = useNavigate();
 
   const toggleDropdown = () => setShowDropdown((prev) => !prev);
   const toggleEnvelopeBox = () => setShowEnvelopeBox((prev) => !prev);
+  const toggleSidebar = () => setShowSidebar((prev) => !prev);
   const confirmLogout = () => setShowLogoutConfirm(true);
   const cancelLogout = () => setShowLogoutConfirm(false);
 
@@ -25,23 +35,32 @@ export default function Mentor_navbar() {
   };
 
   const handleCoursesClick = () => {
-  const user = JSON.parse(localStorage.getItem("userData"));
-  const mentorid = user?.id;  // Make sure 'id' is the mentorid
+    if (mentorid) {
+      navigate(`/mentor/courses/${mentorid}`);
+    } else {
+      alert("Mentor ID not found");
+    }
+  };
 
-  if (mentorid) {
-    navigate(`/mentor/courses/${mentorid}`);
-  } else {
-    alert("Mentor ID not found");
-  }
-}; 
-   useEffect(() => {
-  const storedUserData = localStorage.getItem("userData");
-  if (storedUserData) {
-    const userData = JSON.parse(storedUserData);
-    const name = userData.name;
-    if (name) setFirstLetter(name[0].toUpperCase());
-  }
-}, []);
+  // Get user info from localStorage
+  useEffect(() => {
+    const storedUserData = localStorage.getItem("userData");
+    if (storedUserData) {
+      const userData = JSON.parse(storedUserData);
+      setMentorId(userData.id);
+      const name = userData.name;
+      if (name) setFirstLetter(name[0].toUpperCase());
+    }
+  }, []);
+
+  // Auto-close sidebar on resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 760) setShowSidebar(false);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <nav id="nava">
@@ -72,6 +91,21 @@ export default function Mentor_navbar() {
             </div>
           )}
         </div>
+
+        <div className="hamburger-icon" onClick={toggleSidebar}>
+          {showSidebar ? <FaTimes /> : <FaBars />}
+        </div>
+      </div>
+
+      {/* Sidebar Menu */}
+      <div className={`sidebar-menu ${showSidebar ? "open" : ""}`}>
+        <FaTimes className="sidebar-close" onClick={() => setShowSidebar(false)} />
+        <Link to={`/mentor/courses/${mentorid}`} onClick={toggleSidebar}>Courses</Link>
+        <Link to="/mentor/mentorcontest" onClick={toggleSidebar}>Contest</Link>
+        <Link to="/mentor/problems" onClick={toggleSidebar}>Problems</Link>
+        <p onClick={() => { confirmLogout(); toggleSidebar(); }}>
+          <FaSignOutAlt /> Logout
+        </p>
       </div>
 
       {/* Logout Confirmation Modal */}

@@ -57,11 +57,7 @@ export default function P2pCard({
           </p>
         </div>
 
-        <div className="tags-container">
-          {tags.map((tag, index) => (
-            <span key={index} className="tag">{tag}</span>
-          ))}
-        </div>
+        
       </div>
 
       <div className="card-bottom">
