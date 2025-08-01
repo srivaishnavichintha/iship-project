@@ -116,6 +116,7 @@ const Playground = () => {
                 contestTime={match.contestTime}
                 matchDate={match.matchDate}
                 tags={match.tags || []}
+                problemid={match.problemid}
               />
             ))}
           </div>

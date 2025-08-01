@@ -1,10 +1,25 @@
-import React from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';  // ✅ FIXED HERE
 import './P2pmatching.css';
+
+const accentColors = [
+  '--accent-blue', '--accent-purple', '--accent-orange',
+  '--accent-green', '--accent-pink', '--accent-teal',
+  '--accent-red', '--accent-yellow'
+];
+
+const getRandomColor = () => {
+  return accentColors[Math.floor(Math.random() * accentColors.length)];
+};
 
 const P2pmatching = () => {
   const { id } = useParams();
   const location = useLocation();
+  const navigate = useNavigate(); // ✅ FIXED HERE
+
+  const [accentColor1, setAccentColor1] = useState('--accent-blue');
+  const [accentColor2, setAccentColor2] = useState('--accent-purple');
+
   const {
     student1,
     student2,
@@ -12,11 +27,13 @@ const P2pmatching = () => {
     level,
     contestTime,
     matchDate,
+    problemid,
     tags = [],
-    submissions = [] // Added submissions data
+    submissions = [],
+    skills1 = ['DSA', 'JavaScript'],
+    skills2 = ['Python', 'Graph Theory']
   } = location.state || {};
 
-  // Sample leaderboard data (replace with actual data from props)
   const leaderboard = [
     { problem: 'Array Sorting', student1Score: 85, student2Score: 92 },
     { problem: 'Dynamic Programming', student1Score: 78, student2Score: 88 },
@@ -24,86 +41,109 @@ const P2pmatching = () => {
     { problem: 'String Manipulation', student1Score: 82, student2Score: 85 }
   ];
 
+  useEffect(() => {
+    setAccentColor1(getRandomColor());
+    setAccentColor2(getRandomColor());
+  }, []);
+
+  const handleEnterContest = () => {
+    const now = new Date();
+    const [hours, minutes] = contestTime.split(':');
+    const contestDateTime = new Date(matchDate);
+    contestDateTime.setHours(parseInt(hours));
+    contestDateTime.setMinutes(parseInt(minutes));
+    contestDateTime.setSeconds(0);
+
+    if (now >= contestDateTime) {
+      navigate(`/solve/${problemid}`); // ✅ Redirect when time is valid
+    } else {
+      alert("⏰ Contest is not available yet. Please wait for the scheduled time.");
+    }
+  };
+
   if (!location.state) {
     return <div className="error">No match data found. Please go back and try again.</div>;
   }
 
   return (
-    <div className="p2p-matching-container">
-      <div className="header-section">
-        <h1>Peer-to-Peer Match Details</h1>
-        <div className="match-id">Match ID: {id}</div>
-      </div>
-      
-      <div className="profile-cards">
-        <div className="profile-card">
-          <div className="avatar">{student1.charAt(0)}</div>
-          <h3>{student1}</h3>
-          <div className="stats">
-            <span>Total Submissions: 24</span>
-            <span>Success Rate: 85%</span>
-          </div>
-        </div>
-        
-        <div className="vs-circle">VS</div>
-        
-        <div className="profile-card">
-          <div className="avatar">{student2.charAt(0)}</div>
-          <h3>{student2}</h3>
-          <div className="stats">
-            <span>Total Submissions: 28</span>
-            <span>Success Rate: 89%</span>
-          </div>
-        </div>
+    <div className="p2p-modern-container">
+      <div className="p2p-header">
+        <h1>Peer Match Battle</h1>
+        <p>Match ID: <strong>{id}</strong></p>
       </div>
 
-      <div className="content-grid">
-        <div className="match-details">
-          <h2>Match Information</h2>
-          
-          <div className="detail-section">
-            <h3>Course Details</h3>
-            <p><strong>Course:</strong> {course}</p>
-            <p><strong>Level:</strong> {level}</p>
-            <p><strong>Session Time:</strong> {contestTime}</p>
-            <p><strong>Match Date:</strong> {new Date(matchDate).toLocaleDateString()}</p>
-          </div>
-
-          <div className="detail-section">
-            <h3>Tags</h3>
-            <div className="tags-container">
-              {tags.map((tag, index) => (
-                <span key={index} className="tag">{tag}</span>
-              ))}
+      <div className="p2p-card-grid">
+        {[{ name: student1, color: accentColor1, skills: skills1 }, { name: student2, color: accentColor2, skills: skills2 }].map((user, index) => (
+          <div
+            key={index}
+            className="p2p-player-card"
+            style={{ '--accent-color': `var(${user.color})` }}
+          >
+            <div className="p2p-card-accent" />
+            <div className="p2p-card-avatar" style={{ backgroundColor: `var(${user.color})` }}>
+              {user.name?.charAt(0)}
+            </div>
+            <div className="p2p-card-info">
+              <h3>{user.name}</h3>
+              <p className="p2p-subtext">Level: {level}</p>
+              <p>Total Submissions: 24</p>
+              <p>Success Rate: {index === 0 ? '85%' : '89%'}</p>
+              <div className="p2p-skill-tags">
+                {user.skills.map(skill => (
+                  <span key={skill} className="p2p-tag">{skill}</span>
+                ))}
+              </div>
             </div>
           </div>
+        ))}
+      </div>
+
+      <div className="p2p-match-info">
+        <h2>Match Information</h2>
+        <div className="p2p-info-grid">
+          <div><strong>Course:</strong> {course}</div>
+          <div><strong>Level:</strong> {level}</div>
+          <div><strong>Session Time:</strong> {contestTime}</div>
+          <div><strong>Date:</strong> {new Date(matchDate).toLocaleDateString()}</div>
         </div>
 
-        <div className="leaderboard">
-          <h2>Leaderboard</h2>
-          <div className="leaderboard-header">
-            <span>Problem</span>
-            <span>{student1}</span>
-            <span>{student2}</span>
-          </div>
-          <div className="leaderboard-body">
-            {leaderboard.map((item, index) => (
-              <div key={index} className="leaderboard-row">
-                <span>{item.problem}</span>
-                <span className={item.student1Score > item.student2Score ? 'winner' : ''}>
-                  {item.student1Score}%
-                </span>
-                <span className={item.student2Score > item.student1Score ? 'winner' : ''}>
-                  {item.student2Score}%
-                </span>
-              </div>
-            ))}
-          </div>
+        <div className="p2p-tags-container">
+          <h3>Tags:</h3>
+          {tags.map((tag, i) => (
+            <span key={i} className="p2p-tag">{tag}</span>
+          ))}
         </div>
       </div>
 
-      <button className="back-button" onClick={() => window.history.back()}>
-        Back to Matches
+      <div className="p2p-leaderboard">
+        <h2>Leaderboard</h2>
+        <div className="p2p-leaderboard-header">
+          <span>Problem</span>
+          <span>{student1}</span>
+          <span>{student2}</span>
+        </div>
+        {leaderboard.map((entry, i) => (
+          <div key={i} className="p2p-leaderboard-row">
+            <span>{entry.problem}</span>
+            <span className={entry.student1Score > entry.student2Score ? 'winner' : ''}>
+              {entry.student1Score}%
+            </span>
+            <span className={entry.student2Score > entry.student1Score ? 'winner' : ''}>
+              {entry.student2Score}%
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* ✅ Enter Contest Button */}
+      <div className="p2p-action-buttons">
+        <button className="enter-contest-btn" onClick={handleEnterContest}>
+          🚀 Enter Contest
+        </button>
+      </div>
+
+      <button className="p2p-back-button" onClick={() => window.history.back()}>
+        ⬅ Back to Matches
       </button>
     </div>
   );
