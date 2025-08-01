@@ -1,4 +1,3 @@
-// models/Submission.js
 const mongoose = require("mongoose");
 
 const testResultSchema = new mongoose.Schema({
@@ -12,10 +11,15 @@ const submissionSchema = new mongoose.Schema({
   problemId: Number,
   code: String,
   language: String,
-  status: { type: String, enum: ["Accepted", "Wrong Answer", "Runtime Error", "Compilation Error"], required: true },
+  languageId: Number, // Optional but useful
+  status: {
+    type: String,
+    enum: ["Accepted", "Wrong Answer", "Runtime Error", "Compilation Error"],
+    required: true,
+  },
   testResults: [testResultSchema],
-  executionTime: Date,
-  studentId: Number, // optional: if you want to track who submitted
+  executionTime: { type: Date, default: Date.now },
+  studentId: Number, // or: mongoose.Schema.Types.ObjectId if linking to Student model
 });
 
 module.exports = mongoose.model("Submission", submissionSchema);

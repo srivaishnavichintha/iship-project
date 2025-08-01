@@ -4,7 +4,7 @@ const Problem = require("../models/Problem");
 const Submission = require("../models/submission");
 
 // ✅ GET /api/problems/:problemId
-router.get("/solve/:problemId", async (req, res) => {
+router.get("/problems/:problemId", async (req, res) => {
   try {
     const numericProblemId = Number(req.params.problemId);
     console.log(numericProblemId);

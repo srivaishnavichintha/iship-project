@@ -33,13 +33,13 @@ export default function Login() {
 
     const payload = isSignup
       ? {
-          username: formData.username,
-          email: formData.email,
+          username: formData.username.trim(),
+          email: formData.email.trim(),
           password: formData.password,
           role: role,
         }
       : {
-          identifier: formData.identifier,
+          identifier: formData.identifier.trim(),
           password: formData.password,
           role: role,
         };
