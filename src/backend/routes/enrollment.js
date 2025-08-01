@@ -13,7 +13,6 @@ router.post("/enroll", async (req, res) => {
     // 1. Fetch course by courseid
     const course = await Course.findOne({ courseid });
     if (!course) return res.status(404).json({ error: "Course not found" });
-    if (!course) return res.status(404).json({ error: "Course not found" });
 
     // 2. Create Enrollment document
     // 2. Create Enrollment document
@@ -65,8 +64,10 @@ router.get("/popular-courses", async (req, res) => {
           _id: 0,
           courseid: "$_id",
           coursename: 1,
-          enrollmentend: 1,
-          enrolledCount: 1
+          enrolledCount: 1,
+          enrollmentend: {
+            $dateToString: { format: "%Y-%m-%d", date: "$enrollmentend" }
+          }
         }
       }
     ]);
@@ -77,6 +78,7 @@ router.get("/popular-courses", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
 
 
 module.exports = router;

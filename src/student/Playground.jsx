@@ -82,7 +82,7 @@ const Playground = () => {
   useEffect(() => {
     const fetchP2pMatches = async () => {
       try {
-        const response = await axios.get('http://localhost:3000//p2p-matches');
+        const response = await axios.get('http://localhost:3000/p2p-matches');
         setP2pMatches(response.data);
       } catch (err) {
         console.error('Error fetching P2P matches:', err);

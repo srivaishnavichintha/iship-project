@@ -68,6 +68,8 @@ var solution = function(arr) {
       try {
         setLoading(true);
         const response = await fetch(`${API_BASE_URL}/problems/${problemId}`);
+console.log(response); // <-- this is your issue
+
         if (!response.ok) {
           throw new Error('Problem not found');
         }
