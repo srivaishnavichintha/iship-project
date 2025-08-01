@@ -4,6 +4,7 @@ const router = express.Router();
 const peers=require("../models/peer2peer")
 const Student = require("../models/Student");
 const Course = require("../models/course");
+const Problem=require("../models/Problem");
 
 // GET /courses/student/:id
 router.get("/courses/student/:id", async (req, res) => {
@@ -133,26 +134,51 @@ router.get("/peers/:courseName/:studentid", async (req, res) => {
   }
 });
 //p2p Matches
-router.get("/p2p-matches", async (req, res) => {
+// GET /p2p-matches/:studentid
+router.get("/p2p-matches/:studentid", async (req, res) => {
   try {
-    // Step 1: Get all peer challenges
-    const matches = await peers.find().sort({ datetime: -1 });
+    const { studentid } = req.params;
 
-    // Step 2: Extract unique student IDs involved in challenges
+    // Step 1: Get only matches where student is involved
+    const matches = await peers.find({
+      $or: [
+        { challengerId: studentid },
+        { opponentId: studentid }
+      ]
+    }).sort({ datetime: -1 });
+
+    if (matches.length === 0) {
+      return res.status(200).json([]); // No matches for this student
+    }
+
+    // Step 2: Get involved student IDs
     const studentIds = Array.from(
       new Set(matches.flatMap(m => [m.challengerId, m.opponentId]))
     );
 
-    // Step 3: Fetch those students to get their usernames
     const students = await Student.find({ studentid: { $in: studentIds } });
 
-    // Step 4: Create a mapping from studentid to username
     const studentMap = {};
+    const studentLevelMap = {};
     students.forEach(s => {
       studentMap[s.studentid] = s.username;
+      studentLevelMap[s.studentid] = s.level;
     });
 
-    // Step 5: Format response for frontend
+    const levelMap = {
+      Beginner: "Easy",
+      Intermediate: "Medium",
+      Advanced: "Hard"
+    };
+
+    // Fetch problems once
+    const allProblems = await Problem.find({});
+    const problemsByLevel = {
+      Easy: allProblems.filter(p => p.level === "Easy"),
+      Medium: allProblems.filter(p => p.level === "Medium"),
+      Hard: allProblems.filter(p => p.level === "Hard")
+    };
+
     const formattedMatches = matches.map(match => {
       const date = new Date(match.datetime);
       const matchDate = date.toISOString().split("T")[0];
@@ -161,15 +187,21 @@ router.get("/p2p-matches", async (req, res) => {
         minute: "2-digit"
       });
 
+      const challengerLevel = studentLevelMap[match.challengerId] || "Beginner";
+      const problemLevel = levelMap[challengerLevel] || "Easy";
+      const problemPool = problemsByLevel[problemLevel] || [];
+      const randomProblem = problemPool[Math.floor(Math.random() * problemPool.length)];
+
       return {
-        id:` p2p-${match.challengeId}`,
+        id: `p2p-${match.challengeId}`,
         student1: studentMap[match.challengerId] || "Unknown",
         student2: studentMap[match.opponentId] || "Unknown",
         course: match.course,
-        level: "Intermediate", // or dynamic if needed
+        level: challengerLevel,
         contestTime,
         matchDate,
-        tags: ["Peer Match"]
+        tags: ["Peer Match"],
+        problemid: randomProblem?.problemId || null
       };
     });
 
@@ -179,6 +211,5 @@ router.get("/p2p-matches", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
-
 
 module.exports = router;

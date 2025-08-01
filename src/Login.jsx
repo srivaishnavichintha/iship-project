@@ -81,6 +81,7 @@ export default function Login() {
   };
 
   return (
+    <>
     <div className="login-wrapper">
       <div className="login-card">
         {/* Role Tabs */}
@@ -198,5 +199,19 @@ export default function Login() {
         theme="light"
       />
     </div>
+    <div className="rectangle1 r1" style={{ animationDelay: "0s" }}></div>
+<div className="rectangle2 r2" style={{ animationDelay: "3.2s" }}></div>
+<div className="rectangle3 r3" style={{ animationDelay: "7.8s" }}></div>
+<div className="rectangle1 r4" style={{ animationDelay: "1.5s" }}></div>
+<div className="rectangle2 r5" style={{ animationDelay: "5.4s" }}></div>
+<div className="rectangle3 r6" style={{ animationDelay: "2.3s" }}></div>
+<div className="rectangle1 r7" style={{ animationDelay: "9.1s" }}></div>
+<div className="rectangle2 r8" style={{ animationDelay: "4.6s" }}></div>
+<div className="rectangle3 r9" style={{ animationDelay: "6.9s" }}></div>
+<div className="rectangle1 r10" style={{ animationDelay: "11.5s" }}></div>
+<div className="rectangle2 r11" style={{ animationDelay: "13.3s" }}></div>
+<div className="rectangle3 r12" style={{ animationDelay: "8.7s" }}></div>
+
+    </>
   );
 }

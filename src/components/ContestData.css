@@ -1,277 +1,306 @@
 /* Base Styles */
-.contest-data-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: #f5f7fa;
-  color: rgb(1, 24, 39);
-  padding: 20px;
+.contest-management {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Loading State */
-.contest-data-loading,
-.contest-data-error {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-
-.loading-spinner {
-  border: 5px solid rgba(1, 24, 39, 0.1);
-  border-top: 5px solid #033a3a;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 1s linear infinite;
-  margin-bottom: 20px;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Header Section */
+/* Contest Header */
 .contest-header {
   text-align: center;
-  margin-bottom: 30px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid rgba(1, 24, 39, 0.1);
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
 }
 
 .contest-header h1 {
-  font-size: 2.5rem;
-  color: rgb(1, 24, 39);
-  margin-bottom: 10px;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.contest-description {
+  color: #7f8c8d;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
 }
 
 .contest-meta {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin-top: 10px;
-}
-
-.status-badge {
-  padding: 5px 15px;
-  border-radius: 20px;
-  font-weight: 600;
+  gap: 2rem;
+  color: #95a5a6;
   font-size: 0.9rem;
-}
-
-.status-badge.upcoming {
-  background-color: rgba(3, 58, 58, 0.1);
-  color: #033a3a;
-  border: 1px solid #033a3a;
-}
-
-.status-badge.live {
-  background-color: rgba(220, 38, 38, 0.1);
-  color: rgb(220, 38, 38);
-  border: 1px solid rgb(220, 38, 38);
-}
-
-.status-badge.completed {
-  background-color: rgba(5, 150, 105, 0.1);
-  color: rgb(5, 150, 105);
-  border: 1px solid rgb(5, 150, 105);
-}
-
-.difficulty-badge {
-  padding: 5px 15px;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  background-color: rgba(1, 24, 39, 0.1);
-  color: rgb(1, 24, 39);
-  border: 1px solid rgb(1, 24, 39);
-}
-
-/* Main Content Layout */
-.contest-content {
-  display: flex;
-  gap: 30px;
-  max-width: 1400px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.contest-details-panel {
-  flex: 2;
-}
-
-.leaderboard-panel {
-  flex: 1;
-}
-
-/* Details Card */
-.details-card {
-  background-color: white;
-  border-radius: 10px;
-  padding: 25px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  margin-bottom: 20px;
-}
-
-.details-card h2 {
-  color: rgb(1, 24, 39);
-  margin-bottom: 20px;
-  font-size: 1.5rem;
-  border-bottom: 2px solid #033a3a;
-  padding-bottom: 10px;
-}
-
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  margin-bottom: 25px;
-}
-
-.info-item {
-  display: flex;
-  flex-direction: column;
-}
-
-.info-label {
-  font-weight: 600;
-  color: rgba(1, 24, 39, 0.7);
-  font-size: 0.9rem;
-}
-
-.info-value {
-  font-weight: 500;
-  color: rgb(1, 24, 39);
-  font-size: 1.1rem;
-  margin-top: 5px;
-}
-
-.description-section {
-  margin-top: 25px;
-}
-
-.description-section h3 {
-  color: rgb(1, 24, 39);
-  margin-bottom: 10px;
-  font-size: 1.2rem;
-}
-
-.description-section p {
-  color: rgba(1, 24, 39, 0.8);
-  line-height: 1.6;
 }
 
 /* Action Buttons */
 .action-buttons {
   display: flex;
-  gap: 15px;
-  margin-top: 30px;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
-.add-problems-btn,
-.edit-contest-btn,
-.back-button {
-  padding: 10px 20px;
+.add-problem-btn, .leaderboard-btn {
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
-.add-problems-btn {
-  background-color: #033a3a;
+.add-problem-btn {
+  background-color: #3498db;
   color: white;
 }
 
-.add-problems-btn:hover {
-  background-color: rgb(1, 24, 39);
+.add-problem-btn:hover {
+  background-color: #2980b9;
 }
 
-.edit-contest-btn {
-  background-color: white;
-  color: #033a3a;
-  border: 1px solid #033a3a;
+.leaderboard-btn {
+  background-color: #2ecc71;
+  color: white;
 }
 
-.edit-contest-btn:hover {
-  background-color: rgba(3, 58, 58, 0.1);
+.leaderboard-btn:hover {
+  background-color: #27ae60;
 }
 
-.back-button {
-  background-color: white;
-  color: rgb(1, 24, 39);
-  border: 1px solid rgb(1, 24, 39);
+/* Problem Form */
+.problem-form-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 1000;
+  animation: slideDown 0.3s ease-out;
 }
 
-.back-button:hover {
-  background-color: rgba(1, 24, 39, 0.1);
+@keyframes slideDown {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
 }
 
-/* Leaderboard Card */
-.leaderboard-card {
-  background-color: white;
-  border-radius: 10px;
-  padding: 25px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+.problem-form {
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.leaderboard-card h2 {
-  color: rgb(1, 24, 39);
-  margin-bottom: 20px;
-  font-size: 1.5rem;
-  border-bottom: 2px solid #033a3a;
-  padding-bottom: 10px;
+.problem-form h2 {
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
 }
 
-.leaderboard-table {
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #34495e;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-group textarea {
+  min-height: 120px;
+}
+
+.test-case {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 4px;
+}
+
+.test-case-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.test-case-header button {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.test-case-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.add-test-case-btn {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.form-actions button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.form-actions button[type="submit"] {
+  background: #2ecc71;
+  color: white;
+}
+
+.form-actions button[type="button"] {
+  background: #95a5a6;
+  color: white;
+}
+
+/* Problems List */
+.problems-list {
+  margin-top: 2rem;
+}
+
+.problems-list h2 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.problems-list table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.leaderboard-table th,
-.leaderboard-table td {
-  padding: 12px 15px;
+.problems-list th,
+.problems-list td {
+  padding: 1rem;
   text-align: left;
-  border-bottom: 1px solid rgba(1, 24, 39, 0.1);
+  border-bottom: 1px solid #eee;
 }
 
-.leaderboard-table th {
-  background-color: rgba(3, 58, 58, 0.05);
-  color: rgb(1, 24, 39);
+.problems-list th {
+  background: #f8f9fa;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.difficulty {
+  text-transform: capitalize;
   font-weight: 600;
 }
 
-.leaderboard-table tr:hover {
-  background-color: rgba(3, 58, 58, 0.03);
+.difficulty.easy {
+  color: #27ae60;
 }
 
-.no-leaderboard {
-  text-align: center;
-  padding: 20px;
-  color: rgba(1, 24, 39, 0.6);
+.difficulty.medium {
+  color: #f39c12;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .contest-content {
+.difficulty.hard {
+  color: #e74c3c;
+}
+
+/* Leaderboard Modal */
+.leaderboard-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.leaderboard-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 800px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.leaderboard-content h2 {
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #7f8c8d;
+}
+
+.leaderboard-content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-content th,
+.leaderboard-content td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.leaderboard-content th {
+  background: #f8f9fa;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contest-meta {
     flex-direction: column;
+    gap: 0.5rem;
   }
   
-  .info-grid {
+  .test-case-inputs {
     grid-template-columns: 1fr;
   }
-}
-
-@media (max-width: 768px) {
-  .contest-header h1 {
-    font-size: 2rem;
-  }
   
-  .action-buttons {
-    flex-direction: column;
+  .problem-form-container {
+    padding: 1rem;
   }
 }

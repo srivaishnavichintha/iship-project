@@ -4,10 +4,8 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(
-    30deg,
-   #030f13,#022935,#3f707f ,
-  ); 
+   /* background: linear-gradient(#000406,#628aa0,#7fb5b5,#001b1b);  */
+  background: linear-gradient(#000506,#074361,#00141e); 
   position: relative;
 }
 
@@ -17,10 +15,10 @@
   width: 360px;
   padding: 2.5rem;
   border-radius: 12px;
-  background-image: linear-gradient(#cbdce5,#cbe1e1);
   color: #fff;
   z-index: 0;
   overflow: hidden;
+  z-index: 10;
 }
 
 /* Glowing border animation (outer layer) */
@@ -52,7 +50,7 @@
   left: 4px;
   right: 4px;
   bottom: 4px;
-  background:  linear-gradient(#011a33,#011414); 
+  background:  linear-gradient(#cbdce5,#cbe1e1); 
   z-index: -1;
   border-radius: 10px;
 }
@@ -155,11 +153,90 @@ button:hover {
   display: flex;
   justify-content: space-between;
   font-size: 0.9rem;
-  color: #022929;
+  color: #ccc;
 }
 
 .t1 span:hover {
   text-decoration: underline;
   color: #074141;
   cursor: pointer;
+}
+.rectangle1{
+  background-color: white;
+  border-radius: 5px;
+  width: 20px;
+  height:20px;
+  opacity: 0.5;
+  position: fixed;
+  bottom: -100px;
+  animation: floatUp 10s linear infinite;
+  animation-fill-mode: forwards;
+}
+.rectangle2{
+  border-radius: 10px;
+  background-color: white;
+  width: 50px;
+  height:50px;
+  opacity: 0.5;
+  position: fixed;
+  bottom: -500px;
+  animation: floatUp 10s linear infinite;
+  animation-fill-mode: forwards;
+}
+.rectangle3{
+  border-radius: 15px;
+  background-color: white;
+  width: 100px;
+  height:100px;
+  opacity: 0.5;
+  position: fixed;
+  bottom: -800px;
+  animation: floatUp 10s linear infinite;
+  animation-fill-mode: forwards;
+}
+.r1{
+  left: 10%;
+}
+.r2{
+  left: 20%;
+}
+.r3{
+  left: 30%;
+}
+.r4{
+  left: 40%;
+}
+.r5{
+  left: 50%;
+}
+.r6{
+  left: 60%;
+}
+.r7{
+  left: 70%;
+}
+.r8{
+  left: 80%;
+}
+.r9{
+  left: 90%;
+}
+.r10{
+  left: 95%;
+}
+@keyframes floatUp {
+  0% {
+    bottom: -20%;
+    border-radius: 0%;
+    transform: translateX(-50%) rotate(0deg);
+  }
+  50% {
+    border-radius: 15%;
+    transform: translateX(-50%) rotate(180deg);
+  }
+  100% {
+    bottom: 100vh; /* Moves out at the top */
+    border-radius: 30%;
+    transform: translateX(-50%) rotate(360deg);
+  }
 }

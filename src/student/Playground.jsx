@@ -82,7 +82,16 @@ const Playground = () => {
   useEffect(() => {
     const fetchP2pMatches = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/p2p-matches');
+         const studentdata = JSON.parse(localStorage.getItem('userData')); // ✅ parse it
+    const studentid = studentdata?.id; // use optional chaining to prevent crash
+    console.log("Student Data:", studentdata, "Student ID:", studentid);
+
+    if (!studentid) {
+    console.error("No student ID found in localStorage.");
+      return;
+    }
+
+        const response = await axios.get(`http://localhost:3000/p2p-matches/${studentid}`);
         setP2pMatches(response.data);
       } catch (err) {
         console.error('Error fetching P2P matches:', err);
@@ -116,6 +125,7 @@ const Playground = () => {
                 contestTime={match.contestTime}
                 matchDate={match.matchDate}
                 tags={match.tags || []}
+                problemid={match.problemid}
               />
             ))}
           </div>
