@@ -221,6 +221,12 @@ nav img {
  .nav_bar > li a:hover {
     color: #ddd;
 }
+.icon {
+  font-size: 1.2rem;
+  color: #5f9ea0;
+  margin-right: 8px;
+  vertical-align: middle;
+}
 @media (max-width: 768px) {
   .land-content {
     flex-direction: column;
