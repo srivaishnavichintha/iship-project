@@ -1,3 +1,4 @@
+
 const express = require("express");
 const router = express.Router();
 const peers=require("../models/peer2peer")
@@ -76,23 +77,23 @@ router.get("/history/:studentId", async (req, res) => {
 
 
 // PUT /challenge/:id/status
-// router.put("/challenge/:id/status", async (req, res) => {
-//   try {
-//     const { status, result } = req.body;
-//     const updated = await peers.findOneAndUpdate(
-//       { challengeId: req.params.id },
-//       { status, result },
-//       { new: true }
-//     );
+router.put("/challenge/:id/status", async (req, res) => {
+  try {
+    const { status, result } = req.body;
+    const updated = await peers.findOneAndUpdate(
+      { challengeId: req.params.id },
+      { status, result },
+      { new: true }
+    );
 
-//     if (!updated) return res.status(404).json({ error: "Challenge not found" });
+    if (!updated) return res.status(404).json({ error: "Challenge not found" });
 
-//     res.json(updated);
-//   } catch (err) {
-//     console.error("Error updating challenge:", err);
-//     res.status(500).json({ error: "Server error" });
-//   }
-// });
+    res.json(updated);
+  } catch (err) {
+    console.error("Error updating challenge:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
 
 //Get route
 router.get("/peers/:courseName/:studentid", async (req, res) => {
@@ -125,11 +126,13 @@ router.get("/peers/:courseName/:studentid", async (req, res) => {
 
     res.json(peerData);
   } catch (err) {
+    console.error("Error fetching peer matches:", err);
+    res.status(500).json({ error: "Server error" });
     console.error("Error fetching peers:", err);
     res.status(500).json({ error: "Server error" });
   }
 });
-
+//p2p Matches
 router.get("/p2p-matches", async (req, res) => {
   try {
     // Step 1: Get all peer challenges
@@ -176,7 +179,6 @@ router.get("/p2p-matches", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
-
 
 
 module.exports = router;
