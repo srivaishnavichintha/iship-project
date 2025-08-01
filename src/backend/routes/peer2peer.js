@@ -1,3 +1,84 @@
+// const express = require("express");
+// const router = express.Router();
+// const Problem = require("../models/Problem");
+// const Submission = require("../models/submission");
+
+// // ✅ GET /problems/:problemId
+// router.get("/problems/:problemId", async (req, res) => {
+//   try {
+//     const numericProblemId = Number(req.params.problemId);
+//     if (isNaN(numericProblemId)) {
+//       return res.status(400).json({ error: "Invalid problemId" });
+//     }
+
+//     console.log("Searching for problemId:", numericProblemId);
+//     const problem = await Problem.findOne({ problemId: numericProblemId });
+//     console.log("Found problem:", problem);
+
+//     if (!problem) {
+//       return res.status(404).json({ error: "Problem not found" });
+//     }
+
+//     // Structure the response
+//     const examples = (problem.inputs || []).map((input, idx) => ({
+//       input,
+//       output: problem.outputs[idx] || "",
+//     }));
+
+//     res.json({
+//       title: problem.problemtitle,
+//       description: problem.description,
+//       level: problem.level,
+//       topics: problem.prerequisites || [],
+//       companies: problem.companyTags || [],
+//       examples: examples,
+//     });
+
+//   } catch (err) {
+//     console.error("Problem fetch error:", err);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// });
+
+// // ✅ POST /submissions
+// router.post("/submissions", async (req, res) => {
+//   try {
+//     const { problemId } = req.body;
+
+//     if (!problemId || isNaN(Number(problemId))) {
+//       return res.status(400).json({ error: "Invalid or missing problemId" });
+//     }
+
+//     const submission = new Submission({
+//       ...req.body,
+//       problemId: Number(problemId),
+//     });
+
+//     await submission.save();
+//     res.status(201).json(submission);
+//   } catch (err) {
+//     console.error("Submission error:", err);
+//     res.status(500).json({ error: "Failed to save submission" });
+//   }
+// });
+
+// // ✅ GET /submissions?problemId=123
+// router.get("/submissions", async (req, res) => {
+//   try {
+//     const numericProblemId = Number(req.query.problemId);
+//     if (isNaN(numericProblemId)) {
+//       return res.status(400).json({ error: "Invalid problemId" });
+//     }
+
+//     const submissions = await Submission.find({ problemId: numericProblemId }).sort({ executionTime: -1 });
+//     res.json(submissions);
+//   } catch (err) {
+//     console.error("Submission fetch error:", err);
+//     res.status(500).json({ error: "Failed to fetch submissions" });
+//   }
+// });
+
+// module.exports = router;
 // // const express = require("express");
 // // const router = express.Router();
 // // const Enrollment = require("../models/Enrollment");
@@ -30,7 +111,7 @@
 
 // //     // Optional formatting for frontend display
 // //     const formatted = history.map((item) => ({
-// //       name: `Challenge vs ${item.challengerId === studentid ? 'Opponent' : 'Challenger'}`,
+// //       name: Challenge vs ${item.challengerId === studentid ? 'Opponent' : 'Challenger'},
 // //       date: item.datetime,
 // //       course: item.course,
 // //       status: item.status
@@ -53,7 +134,7 @@
 // //       .filter(e => e.studentid !== studentid)
 // //       .map(e => ({
 // //         id: e.studentid,
-// //         name: `Student ${e.studentid.slice(-4)}`, // Replace with actual student name if available
+// //         name: Student ${e.studentid.slice(-4)}, // Replace with actual student name if available
 // //         points: Math.floor(Math.random() * 1000), // Replace with real logic
 // //         contests: Math.floor(Math.random() * 10),
 // //         course: e.coursename
@@ -267,7 +348,7 @@ router.get("/history/:studentId", async (req, res) => {
 
     // 🔁 Format response for frontend
     const formatted = challenges.map((c) => ({
-      name: `Peer2Peer`,
+      name: Peer2Peer,
       date: new Date(c.datetime).toISOString().split("T")[0], // "YYYY-MM-DD"
       course: c.course,
       status: c.status || "Pending"
