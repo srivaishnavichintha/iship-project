@@ -23,6 +23,7 @@ export default function P2pCard({
   course, 
   level, 
   contestTime,
+  problemid,
   matchDate,
   tags = []
 }) {
@@ -38,6 +39,7 @@ export default function P2pCard({
         level,
         contestTime,
         matchDate,
+        problemid,
         tags
       } 
     });

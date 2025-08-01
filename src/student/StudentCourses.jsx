@@ -9,10 +9,17 @@ const StudentCourses = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [recommendedCourses, setRecommendedCourses] = useState([]);
-
-  useEffect(() => {
+ useEffect(() => {
     // Fetch Enrolled Courses
-    axios.get("/api/enrolled-courses")
+    const studentdata = JSON.parse(localStorage.getItem('userData')); // ✅ parse it
+    const studentid = studentdata?.id; // use optional chaining to prevent crash
+    console.log("Student Data:", studentdata, "Student ID:", studentid);
+
+    if (!studentid) {
+    console.error("No student ID found in localStorage.");
+    return;
+   }
+    axios.get(`http://localhost:3000/enrolled-courses/${studentid}`)
       .then(res => {
         console.log("Enrolled API response:", res.data);
         setEnrolledCourses(Array.isArray(res.data) ? res.data : []);
@@ -22,7 +29,7 @@ const StudentCourses = () => {
       });
 
     // Fetch Recommended Courses
-    axios.get("/api/recommended-courses")
+    axios.get(`http://localhost:3000/recommended-courses/${studentid}`)
       .then(res => {
         console.log("Recommended API response:", res.data);
         setRecommendedCourses(Array.isArray(res.data) ? res.data : []);
@@ -57,8 +64,8 @@ const StudentCourses = () => {
         <div className="courses-grid">
           {filterCourses(enrolledCourses).map((course, index) => (
             <Myenrollcard
-              key={index}
-              id={index}
+              key={course.id || index}
+              id={course.id}
               title={course.title}
               description={course.description}
               mentor={course.mentor}
@@ -72,7 +79,7 @@ const StudentCourses = () => {
         <div className="courses-grid">
           {filterCourses(recommendedCourses).map((course, index) => (
             <CCard
-              key={index}
+              key={course.id || index}
               id={course.id}
               title={course.title}
               description={course.description}

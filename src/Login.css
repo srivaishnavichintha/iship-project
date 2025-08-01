@@ -4,10 +4,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(
-    30deg,
-   #030f13,#022935,#3f707f ,
-  ); 
+  /* background: #011827; */
   position: relative;
 }
 
@@ -155,7 +152,7 @@ button:hover {
   display: flex;
   justify-content: space-between;
   font-size: 0.9rem;
-  color: #022929;
+  color: #ccc;
 }
 
 .t1 span:hover {

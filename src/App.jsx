@@ -16,7 +16,7 @@ import CourseLayout from "./courses/CourseLayout";
 import CourseLevels from "./courses/CourseLevels";
 import CourseProblems from "./courses/CourseProblems";
 import MentorContestDetails from "./components/MentorcontestDetails";
-// import ContestData from "./components/ContestData";
+import ContestData from "./components/ContestData";
 import PracticeProblems from "./student/PracticeProblems";
 import PracticeCompiler from "./Compiler/PracticeCompiler";
 import P2pmatching from './student/P2pmatching'; 
@@ -52,6 +52,8 @@ function App() {
         <Route path="/student/playground" element={<Playground/>} />
         <Route path="/p2p/p2pmatching" element={<Playground/>} />
          <Route path="/p2p/:id" element={<P2pmatching />} />
+         <Route  path="/mentor/mentorcontest/:contestSlug"  element={<ContestData />} />
+          <Route  path="/contestdata"  element={<ContestData />} />
       </Routes>
     </Router>
   );

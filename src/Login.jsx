@@ -81,6 +81,7 @@ export default function Login() {
   };
 
   return (
+    <>
     <div className="login-wrapper">
       <div className="login-card">
         {/* Role Tabs */}
@@ -198,5 +199,7 @@ export default function Login() {
         theme="light"
       />
     </div>
+    <div className="rectangle"></div>
+    </>
   );
 }
