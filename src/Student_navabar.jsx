@@ -2,17 +2,22 @@ import "./Student_navbar.css";
 import { useState, useEffect } from "react";
 import logo from "./assets/react.png";
 import env from "./assets/envelope.png";
+import { BiSolidDollarCircle } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaListOl, FaFileAlt, FaSignOutAlt } from "react-icons/fa";
+
 
 export default function Student_navbar() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showEnvelopeBox, setShowEnvelopeBox] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [firstLetter, setFirstLetter] = useState("");
+  const [points, setPoints] = useState(0);
 
   const navigate = useNavigate();
-  
+   const handleSubmissions = () => {
+  navigate("/student/submissions");
+};
 
   const toggleDropdown = () => setShowDropdown((prev) => !prev);
   const toggleEnvelopeBox = () => setShowEnvelopeBox((prev) => !prev);
@@ -26,8 +31,25 @@ export default function Student_navbar() {
   };
 
   useEffect(() => {
-    const username = localStorage.getItem("username");
-    if (username) setFirstLetter(username[0].toUpperCase());
+    const storedUserData = localStorage.getItem("userData");
+    if (storedUserData) {
+      const userData = JSON.parse(storedUserData);
+      const name = userData.name;
+      const studentId = userData.id;
+
+      if (name) setFirstLetter(name[0].toUpperCase());
+      fetch(`http://localhost:3000/students/${studentId}/points`)
+        .then((res) => {
+          if (!res.ok) throw new Error("Failed to fetch points");
+          return res.json();
+        })
+        .then((data) => {
+          setPoints(data.points || 0);
+        })
+        .catch((err) => {
+          console.error("Error fetching points:", err.message);
+        });
+    }
   }, []);
 
   return (
@@ -37,18 +59,21 @@ export default function Student_navbar() {
         <Link to="/student/courses" className="nav-con">Courses</Link>
         <Link to="/practice" className="nav-con">Practice</Link>
         <Link to="/student/peer2peer" className="nav-con">peer2peer</Link>
-         <Link to="/student/playground" className="nav-con">Playground</Link>
+        <Link to="/student/playground" className="nav-con">Playground</Link>
       </div>
 
       <div className="nav-right">
+        <div className="points">
+          <BiSolidDollarCircle style={{ marginRight: "4px",  fontSize:"22px"}} /> {points} pts
+        </div>
+
         <div className="profile_wrapper">
           <div className="profile_circle" onClick={toggleDropdown}>
             {firstLetter}
           </div>
           <div className={`dash-drop ${showDropdown ? "open" : ""}`}>
             <p><FaUser /> My Profile</p>
-            <p><FaListOl /> My Leaderboard</p>
-            <p><FaFileAlt /> Submissions</p>
+            <p onClick={handleSubmissions}><FaFileAlt  /> Submissions</p>
             <p onClick={confirmLogout}><FaSignOutAlt /> Log Out</p>
           </div>
         </div>

@@ -75,6 +75,7 @@ const StudentCourses = () => {
           ))}
         </div>
 
+
         <h1 className="section-title">Recommended for You</h1>
         <div className="courses-grid">
           {filterCourses(recommendedCourses).map((course, index) => (

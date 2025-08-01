@@ -21,6 +21,8 @@ import PracticeProblems from "./student/PracticeProblems";
 import PracticeCompiler from "./Compiler/PracticeCompiler";
 import P2pmatching from './student/P2pmatching'; 
 import Playground from "./student/Playground"
+import Practicedescription from "./Compiler/Problemdescription"
+import Submissions from "./student/Submissions"
 
 function App() {
   return (
@@ -54,6 +56,8 @@ function App() {
          <Route path="/p2p/:id" element={<P2pmatching />} />
          <Route  path="/mentor/mentorcontest/:contestSlug"  element={<ContestData />} />
           <Route  path="/contestdata"  element={<ContestData />} />
+          <Route path="/problemdescription/:problemId" element={<Practicedescription/>} />
+           <Route path="/student/submissions" element={<Submissions/>} />
       </Routes>
     </Router>
   );

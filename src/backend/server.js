@@ -12,7 +12,7 @@ const peer2peerRoutes = require("./routes/peer2peer");
 const practiceRoutes = require("./routes/compiler");
 const submissionRoutes = require("./routes/submission");
 // const studentCourseRoutes = require("./routes/studentcourses");
-const playgroundRoutes = require('./routes/playground');
+// const playgroundRoutes = require('./routes/playground');
 
 
 dotenv.config();
@@ -34,9 +34,9 @@ app.use("/",enrollmentRoutes);
 app.use("/mentor", mentorcourseRoutes); // instead of using "/"
 app.use("/",peer2peerRoutes);
 app.use("/", practiceRoutes);
-app.use("/", submissionRoutes);
+app.use("/submissions", submissionRoutes);
 // app.use("/", studentCourseRoutes);
-app.use('/p2p-matches', playgroundRoutes);
+// app.use('/p2p-matches', playgroundRoutes);
 
 
 const PORT = process.env.PORT || 3000;

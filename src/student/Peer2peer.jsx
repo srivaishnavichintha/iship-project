@@ -156,7 +156,7 @@ const Peer2peer = () => {
                 <div className="filter-item">
                   <label>Course</label>
                   <select value={courseFilter} onChange={(e) => setCourseFilter(e.target.value)}>
-                    <option value="All">All Courses</option>
+                    <option value="All">select</option>
                     {allCourses.map((course) => (
                       <option key={course} value={course}>{course}</option>
                     ))}
@@ -180,7 +180,7 @@ const Peer2peer = () => {
                 <div className="filter-item">
                   <label>Filter Peers</label>
                   <select value={inviteCourseFilter} onChange={(e) => setInviteCourseFilter(e.target.value)}>
-                    <option value="All">All Courses</option>
+                    <option value="All">select</option>
                     {allCourses.map((course) => (
                       <option key={course} value={course}>{course}</option>
                     ))}
