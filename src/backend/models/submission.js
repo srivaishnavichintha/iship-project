@@ -11,7 +11,7 @@ const submissionSchema = new mongoose.Schema({
   problemId: Number,
   code: String,
   language: String,
-  languageId: Number, // Optional but useful
+  languageId: Number,
   status: {
     type: String,
     enum: ["Accepted", "Wrong Answer", "Runtime Error", "Compilation Error"],
@@ -19,7 +19,16 @@ const submissionSchema = new mongoose.Schema({
   },
   testResults: [testResultSchema],
   executionTime: { type: Date, default: Date.now },
-  studentId: Number, // or: mongoose.Schema.Types.ObjectId if linking to Student model
+  studentId: Number,
+  peerChallengeId: {
+    type: String,
+    required: true
+  },
+  result: {
+    type: String,
+    enum: ["Won", "Lost", "Pending"],
+    default: "Pending"
+  }
 });
 
 module.exports = mongoose.model("Submission", submissionSchema);

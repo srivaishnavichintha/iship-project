@@ -25,7 +25,7 @@ router.get("/submissions", auth, async (req, res) => {
 });
 
 // routes/submission.js
-router.post("/submissions", auth, async (req, res) => {
+router.post("/", auth, async (req, res) => {
   try {
     const { problemId, code, language, status, testResults, executionTime } = req.body;
 
