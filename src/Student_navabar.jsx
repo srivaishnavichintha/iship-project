@@ -4,8 +4,7 @@ import logo from "./assets/react.png";
 import env from "./assets/envelope.png";
 import { BiSolidDollarCircle } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
-import { FaUser, FaListOl, FaFileAlt, FaSignOutAlt } from "react-icons/fa";
-
+import { FaUser, FaFileAlt, FaSignOutAlt } from "react-icons/fa";
 
 export default function Student_navbar() {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -13,11 +12,9 @@ export default function Student_navbar() {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [firstLetter, setFirstLetter] = useState("");
   const [points, setPoints] = useState(0);
+  const [invitations, setInvitations] = useState([]);
 
   const navigate = useNavigate();
-   const handleSubmissions = () => {
-  navigate("/student/submissions");
-};
 
   const toggleDropdown = () => setShowDropdown((prev) => !prev);
   const toggleEnvelopeBox = () => setShowEnvelopeBox((prev) => !prev);
@@ -30,6 +27,11 @@ export default function Student_navbar() {
     navigate("/login");
   };
 
+  const handleSubmissions = () => {
+    navigate("/student/submissions");
+  };
+
+  // Fetch points and user initial
   useEffect(() => {
     const storedUserData = localStorage.getItem("userData");
     if (storedUserData) {
@@ -38,6 +40,8 @@ export default function Student_navbar() {
       const studentId = userData.id;
 
       if (name) setFirstLetter(name[0].toUpperCase());
+
+      // Fetch student points
       fetch(`http://localhost:3000/students/${studentId}/points`)
         .then((res) => {
           if (!res.ok) throw new Error("Failed to fetch points");
@@ -52,6 +56,36 @@ export default function Student_navbar() {
     }
   }, []);
 
+  // Fetch invitations every 2 minutes
+  useEffect(() => {
+    const fetchInvitations = () => {
+      const storedUserData = localStorage.getItem("userData");
+      if (!storedUserData) return;
+
+      const { id: studentId } = JSON.parse(storedUserData);
+
+      fetch(`http://localhost:3000/students/${studentId}/invitations`)
+        .then((res) => {
+          if (!res.ok) throw new Error("Failed to fetch invitations");
+          return res.json();
+        })
+        .then((data) => {
+          setInvitations(data || []);
+        })
+        .catch((err) => {
+          console.error("Error fetching invitations:", err.message);
+        });
+    };
+
+    fetchInvitations(); // Initial call
+
+    const interval = setInterval(() => {
+      fetchInvitations();
+    },  60 * 1000); // every 2 mins
+
+    return () => clearInterval(interval); // cleanup
+  }, []);
+
   return (
     <nav id="nava">
       <div className="nav-left">
@@ -64,7 +98,7 @@ export default function Student_navbar() {
 
       <div className="nav-right">
         <div className="points">
-          <BiSolidDollarCircle style={{ marginRight: "4px",  fontSize:"22px"}} /> {points} pts
+          <BiSolidDollarCircle style={{ marginRight: "4px", fontSize: "22px" }} /> {points} pts
         </div>
 
         <div className="profile_wrapper">
@@ -73,16 +107,27 @@ export default function Student_navbar() {
           </div>
           <div className={`dash-drop ${showDropdown ? "open" : ""}`}>
             <p><FaUser /> My Profile</p>
-            <p onClick={handleSubmissions}><FaFileAlt  /> Submissions</p>
+            <p onClick={handleSubmissions}><FaFileAlt /> Submissions</p>
             <p onClick={confirmLogout}><FaSignOutAlt /> Log Out</p>
           </div>
         </div>
 
         <div className="envelope-wrapper">
-          <img src={env} alt="Envelope" onClick={toggleEnvelopeBox} className="envelope-icon" />
+          <img
+            src={env}
+            alt="Envelope"
+            onClick={toggleEnvelopeBox}
+            className="envelope-icon"
+          />
           {showEnvelopeBox && (
             <div className="envelope-popup">
-              <p>(empty)</p>
+              {invitations.length === 0 ? (
+                <p>(No invitations)</p>
+              ) : (
+                invitations.map((invite, index) => (
+                  <p key={index}>{invite.message}</p>
+                ))
+              )}
             </div>
           )}
         </div>

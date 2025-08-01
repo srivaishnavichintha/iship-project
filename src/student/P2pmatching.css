@@ -1,11 +1,23 @@
 .p2p-modern-container {
   padding: 2rem;
   font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #f0f8ff, #e8f5ff);
+  min-height: 100vh;
 }
 
 .p2p-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.p2p-header h1 {
+  font-size: 2.5rem;
+  color: #00242b;
+}
+
+.p2p-header p {
+  color: #333;
+  font-size: 1rem;
 }
 
 .p2p-card-grid {
@@ -13,74 +25,102 @@
   gap: 2rem;
   justify-content: center;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
 }
-
 .p2p-player-card {
   position: relative;
-  width: 280px;
-  background: #fff;
-  border-radius: 1.2rem;
+  width: 300px;
+  background-color: rgba(29, 93, 121, 0.7); /* 70% opacity */
+  border-radius: 1.5rem;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
   padding: 1.5rem;
-  overflow: hidden;
   transition: transform 0.3s;
+  border-top: 6px solid var(--accent-color);
+  backdrop-filter: blur(8px); /* Optional: for frosted glass effect */
 }
+
+
+/* .p2p-player-card {
+  position: relative;
+  width: 300px;
+  background: #ffffff;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  transition: transform 0.3s;
+  border-top: 6px solid var(--accent-color);
+} */
 
 .p2p-player-card:hover {
   transform: translateY(-6px);
 }
 
-.p2p-card-accent {
-  height: 6px;
-  width: 100%;
-  background-color: var(--accent-color);
-  border-radius: 6px 6px 0 0;
-  margin-bottom: 1rem;
-}
-
 .p2p-card-avatar {
   font-size: 2rem;
   color: white;
-  height: 60px;
-  width: 60px;
+  height: 70px;
+  width: 70px;
   border-radius: 50%;
   display: grid;
   place-content: center;
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem;
+  background-color: var(--accent-color);
+  font-weight: bold;
+}
+
+.p2p-card-info {
+  text-align: center;
 }
 
 .p2p-card-info h3 {
   margin: 0;
+  color: #00171b;
+  font-size: 1.3rem;
 }
 
 .p2p-subtext {
   font-size: 0.9rem;
-  color: gray;
+  color: rgb(254, 254, 254);
+  margin-bottom: 0.3rem;
 }
 
 .p2p-skill-tags {
   margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3rem;
 }
 
 .p2p-tag {
-  display: inline-block;
-  background-color: #eee;
-  color: #333;
+  background-color: #d8f3dc;
+  color: #204f3b;
   padding: 0.3rem 0.6rem;
-  margin: 0.2rem;
   border-radius: 999px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 
 .p2p-match-info {
   margin: 2rem 0;
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+}
+
+.p2p-match-info h2 {
+  color: #0077b6;
+  margin-bottom: 1rem;
 }
 
 .p2p-info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1rem;
-  margin-bottom: 1rem;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  color: #333;
 }
 
 .p2p-tags-container {
@@ -111,12 +151,16 @@
   padding: 0.7rem 1.5rem;
   border: none;
   border-radius: 0.6rem;
-  background-color: #444;
+  background-color: #6c757d;
   color: white;
   cursor: pointer;
   font-size: 1rem;
+  transition: background 0.3s ease;
 }
 
+.p2p-back-button:hover {
+  background-color: #495057;
+}
 
 .p2p-actions {
   margin-top: 2rem;
@@ -127,18 +171,17 @@
 
 .p2p-action-buttons {
   display: flex;
-  justify-content: flex-end;
-  margin: 1rem 0 2rem;
-  padding-right: 2rem;
+  justify-content: center;
+  margin: 2rem 0 0;
 }
 
 .enter-contest-btn {
   background: linear-gradient(135deg, #00b4db, #0083b0);
   color: white;
   border: none;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 2rem;
   font-size: 1rem;
-  border-radius: 50px;
+  border-radius: 999px;
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s ease;
@@ -148,4 +191,12 @@
 .enter-contest-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 22px rgba(0, 132, 176, 0.5);
+}
+
+.error {
+  text-align: center;
+  margin-top: 4rem;
+  font-size: 1.2rem;
+  color: red;
+  font-weight: 600;
 }

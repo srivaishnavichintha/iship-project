@@ -15,7 +15,7 @@ const getRandomColor = () => {
 const P2pmatching = () => {
   const { id } = useParams();
   const location = useLocation();
-  const navigate = useNavigate(); // ✅ FIXED HERE
+  const navigate = useNavigate(); 
 
   const [accentColor1, setAccentColor1] = useState('--accent-blue');
   const [accentColor2, setAccentColor2] = useState('--accent-purple');
@@ -34,12 +34,6 @@ const P2pmatching = () => {
     skills2 = ['Python', 'Graph Theory']
   } = location.state || {};
 
-  const leaderboard = [
-    { problem: 'Array Sorting', student1Score: 85, student2Score: 92 },
-    { problem: 'Dynamic Programming', student1Score: 78, student2Score: 88 },
-    { problem: 'Graph Traversal', student1Score: 95, student2Score: 90 },
-    { problem: 'String Manipulation', student1Score: 82, student2Score: 85 }
-  ];
 
   useEffect(() => {
     setAccentColor1(getRandomColor());
@@ -106,36 +100,7 @@ const P2pmatching = () => {
           <div><strong>Session Time:</strong> {contestTime}</div>
           <div><strong>Date:</strong> {new Date(matchDate).toLocaleDateString()}</div>
         </div>
-
-        <div className="p2p-tags-container">
-          <h3>Tags:</h3>
-          {tags.map((tag, i) => (
-            <span key={i} className="p2p-tag">{tag}</span>
-          ))}
-        </div>
       </div>
-
-      <div className="p2p-leaderboard">
-        <h2>Leaderboard</h2>
-        <div className="p2p-leaderboard-header">
-          <span>Problem</span>
-          <span>{student1}</span>
-          <span>{student2}</span>
-        </div>
-        {leaderboard.map((entry, i) => (
-          <div key={i} className="p2p-leaderboard-row">
-            <span>{entry.problem}</span>
-            <span className={entry.student1Score > entry.student2Score ? 'winner' : ''}>
-              {entry.student1Score}%
-            </span>
-            <span className={entry.student2Score > entry.student1Score ? 'winner' : ''}>
-              {entry.student2Score}%
-            </span>
-          </div>
-        ))}
-      </div>
-
-      {/* ✅ Enter Contest Button */}
       <div className="p2p-action-buttons">
         <button className="enter-contest-btn" onClick={handleEnterContest}>
           🚀 Enter Contest
