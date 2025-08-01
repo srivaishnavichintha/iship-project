@@ -127,7 +127,7 @@ export default function Problems() {
               </div>
 
               <div className="problem-action">
-                <button className="solve-button" onClick={() => handleSolveClick(problem._id)}>
+                <button className="solve-button" onClick={() => handleSolveClick(problem.problemId)}>
                   Solve Challenge
                 </button>
               </div>

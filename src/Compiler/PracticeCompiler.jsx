@@ -3,8 +3,9 @@ import * as monaco from "monaco-editor";
 import { useParams } from "react-router-dom";
 import "./PracticeCompiler.css";
 
+
 // API configuration
-const API_BASE_URL = 'http://your-api-base-url.com/api'; // Replace with your backend API URL
+const API_BASE_URL = 'http://localhost:3000'; // Replace with your backend API URL
 
 export default function PracticeCompiler() {
   const { problemId } = useParams();

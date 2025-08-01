@@ -72,4 +72,19 @@ router.get("/", async (req, res) => {
   }
 });
 
+
+// Get single problem by ID
+router.get("/problems/:problemId", async (req, res) => {
+  try {
+    const problem = await Problem.findOne({ problemId: parseInt(req.params.problemId) });
+    if (!problem) {
+      return res.status(404).json({ message: "Problem not found" });
+    }
+    res.json(problem);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
 module.exports = router;
