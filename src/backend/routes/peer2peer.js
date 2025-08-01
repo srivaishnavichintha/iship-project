@@ -36,7 +36,7 @@ router.post("/challenge", async (req, res) => {
       course,
       datetime
     });
-
+    console.log(datetime);
     await newChallenge.save();
     res.status(201).json({ message: "Challenge created", challenge: newChallenge });
   } catch (err) {

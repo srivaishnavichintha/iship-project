@@ -96,7 +96,7 @@ const Peer2peer = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-
+      console.log(response);
       if (response.ok) {
         alert(`Invite successfully sent to ${selectedPeer.name}`);
       } else {

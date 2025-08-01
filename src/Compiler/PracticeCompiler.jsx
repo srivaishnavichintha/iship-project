@@ -263,9 +263,17 @@ console.log(response); // <-- this is your issue
         testResults,
         executionTime: new Date().toISOString()
       };
+       const studentdata = JSON.parse(localStorage.getItem('userData')); // ✅ parse it
+      const studentid = studentdata?.id; // use optional chaining to prevent crash
+      console.log("Student Data:", studentdata, "Student ID:", studentid);
+
+      if (!studentid) {
+        console.error("No student ID found in localStorage.");
+      return;
+      }
 
       // Save submission to backend
-      const saveResponse = await fetch(`${API_BASE_URL}/submissions`, {
+      const saveResponse = await fetch(`${API_BASE_URL}/submissions/${studentid}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
