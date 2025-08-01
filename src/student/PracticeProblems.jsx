@@ -103,7 +103,7 @@ export default function Problems() {
           </div>
 
           {filteredProblems.map((problem, index) => (
-            <div key={problem._id} className="student-problem-card">
+            <div key={problem.problemId} className="student-problem-card">
               <div className="problem-id">{index + 1}</div>
               <div className="problem-title">{problem.problemtitle}</div>
               <div className={`problem-difficulty ${problem.level.toLowerCase()}`}>
