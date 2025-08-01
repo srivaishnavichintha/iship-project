@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  /* background: #011827; */
+  background:  linear-gradient(to top , #014053,#f1f8fa, #01152f);
   position: relative;
 }
 
@@ -29,10 +29,11 @@
   right: -2px;
   bottom: -2px;
   background: linear-gradient(
-    45deg,
+    30deg,
    #0b405b,
+   #658a95,
    #3a8686,
-   #033a3a,
+   #012f2f,
    rgb(1, 24, 39)
   ); 
   background-size: 500%;
@@ -143,7 +144,7 @@ button {
 }
 
 button:hover {
-  background: #00cccc;
+  background: #025f5f;
 }
 
 .t1 {
@@ -151,11 +152,19 @@ button:hover {
   display: flex;
   justify-content: space-between;
   font-size: 0.9rem;
-  color: #ccc;
+  color: #022929;
+}
+.rectangle{
+  opacity: 0.5;
+  height: 250px;
+  width: 250px;
+  position: fixed;
+  bottom: 0px;
+  background-color: white;
 }
 
 .t1 span:hover {
   text-decoration: underline;
-  color: #00ffff;
+  color: #074141;
   cursor: pointer;
 }
