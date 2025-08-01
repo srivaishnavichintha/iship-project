@@ -26,9 +26,14 @@ export default function Student_navbar() {
   };
 
   useEffect(() => {
-    const username = localStorage.getItem("username");
-    if (username) setFirstLetter(username[0].toUpperCase());
-  }, []);
+  const storedUserData = localStorage.getItem("userData");
+  if (storedUserData) {
+    const userData = JSON.parse(storedUserData);
+    const name = userData.name;
+    if (name) setFirstLetter(name[0].toUpperCase());
+  }
+}, []);
+
 
   return (
     <nav id="nava">
@@ -47,8 +52,7 @@ export default function Student_navbar() {
           </div>
           <div className={`dash-drop ${showDropdown ? "open" : ""}`}>
             <p><FaUser /> My Profile</p>
-            <p><FaListOl /> My Leaderboard</p>
-            <p><FaFileAlt /> Submissions</p>
+            <p ><FaFileAlt /> Submissions</p>
             <p onClick={confirmLogout}><FaSignOutAlt /> Log Out</p>
           </div>
         </div>

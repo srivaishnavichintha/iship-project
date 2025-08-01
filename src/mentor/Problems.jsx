@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Mentor_navbar from "../Mentor_navbar";
 import axios from "axios";
 import "./Problems.css";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Problems() {
   const [problems, setProblems] = useState([]);
@@ -24,6 +26,12 @@ export default function Problems() {
 
     fetchData();
   }, []);
+  const navigate = useNavigate();
+
+const handleViewChallenge = (problemId) => {
+  navigate(`/solve/${problemId}`);
+};
+
 
   const levels = ["Easy", "Medium", "Hard"];
   const [showForm, setShowForm] = useState(false);
@@ -338,7 +346,7 @@ export default function Problems() {
                 </div>
               </div>
               <div className="problem-action">
-                <button className="solve-button">View Challenge</button>
+                <button className="solve-button" onClick={handleViewChallenge}>View Challenge</button>
               </div>
             </div>
           ))}

@@ -55,7 +55,7 @@ const StudentCourses = () => {
 
         <h1 className="section-title">My Enrolled Courses</h1>
         <div className="courses-grid">
-          {filterCourses(coursesData.enrolled).map((course, index) => (
+          {filterCourses(enrolledCourses).map((course, index) => (
             <Myenrollcard
               key={index}
               id={index}
@@ -67,9 +67,10 @@ const StudentCourses = () => {
             />
           ))}
         </div>
+
         <h1 className="section-title">Recommended for You</h1>
         <div className="courses-grid">
-          {filterCourses(coursesData.recommended).map((course, index) => (
+          {filterCourses(recommendedCourses).map((course, index) => (
             <CCard
               key={index}
               id={course.id}
@@ -80,8 +81,6 @@ const StudentCourses = () => {
               tags={course.tags || []}
             />
           ))}
-           
-           
         </div>
       </div>
     </>

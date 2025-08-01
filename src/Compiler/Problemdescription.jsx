@@ -3,11 +3,10 @@ import * as monaco from "monaco-editor";
 import { useParams } from "react-router-dom";
 import "./PracticeCompiler.css";
 
-
 // API configuration
-const API_BASE_URL = 'http://localhost:3000'; 
+const API_BASE_URL = 'http://localhost:3000'; // Replace with your backend API URL
 
-export default function PracticeCompiler() {
+export default function Problemdescription() {
   const { problemId } = useParams();
   const editorRef = useRef(null);
   const monacoRef = useRef(null);
@@ -68,7 +67,7 @@ var solution = function(arr) {
       try {
         setLoading(true);
         const response = await fetch(`${API_BASE_URL}/problems/${problemId}`);
-console.log(response); // <-- this is your issue
+        console.log(response);
 
         if (!response.ok) {
           throw new Error('Problem not found');
@@ -216,7 +215,7 @@ console.log(response); // <-- this is your issue
     setOutput("⏳ Submitting your solution...");
 
     try {
-      // First execute the code against test cases
+      // Execute the code against test cases
       const testResults = [];
       let allPassed = true;
       
@@ -253,40 +252,6 @@ console.log(response); // <-- this is your issue
           passed: isPassed
         });
       }
-      
-      // Prepare submission data for backend
-      const submissionData = {
-        problemId,
-        code,
-        language: languageMap[languageId],
-        status: allPassed ? "Accepted" : "Wrong Answer",
-        testResults,
-        executionTime: new Date().toISOString()
-      };
-
-      // Save submission to backend
-      const saveResponse = await fetch(`${API_BASE_URL}/submissions`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify(submissionData)
-      });
-
-      if (!saveResponse.ok) {
-        throw new Error('Failed to save submission');
-      }
-
-      const savedSubmission = await saveResponse.json();
-
-      // Update local state with the new submission
-      const newSubmission = {
-        ...savedSubmission,
-        timestamp: new Date(savedSubmission.executionTime).toLocaleString()
-      };
-      
-      setSubmissions(prev => [newSubmission, ...prev]);
       
       // Generate output message
       let outputText = "";
@@ -414,12 +379,6 @@ console.log(response); // <-- this is your issue
           >
             <i className="fas fa-file-alt"></i> Problem
           </button>
-          <button 
-            className={activeTab === "submissions" ? "active" : ""}
-            onClick={() => setActiveTab("submissions")}
-          >
-            <i className="fas fa-history"></i> Submissions
-          </button>
         </div>
         
         {activeTab === "problem" && (
@@ -464,37 +423,6 @@ console.log(response); // <-- this is your issue
               </div>
             </div>
             <div className="monaco-editor" ref={editorRef}></div>
-          </div>
-        )}
-        
-        {activeTab === "submissions" && (
-          <div className="submissions-container">
-            <h3>Your Submissions</h3>
-            {submissions.length === 0 ? (
-              <p className="no-submissions">No submissions yet</p>
-            ) : (
-              <div className="submissions-list">
-                {submissions.map((submission, idx) => (
-                  <div key={idx} className={`submission-card ${submission.status === "Accepted" ? "accepted" : "rejected"}`}>
-                    <div className="submission-header">
-                      <span className="submission-time">{submission.timestamp}</span>
-                      <span className={`submission-status ${submission.status === "Accepted" ? "accepted" : "rejected"}`}>
-                        {submission.status}
-                      </span>
-                    </div>
-                    <div className="submission-language">{submission.language}</div>
-                    <div className="submission-test-results">
-                      {submission.testResults?.map((test, testIdx) => (
-                        <div key={testIdx} className={`test-result ${test.passed ? "passed" : "failed"}`}>
-                          Test Case {testIdx + 1}: {test.passed ? "✓ Passed" : "✗ Failed"}
-                        </div>
-                      ))}
-                    </div>
-                    <pre className="submission-code">{submission.code}</pre>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
         )}
         

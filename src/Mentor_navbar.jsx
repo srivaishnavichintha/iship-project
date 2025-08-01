@@ -34,10 +34,14 @@ export default function Mentor_navbar() {
     alert("Mentor ID not found");
   }
 }; 
-  useEffect(() => {
-    const username = localStorage.getItem("username");
-    if (username) setFirstLetter(username[0].toUpperCase());
-  }, []);
+   useEffect(() => {
+  const storedUserData = localStorage.getItem("userData");
+  if (storedUserData) {
+    const userData = JSON.parse(storedUserData);
+    const name = userData.name;
+    if (name) setFirstLetter(name[0].toUpperCase());
+  }
+}, []);
 
   return (
     <nav id="nava">
@@ -46,7 +50,6 @@ export default function Mentor_navbar() {
         <p className="nav-con" onClick={handleCoursesClick}>Courses</p>
         <Link to="/mentor/mentorcontest" className="nav-con">Contest</Link>
         <Link to="/mentor/problems" className="nav-con">Problems</Link>
-        <Link to="/mentor/leaderboard" className="nav-con">Leaderboard</Link>
       </div>
 
       <div className="nav-right">
@@ -56,8 +59,7 @@ export default function Mentor_navbar() {
           </div>
           <div className={`dash-drop ${showDropdown ? "open" : ""}`}>
             <p><FaUser /> My Profile</p>
-            <p><FaListOl /> Submissions</p>
-            <p><FaFileAlt /> Problem Sets</p>
+            <p><FaListOl /> Leaderboard</p>
             <p onClick={confirmLogout}><FaSignOutAlt /> Log Out</p>
           </div>
         </div>
