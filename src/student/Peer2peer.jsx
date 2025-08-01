@@ -131,7 +131,7 @@ const Peer2peer = () => {
         <header className="peer-header">
           <div className="header-content">
             <h1 className="peer-title">
-              {view === "history" ? "Contest History" : "Peer Challenges"}
+              {view === "history" ? "Peer to Peer BattleGround" : "Peer Challenges"}
             </h1>
             <p className="peer-subtitle">
               {view === "history" ? "Your complete battle record" : "Find worthy opponents"}
@@ -144,7 +144,7 @@ const Peer2peer = () => {
               setIsFormOpen(false);
             }}
           >
-            {view === "history" ? "Invite Peers" : "View History"}
+            {view === "history" ? "Invite Peers" : "Goto BattleGround"}
             <span className="toggle-icon">→</span>
           </button>
         </header>
@@ -156,7 +156,7 @@ const Peer2peer = () => {
                 <div className="filter-item">
                   <label>Course</label>
                   <select value={courseFilter} onChange={(e) => setCourseFilter(e.target.value)}>
-                    <option value="All">All Courses</option>
+                    <option value="All">select</option>
                     {allCourses.map((course) => (
                       <option key={course} value={course}>{course}</option>
                     ))}
@@ -180,7 +180,7 @@ const Peer2peer = () => {
                 <div className="filter-item">
                   <label>Filter Peers</label>
                   <select value={inviteCourseFilter} onChange={(e) => setInviteCourseFilter(e.target.value)}>
-                    <option value="All">All Courses</option>
+                    <option value="All">select</option>
                     {allCourses.map((course) => (
                       <option key={course} value={course}>{course}</option>
                     ))}

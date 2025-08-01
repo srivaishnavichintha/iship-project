@@ -25,7 +25,7 @@ const challengeSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ["Pending", "Accepted", "Rejected", "Completed", "Won", "Lost"],
-    default: "Pending"
+    default: "Lost"
   },
   result: {
     type: String, // e.g., "challenger", "opponent", "draw"
