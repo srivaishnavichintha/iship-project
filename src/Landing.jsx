@@ -1,5 +1,6 @@
 import "./Landing.css";
 import { Link } from "react-router-dom";
+ import logo from "./assets/react.png"
 import Icongrid from "./Icongrid";
 import peertopeer from "./assets/2code.png";
 import Frontcompiler from "./Frontendcompiler.jsx";
@@ -11,7 +12,7 @@ export default function Landing() {
     <>
       <div className="about">
         <nav>
-          <img alt="logo" />
+            <img src={logo} alt="Logo" /> 
           <ul className="nav_bar">
             <li><a href="#land-exp">Explore</a></li>
             <li><a href="#land-pro">Product</a></li>

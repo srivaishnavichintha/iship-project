@@ -187,6 +187,7 @@ const handleViewChallenge = (problemId) => {
             <div className="course_form slide-down">
               <h2>Add New Problem</h2>
               <form onSubmit={handleSubmit}>
+                <label>Problem name</label>
                 <input
                   type="text"
                   name="problemtitle"
@@ -195,6 +196,7 @@ const handleViewChallenge = (problemId) => {
                   onChange={handleInputChange}
                   required
                 />
+                <label>Problem description</label>
                 <textarea
                   name="description"
                   placeholder="Description"
@@ -202,6 +204,8 @@ const handleViewChallenge = (problemId) => {
                   onChange={handleInputChange}
                   required
                 />
+                <br></br>
+                <label>level</label>
                 <select
                   name="level"
                   value={formData.level}
@@ -214,7 +218,7 @@ const handleViewChallenge = (problemId) => {
                   ))}
                 </select>
 
-                {/* Prerequisites */}
+                <label>Topic</label>
                 <div className="tag-input-section">
                   <input
                     type="text"
@@ -233,7 +237,9 @@ const handleViewChallenge = (problemId) => {
                 </div>
 
                 {/* Company Tags */}
+
                 <div className="tag-input-section">
+                  <label>Company</label>
                   <input
                     type="text"
                     placeholder="Add Company"
@@ -251,6 +257,7 @@ const handleViewChallenge = (problemId) => {
                 </div>
 
                 {/* Test Cases */}
+                <label>Testcases</label>
                 {inputs.map((input, idx) => (
                   <div key={idx} className="test-case">
                     <input

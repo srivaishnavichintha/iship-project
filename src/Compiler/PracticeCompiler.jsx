@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import * as monaco from "monaco-editor";
 import { useParams } from "react-router-dom";
 import "./PracticeCompiler.css";
-
+import Student_navbar from "../Student_navabar";
 
 // API configuration
 const API_BASE_URL = 'http://localhost:3000'; 
@@ -68,7 +68,7 @@ var solution = function(arr) {
       try {
         setLoading(true);
         const response = await fetch(`${API_BASE_URL}/problems/${problemId}`);
-console.log(response); // <-- this is your issue
+console.log(response);
 
         if (!response.ok) {
           throw new Error('Problem not found');
@@ -343,6 +343,8 @@ console.log(response); // <-- this is your issue
   }
 
   return (
+    <>
+    < Student_navbar />
     <div className="practice-compiler-container">
       <div className="problem-panel">
         <div className="problem-header">
@@ -516,5 +518,6 @@ console.log(response); // <-- this is your issue
         </div>
       </div>
     </div>
+    </>
   );
 }

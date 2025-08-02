@@ -16,7 +16,7 @@ nav img {
  padding: 0px;
   position: relative;
   height: 100vh;
-  background: linear-gradient(to right, rgb(1, 24, 39), #033a3a);
+  background: linear-gradient(to right, rgb(1, 24, 39), #035252);
   color: white;
   padding: 1.5rem;
   overflow: hidden;
@@ -43,12 +43,21 @@ nav img {
     /* margin-top: -5px; */
 }
 .nav_bar > li{
+  /* padding:15px; */
     margin-right: 40px;
     font-family: "Inter", sans-serif;
     font-weight: 200;
+
 }
+
 .nav_bar > li > a{
+   transition: all 0.3s ease;
     color: white;
+    display: inline-block;
+}
+.nav_bar > li > a:hover{
+    transform: scale(1.05);
+  opacity: 0.8; 
 }
 .land-content{
     width: 100%;
@@ -169,7 +178,7 @@ nav img {
     max-width: 600px;
 }
 .colorings {
-  background: linear-gradient(to right,#012626, #036868,#056969,#87e4e4);
+  background: linear-gradient(to right,#87e4e4,#056969,#036868,#104e74);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

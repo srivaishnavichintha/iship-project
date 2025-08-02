@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useParams, useNavigate } from 'react-router-dom';  // ✅ FIXED HERE
+import { useLocation, useParams, useNavigate } from 'react-router-dom';  
 import './P2pmatching.css';
+import Student_navbar from '../Student_navabar';
 
 const accentColors = [
   '--accent-blue', '--accent-purple', '--accent-orange',
@@ -49,7 +50,7 @@ const P2pmatching = () => {
     contestDateTime.setSeconds(0);
 
     if (now >= contestDateTime) {
-      navigate(`/solve/${problemid}`); // ✅ Redirect when time is valid
+      navigate(`/solve/${problemid}`); 
     } else {
       alert("⏰ Contest is not available yet. Please wait for the scheduled time.");
     }
@@ -60,6 +61,8 @@ const P2pmatching = () => {
   }
 
   return (
+    <>
+    <Student_navbar />
     <div className="p2p-modern-container">
       <div className="p2p-header">
         <h1>Peer Match Battle</h1>
@@ -111,6 +114,7 @@ const P2pmatching = () => {
         ⬅ Back to Matches
       </button>
     </div>
+    </>
   );
 };
 

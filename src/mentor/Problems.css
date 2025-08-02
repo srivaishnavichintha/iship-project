@@ -19,17 +19,19 @@
 }
 
 .add-problem-btn {
-  background-color: #4CAF50;
+  background-color: #3f51b5;
   color: white;
   border: none;
-  padding: 10px 15px;
-  border-radius: 4px;
+  padding: 10px 20px;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 16px;
   font-weight: bold;
+  transition: background-color 0.2s ease;
 }
 
 .add-problem-btn:hover {
-  background-color: #45a049;
+  background-color: #303f9f;
 }
 
 /* Filters Section */
@@ -313,13 +315,7 @@
   gap: 10px;
 }
 
-.testcase-buttons button {
-  padding: 6px 10px;
-  background-color: #eee;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  cursor: pointer;
-}
+
 
 /* Form actions */
 .form-actions {

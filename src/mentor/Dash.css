@@ -6,77 +6,6 @@
   margin-bottom: 60px;
 }
 
-.card_cover {
-  display: flex;
-  gap: 50px;
-  margin-top: 30px;
-}
-
-.popular_card,
-.upcoming_card {
-  width: 300px;
-  height: 300px;
-  box-shadow: 2px 5px 8px #888888;
-  border-radius: 14px;
-  background: linear-gradient(to bottom, rgb(227, 97, 97) 75%, transparent 25%);
-  position: relative;
-  transition: transform 0.3s ease;
-}
-
-.popular_card:hover,
-.upcoming_card:hover {
-  transform: translateY(-20px);
-}
-
-.rec {
-  position: absolute;
-  top: 25%;
-  left: 10%;
-  opacity: 0.5;
-}
-
-.rec1,
-.rec2,
-.rec3 {
-  border-radius: 3px;
-  background-color: white;
-  height: 10px;
-  margin: 5px 0;
-}
-
-.rec1 {
-  width: 40px;
-}
-
-.rec2 {
-  width: 70px;
-}
-
-.rec3 {
-  width: 90px;
-}
-
-.top_students_table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.top_students_table th,
-.top_students_table td {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: left;
-}
-
-.top_students_table th {
-  background-color: #f2f2f2;
-  font-weight: 600;
-}
-.section {
-  margin-bottom: 3rem;
-}
-
 .scrollable-wrapper {
   position: relative;
   display: flex;
@@ -86,7 +15,7 @@
 .scroll-button {
   background-color: transparent;
   border: none;
-  font-size: 1.8rem;
+  font-size: 2rem;
   cursor: pointer;
   z-index: 10;
   padding: 0 10px;
@@ -105,11 +34,17 @@
 
 .card_cover.scrollable {
   display: flex;
+  flex-wrap: nowrap;
   overflow-x: auto;
   scroll-behavior: smooth;
-  gap: 1rem;
+  gap: 1.2rem;
   padding: 1rem 2rem;
   margin: 0 2.5rem;
+}
+
+.card_cover.scrollable > * {
+  flex: 0 0 auto;
+  min-width: 300px;
 }
 
 /* Hide scrollbar */
@@ -117,166 +52,24 @@
   display: none;
 }
 
-/* Leaderboard Styles */
+/* Leaderboard styles (add your own or import from leaderboard CSS) */
 .leaderboard-section {
   margin-top: 2.5rem;
 }
 
-.leaderboard-title {
-  color: #fff;
-  font-size: 1.5rem;
-  margin-bottom: 1.2rem;
-  text-align: center;
-  position: relative;
-  padding-bottom: 10px;
-}
-
-.leaderboard-title::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 3px;
-  background: linear-gradient(90deg, #00d4ff, #033a3a);
-}
-
-.leaderboard-container {
-  background: rgba(1, 24, 39, 0.8);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-.leaderboard-header {
-  display: grid;
-  grid-template-columns: 8% 27% 15% 15% 35%;
-  background: linear-gradient(90deg, #033a3a, #011827);
-  padding: 1rem 1.5rem;
-  color: white;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-size: 0.85rem;
-  align-items: center;
-}
-
-.header-cell {
-  padding: 0.5rem;
-  text-align: center;
-}
-
-.header-cell:first-child {
-  text-align: left;
-}
-
-.header-cell.name-header {
-  text-align: left;
-}
-
-.leaderboard-body {
-  max-height: 500px;
-  overflow-y: auto;
-}
-
-.leaderboard-row {
-  display: grid;
-  grid-template-columns: 8% 27% 15% 15% 35%;
-  padding: 1rem 1.5rem;
-  align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.3s ease;
-}
-
-.leaderboard-row:hover {
-  background: rgba(3, 58, 58, 0.3);
-}
-
-.row-cell {
-  padding: 0.5rem;
-  color: #e5e7eb;
-}
-
-.sno-cell {
-  font-weight: 600;
-  color: #a7f3f3;
-  text-align: center;
-}
-
-.name-cell {
-  text-align: left;
-}
-
-.student-name {
-  font-weight: 500;
-}
-
-.points-cell {
-  text-align: center;
-}
-
-.points-badge {
-  background: rgba(74, 222, 128, 0.2);
-  color: #4ade80;
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-weight: 600;
-  display: inline-block;
-}
-
-.submissions-cell {
-  text-align: center;
-  color: #60a5fa;
-}
-
-.course-tag {
-  background: rgba(96, 165, 250, 0.1);
-  color: #a5b4fc;
-  padding: 0.3rem 0.8rem;
-  border-radius: 4px;
-  font-size: 0.85rem;
-}
-
-/* Top 3 Highlighting */
-.top-three {
-  background: linear-gradient(90deg, rgba(1, 24, 39, 0.6), rgba(3, 58, 58, 0.6));
-  border-left: 3px solid #00d4ff;
-}
-
-.top-three .sno-cell {
-  font-size: 1.1rem;
-}
-
-/* Scrollbar styling */
-.leaderboard-body::-webkit-scrollbar {
-  width: 6px;
-}
-
-.leaderboard-body::-webkit-scrollbar-track {
-  background: rgba(1, 24, 39, 0.5);
-}
-
-.leaderboard-body::-webkit-scrollbar-thumb {
-  background: #033a3a;
-  border-radius: 3px;
-}
-
-/* Responsive */
+/* Optional responsiveness */
 @media (max-width: 768px) {
-  .leaderboard-header,
-  .leaderboard-row {
-    grid-template-columns: 15% 25% 15% 15% 30%;
-    padding: 0.8rem;
+  .scroll-button {
+    font-size: 1.5rem;
   }
-  
-  .header-cell, .row-cell {
-    font-size: 0.8rem;
-    padding: 0.3rem;
+
+  .card_cover.scrollable {
+    padding: 1rem;
+    margin: 0 1rem;
+    gap: 0.8rem;
   }
-  
-  .points-badge, .course-tag {
-    padding: 0.2rem 0.5rem;
+
+  .card_cover.scrollable > * {
+    min-width: 260px;
   }
 }
-
