@@ -19,16 +19,7 @@ const submissionSchema = new mongoose.Schema({
   },
   testResults: [testResultSchema],
   executionTime: { type: Date, default: Date.now },
-  studentId: Number,
-  peerChallengeId: {
-    type: String,
-    required: true
-  },
-  result: {
-    type: String,
-    enum: ["Won", "Lost", "Pending"],
-    default: "Pending"
-  }
+  studentId: Number // or: mongoose.Schema.Types.ObjectId if linking to Student model
 });
 
 module.exports = mongoose.model("Submission", submissionSchema);

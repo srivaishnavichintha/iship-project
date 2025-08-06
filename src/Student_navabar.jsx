@@ -56,7 +56,7 @@ export default function Student_navbar() {
           return res.json();
         })
         .then((data) => {
-          setPoints(data.points || 0);
+          setPoints(data.points|| 0);
         })
         .catch((err) => {
           console.error("Error fetching points:", err.message);

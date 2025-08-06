@@ -1,21 +1,22 @@
 import { useLocation, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function EnrollForm() {
   const { courseName } = useParams();
   const { state } = useLocation();
   const coursename = state?.title || courseName.replace(/-/g, " ");
-    const courseid = state?.courseid ;
+  const courseid = state?.courseid;
 
   const [studentid, setStudentid] = useState("");
   const [username, setStudentname] = useState("");
 
   useEffect(() => {
-    // Simulate getting from localStorage or auth context
-     const studentData = JSON.parse(localStorage.getItem("userData"));
-    setStudentid(studentData.id);
-    setStudentname(studentData.name);
+    const studentData = JSON.parse(localStorage.getItem("userData"));
+    setStudentid(studentData?.id);
+    setStudentname(studentData?.name);
   }, []);
 
   const handleSubmit = async (e) => {
@@ -25,15 +26,14 @@ export default function EnrollForm() {
       courseid,
       coursename,
       studentid,
-      // username
     };
 
     try {
       await axios.post("http://localhost:3000/enroll", payload);
-      alert("Enrollment successful!");
+      toast.success("Enrollment successful!");
     } catch (error) {
       console.error("Enrollment failed:", error);
-      alert("Failed to enroll");
+      toast.error("Failed to enroll");
     }
   };
 
@@ -43,6 +43,7 @@ export default function EnrollForm() {
 
   return (
     <div style={{ padding: "2rem", maxWidth: "500px", margin: "auto" }}>
+      <ToastContainer position="top-right" />
       <h2>Enroll in <span style={{ color: "#007777" }}>{coursename}</span></h2>
       <p><strong>Course ID:</strong> {courseid}</p>
       <p><strong>Student ID:</strong> {studentid}</p>

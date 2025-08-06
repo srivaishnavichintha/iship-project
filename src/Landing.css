@@ -65,6 +65,7 @@ nav img {
     display: flex;
     justify-content: space-evenly;
     align-items: center; 
+    animation:slideIn 1s ease;
 }
 .land-content > img{
     width: 300px;
@@ -263,6 +264,67 @@ nav img {
 
   .land-about > p {
     padding: 0 10%;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .land-content {
+    flex-direction: column;
+    height: auto;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+
+  .product {
+    flex-direction: column;
+    height: auto;
+    gap: 40px;
+  }
+
+  .land-explore {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .explore-data {
+    text-align: center;
+    max-width: 90%;
+  }
+
+  .floating {
+    width: 250px;
+    height: 250px;
+    margin-bottom: 20px;
+  }
+
+  .comp-div {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .land-about > p {
+    padding: 0 10%;
+  }
+
+  .nav_bar {
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .nav_bar > li {
+    margin: 5px;
+    font-size: 14px;
   }
 }
 

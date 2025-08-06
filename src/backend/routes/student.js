@@ -4,28 +4,20 @@ const router = express.Router();
 const Student = require("../models/Student");
 const Peer2peer=require("../models/peer2peer");
 const Submission= require("../models/submission");
-// GET /students/:studentid/invitations
-router.get("/students/:studentid/invitations", async (req, res) => {
+router.get("/students/:studentid/points", async (req, res) => {
   try {
-    const studentId = parseInt(req.params.studentid);
+    const { studentid } = req.params;
 
-    const invitations = await Peer2peer.find({
-      opponentId: studentId,
-      status: "pending" // Optional: Filter only pending invites
-    });
+    const student = await Student.findOne({ studentid: parseInt(studentid) });
 
-    const formattedInvites = invitations.map((invite) => ({
-      id: invite._id,
-      message: `You were invited to solve Problem ${invite.problemId} by Student ${invite.challengerId}`,
-      peerChallengeId: invite._id,
-      challengerId: invite.challengerId,
-      problemId: invite.problemId,
-    }));
-
-    res.json(formattedInvites);
+    if (!student) {
+      return res.status(404).json({ error: "Student not found" });
+    }
+    console.log(student.points);
+    res.json({ points: student.points || 0 });
   } catch (err) {
-    console.error("Error fetching invitations:", err);
-    res.status(500).json({ error: "Server error fetching invitations" });
+    console.error("Error fetching student points:", err);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
@@ -58,7 +50,7 @@ router.get("/student-progress/:studentid", async (req, res) => {
     res.json({
       contestsAttended,
       problemsSolved: acceptedSubmissions,
-      accuracy:` ${accuracy}%`
+      accuracy: `${accuracy}%`
     });
   } catch (err) {
     console.error("Error fetching student progress:", err);
@@ -66,5 +58,17 @@ router.get("/student-progress/:studentid", async (req, res) => {
   }
 });
 
+router.get("/submissions/:studentId", async (req, res) => {
+  try {
+    const studentId = parseInt(req.params.studentId);
+
+    const submissions = await Submission.find({ studentId }).sort({ executionTime: -1 });
+
+    res.status(200).json(submissions);
+  } catch (err) {
+    console.error("Error fetching student submissions:", err);
+    res.status(500).json({ error: "Server error", details: err.message });
+  }
+});
 
 module.exports = router;

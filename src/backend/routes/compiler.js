@@ -11,20 +11,19 @@ router.get("/problems/:problemId", async (req, res) => {
     if (isNaN(numericProblemId)) {
       return res.status(400).json({ error: "Invalid problemId" });
     }
-
+    console.log(numericProblemId);
    console.log("Searching for problemId:", numericProblemId);
 const problem = await Problem.findOne({ problemId: numericProblemId });
 console.log("Found problem:", problem);
-
-
     res.json({
       title: problem.problemtitle,
       description: problem.description,
       level: problem.level,
       topics: problem.prerequisites || [],
       companies: problem.companyTags || [],
-      examples: problem.examples || [],  // ✅ include examples here if needed
+      examples: problem.inputs || [],  // ✅ include examples here if needed
     });
+
   } catch (err) {
     console.error("Problem fetch error:", err);
     res.status(500).json({ error: "Server error" });

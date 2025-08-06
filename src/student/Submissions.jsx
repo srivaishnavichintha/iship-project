@@ -13,12 +13,13 @@ const SubmissionsPage = () => {
     if (storedUserData) {
       const { id: studentId } = JSON.parse(storedUserData);
 
-      fetch(`http://localhost:3000/api/submissions/${studentId}`)
+      fetch(`http://localhost:3000/submissions/${studentId}`)
         .then(res => {
           if (!res.ok) throw new Error("Failed to fetch submissions");
           return res.json();
         })
         .then(data => {
+          console.log(data);
           setSubmissionsData(data);
         })
         .catch(error => {

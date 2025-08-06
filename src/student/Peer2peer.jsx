@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./Peer2peer.css";
 import Student_navbar from "../Student_navabar";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Peer2peer = () => {
   const [view, setView] = useState("history");
@@ -29,6 +31,7 @@ const Peer2peer = () => {
         setAllCourses(data);
       } catch (error) {
         console.error("Error fetching courses:", error);
+        toast.error("Failed to fetch courses.");
       }
     };
 
@@ -42,6 +45,7 @@ const Peer2peer = () => {
         setContests(data);
       } catch (error) {
         console.error("Error fetching history:", error);
+        toast.error("Failed to fetch battle history.");
       }
     };
 
@@ -62,6 +66,7 @@ const Peer2peer = () => {
         setFilteredPeers(data);
       } catch (error) {
         console.error("Error fetching peers:", error);
+        toast.error("Failed to fetch peers.");
       }
     };
 
@@ -79,7 +84,7 @@ const Peer2peer = () => {
 
   const handleSendInvite = async () => {
     if (!inviteDateTime) {
-      alert("Please select date and time");
+      toast.warn("Please select date and time");
       return;
     }
 
@@ -98,12 +103,13 @@ const Peer2peer = () => {
       });
 
       if (response.ok) {
-        alert(`Invite successfully sent to ${selectedPeer.name}`);
+        toast.success(` Invite successfully sent to ${selectedPeer.name}`);
       } else {
-        alert("Failed to send invite");
+        toast.error("Failed to send invite");
       }
     } catch (error) {
       console.error("Error sending invite:", error);
+      toast.error("Something went wrong while sending invite.");
     }
 
     setIsFormOpen(false);
@@ -127,6 +133,7 @@ const Peer2peer = () => {
   return (
     <>
       <Student_navbar />
+      <ToastContainer position="top-right" />
       <div className="peer-container">
         <header className="peer-header">
           <div className="header-content">
@@ -144,7 +151,7 @@ const Peer2peer = () => {
               setIsFormOpen(false);
             }}
           >
-            {view === "history" ? "Invite Peers" : "goto battleground"}
+            {view === "history" ? "Invite Peers" : "Go to Battleground"}
             <span className="toggle-icon">→</span>
           </button>
         </header>
@@ -233,7 +240,11 @@ const Peer2peer = () => {
                         <td>{peer.points}</td>
                         <td>{peer.contests}</td>
                         <td>{peer.course}</td>
-                        <td><button className="challenge-btn" onClick={() => handleInviteClick(peer)}>Challenge</button></td>
+                        <td>
+                          <button className="challenge-btn" onClick={() => handleInviteClick(peer)}>
+                            Challenge
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>

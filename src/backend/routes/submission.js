@@ -25,10 +25,11 @@ router.get("/submissions", auth, async (req, res) => {
 });
 
 // routes/submission.js
-router.post("/", auth, async (req, res) => {
+router.post("/submissions/:studentid", auth, async (req, res) => {
   try {
+    const studentId = parseInt(req.params.studentid);
     const { problemId, code, language, status, testResults, executionTime } = req.body;
-
+    console.log(req.studentId);
     const newSubmission = new Submission({
       problemId,
       code,
@@ -36,7 +37,7 @@ router.post("/", auth, async (req, res) => {
       status,
       testResults,
       executionTime,
-      studentId: req.studentId, // from auth middleware
+      studentId // from auth middleware
     });
 
     await newSubmission.save();
