@@ -21,7 +21,10 @@ console.log("Found problem:", problem);
       level: problem.level,
       topics: problem.prerequisites || [],
       companies: problem.companyTags || [],
-      examples: problem.inputs || [],  // ✅ include examples here if needed
+      examples: (problem.inputs || []).map((input, index) => ({
+        input,
+        output: problem.outputs?.[index] || ""
+      })) // ✅ include examples here if needed
     });
 
   } catch (err) {
