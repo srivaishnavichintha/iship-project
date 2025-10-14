@@ -29,6 +29,7 @@
     "react-router-dom": "^7.7.1",
     "react-toastify": "^11.0.5",
     "reconnecting-websocket": "^4.4.0",
+    "rollup": "^4.52.4",
     "toastify": "^2.0.1",
     "uuid": "^11.1.0",
     "vite-plugin-monaco-editor": "^1.1.0",
