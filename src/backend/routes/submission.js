@@ -2,13 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const Submission = require("../models/submission");
-
-// Middleware to get student ID from token (dummy version for now)
-const auth = (req, res, next) => {
-  // You’d normally verify token here
-  req.studentId = 1234; // replace this with actual extracted student ID
-  next();
-};
+const auth=require('./auth');
 
 router.get("/submissions", auth, async (req, res) => {
   const { problemId } = req.query;
@@ -17,7 +11,7 @@ router.get("/submissions", auth, async (req, res) => {
       problemId: parseInt(problemId),
       studentId: req.studentId,
     }).sort({ executionTime: -1 });
-
+    
     res.json(submissions);
   } catch (error) {
     res.status(500).json({ message: "Error fetching submissions" });
