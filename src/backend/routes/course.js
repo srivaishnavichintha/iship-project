@@ -93,7 +93,6 @@ router.get("/recommended-courses/:studentid", async (req, res) => {
       endDate: course.enrollmentend ? new Date(course.enrollmentend).toISOString().split("T")[0] : null,
       tags: course.prerequisites || []
     }));
-
     res.json(formatted);
   } catch (err) {
     console.error("Error fetching recommended courses:", err);

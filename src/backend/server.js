@@ -11,7 +11,6 @@ const enrollmentRoutes = require("./routes/enrollment");
 const peer2peerRoutes = require("./routes/peer2peer");
 const practiceRoutes = require("./routes/compiler");
 const submissionRoutes = require("./routes/submission");
-const studentRoutes=require("./routes/student");
 
 
 dotenv.config();
@@ -27,14 +26,13 @@ app.use(express.json());
 app.use("/", authRoutes);
 app.use("/", courseRoutes);
 app.use("/mentor/problems",problemRoutes);
-app.use("/",mentorcourseRoutes);
+// app.use("/",mentorcourseRoutes);
 app.use("/", contestRoutes);
 app.use("/",enrollmentRoutes);
 app.use("/mentor", mentorcourseRoutes); // instead of using "/"
 app.use("/",peer2peerRoutes);
 app.use("/", practiceRoutes);
 app.use("/", submissionRoutes);
-app.use("/",studentRoutes);
 
 
 const PORT = process.env.PORT || 3000;

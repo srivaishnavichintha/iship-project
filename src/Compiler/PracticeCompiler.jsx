@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import "./PracticeCompiler.css";
 import Student_navbar from "../Student_navabar";
 
+
 // API configuration
 const API_BASE_URL = 'http://localhost:3000'; 
 
@@ -94,6 +95,7 @@ var solution = function(arr) {
             'Authorization': `Bearer ${localStorage.getItem('token')}` // If using auth
           }
         });
+        console.log(problemId);
         if (!response.ok) {
           throw new Error('Failed to fetch submissions');
         }
